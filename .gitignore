@@ -19,6 +19,10 @@ yarn-error.log*
 # env files
 .env*
 
+# Google OAuth credentials
+client_secret*.json
+*client_secret*.json
+
 # vercel
 .vercel
 
