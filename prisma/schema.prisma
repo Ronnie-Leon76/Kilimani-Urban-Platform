@@ -1,0 +1,212 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole  @default(RESIDENT)
+  phoneNumber   String?
+  location      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts            Account[]
+  sessions            Session[]
+  reports             Report[]
+  consultationVotes   ConsultationVote[]
+  consultationComments ConsultationComment[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+enum UserRole {
+  RESIDENT
+  GOVERNMENT_OFFICIAL
+  ADMIN
+}
+
+enum ReportType {
+  INFRASTRUCTURE
+  WATER_SHORTAGE
+  FLOODING
+  WASTE_MANAGEMENT
+  ILLEGAL_DEVELOPMENT
+  OTHER
+}
+
+enum ReportStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+  REJECTED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model Report {
+  id          String       @id @default(cuid())
+  title       String
+  description String
+  type        ReportType
+  status      ReportStatus @default(PENDING)
+  priority    Priority     @default(MEDIUM)
+  latitude    Float
+  longitude   Float
+  address     String?
+  images      String[]     // Array of image URLs
+  userId      String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  resolvedAt  DateTime?
+
+  user     User              @relation(fields: [userId], references: [id])
+  updates  ReportUpdate[]
+  analysis SatelliteAnalysis[]
+}
+
+model ReportUpdate {
+  id          String   @id @default(cuid())
+  reportId    String
+  message     String
+  status      ReportStatus?
+  createdAt   DateTime @default(now())
+  updatedBy   String?
+
+  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
+
+model SatelliteAnalysis {
+  id              String   @id @default(cuid())
+  reportId        String?
+  analysisType    String   // 'flood_risk', 'illegal_development', 'green_cover', 'waste_dumping'
+  latitude        Float
+  longitude       Float
+  confidence      Float    // AI confidence score 0-1
+  detectedChanges Json?    // Store analysis results
+  imageUrl        String?  // Satellite image URL
+  analysisDate    DateTime @default(now())
+  createdAt       DateTime @default(now())
+
+  report Report? @relation(fields: [reportId], references: [id])
+}
+
+model FloodRiskArea {
+  id          String   @id @default(cuid())
+  name        String
+  coordinates Json     // GeoJSON polygon
+  riskLevel   String   // 'low', 'medium', 'high', 'critical'
+  lastUpdated DateTime @default(now())
+  predictions Json?    // AI predictions data
+}
+
+model DevelopmentPlan {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  coordinates Json     // GeoJSON data
+  status      String   // 'proposed', 'approved', 'under_construction', 'completed'
+  approvedBy  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PublicConsultation {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  startDate   DateTime
+  endDate     DateTime
+  status      String   // 'active', 'closed', 'draft'
+  coordinates Json?    // Area of interest
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  votes    ConsultationVote[]
+  comments ConsultationComment[]
+}
+
+model ConsultationVote {
+  id             String @id @default(cuid())
+  consultationId String
+  userId         String
+  vote           String // 'support', 'oppose', 'neutral'
+  createdAt      DateTime @default(now())
+
+  consultation PublicConsultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([consultationId, userId])
+}
+
+model ConsultationComment {
+  id             String   @id @default(cuid())
+  consultationId String
+  userId         String
+  comment        String
+  createdAt      DateTime @default(now())
+
+  consultation PublicConsultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model WaterDemandAnalysis {
+  id               String   @id @default(cuid())
+  area             String
+  coordinates      Json     // GeoJSON polygon
+  populationDensity Float
+  predictedDemand  Float    // Liters per day
+  currentSupply    Float?   // Liters per day
+  shortage         Float?   // Calculated shortage
+  analysisDate     DateTime @default(now())
+}
