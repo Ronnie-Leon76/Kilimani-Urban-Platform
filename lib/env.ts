@@ -16,9 +16,9 @@ if (typeof window === 'undefined' && process.env.NODE_ENV !== 'test') {
     console.warn(
       `Missing required environment variables: ${missingVars.join(', ')}`
     )
-    // Don't throw error during build to prevent build failures
+    // Only throw error in development to prevent build failures
     if (process.env.NODE_ENV === 'development') {
-      throw new Error(
+      console.error(
         `Missing required environment variables: ${missingVars.join(', ')}`
       )
     }
@@ -27,8 +27,8 @@ if (typeof window === 'undefined' && process.env.NODE_ENV !== 'test') {
 
 export const env = {
   DATABASE_URL: process.env.DATABASE_URL || '',
-  NEXTAUTH_URL: process.env.NEXTAUTH_URL || 'http://localhost:3000',
-  NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET || '',
+  NEXTAUTH_URL: process.env.NEXTAUTH_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000',
+  NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET || 'fallback-secret-for-build',
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || '',
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || '',
   NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,

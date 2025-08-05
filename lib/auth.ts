@@ -4,8 +4,18 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "./prisma"
 import { env } from "./env"
 
+// Create a safe adapter that handles build-time issues
+const createPrismaAdapter = () => {
+  try {
+    return PrismaAdapter(prisma)
+  } catch (error) {
+    console.warn('Prisma adapter initialization failed during build:', error)
+    return undefined
+  }
+}
+
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: createPrismaAdapter(),
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
@@ -13,39 +23,47 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   session: {
-    strategy: "database",
+    strategy: "jwt", // Use JWT strategy to avoid database dependency during build
   },
   callbacks: {
-    session: async ({ session, user }: { session: any; user: any }) => {
-      if (session?.user && user) {
-        session.user.id = user.id
-        
-        try {
-          // Check if user has a role, if not assign one
-          const dbUser = await prisma.user.findUnique({
-            where: { id: user.id },
-            select: { role: true },
-          })
-          
-          if (!dbUser?.role) {
-            // Make the first user an admin
-            const userCount = await prisma.user.count()
-            const newRole = userCount === 1 ? "ADMIN" : "RESIDENT"
-            
-            await prisma.user.update({
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token.id = user.id
+        // Only try to get role from database if we're not in build mode
+        if (process.env.NODE_ENV !== 'production' || process.env.VERCEL_ENV) {
+          try {
+            const dbUser = await prisma.user.findUnique({
               where: { id: user.id },
-              data: { role: newRole }
+              select: { role: true },
             })
             
-            session.user.role = newRole
-          } else {
-            session.user.role = dbUser.role
+            if (!dbUser?.role) {
+              const userCount = await prisma.user.count()
+              const newRole = userCount === 1 ? "ADMIN" : "RESIDENT"
+              
+              await prisma.user.update({
+                where: { id: user.id },
+                data: { role: newRole }
+              })
+              
+              token.role = newRole
+            } else {
+              token.role = dbUser.role
+            }
+          } catch (error) {
+            console.error('Error updating user role:', error)
+            token.role = "RESIDENT"
           }
-        } catch (error) {
-          console.error('Error updating user role:', error)
-          // Fallback to RESIDENT role if database operation fails
-          session.user.role = "RESIDENT"
+        } else {
+          token.role = "RESIDENT"
         }
+      }
+      return token
+    },
+    session: async ({ session, token }: { session: any; token: any }) => {
+      if (session?.user && token) {
+        session.user.id = token.id
+        session.user.role = token.role || "RESIDENT"
       }
       return session
     },
