@@ -7,20 +7,25 @@ const requiredEnvVars = {
 }
 
 // Check for missing environment variables (only during runtime, not build)
-if (typeof window === 'undefined' && process.env.NODE_ENV !== 'test') {
-  const missingVars = Object.entries(requiredEnvVars)
-    .filter(([key, value]) => !value)
-    .map(([key]) => key)
+if (typeof window === 'undefined' && process.env.NODE_ENV !== 'test' && !process.env.SKIP_ENV_VALIDATION) {
+  // Skip validation during Vercel build if not in runtime
+  const isVercelBuild = process.env.NODE_ENV === 'production' && !process.env.VERCEL_ENV
+  
+  if (!isVercelBuild) {
+    const missingVars = Object.entries(requiredEnvVars)
+      .filter(([key, value]) => !value)
+      .map(([key]) => key)
 
-  if (missingVars.length > 0) {
-    console.warn(
-      `Missing required environment variables: ${missingVars.join(', ')}`
-    )
-    // Only throw error in development to prevent build failures
-    if (process.env.NODE_ENV === 'development') {
-      console.error(
+    if (missingVars.length > 0) {
+      console.warn(
         `Missing required environment variables: ${missingVars.join(', ')}`
       )
+      // Only throw error in development to prevent build failures
+      if (process.env.NODE_ENV === 'development') {
+        console.error(
+          `Missing required environment variables: ${missingVars.join(', ')}`
+        )
+      }
     }
   }
 }

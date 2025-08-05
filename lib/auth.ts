@@ -5,8 +5,13 @@ import { env } from "./env"
 
 // Helper function to safely create adapter only at runtime
 const createSafeAdapter = () => {
-  // Only create adapter if we're in a runtime environment with database access
-  if (process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'development') {
+  // Skip adapter creation during build phase
+  if (process.env.NODE_ENV === 'production' && !process.env.VERCEL_ENV) {
+    return undefined
+  }
+  
+  // Only create adapter if we have database access
+  if (process.env.DATABASE_URL) {
     try {
       return PrismaAdapter(prisma)
     } catch (error) {
@@ -18,8 +23,8 @@ const createSafeAdapter = () => {
 }
 
 export const authOptions = {
-  // Conditionally set adapter - undefined during build, PrismaAdapter at runtime
-  ...(process.env.NODE_ENV !== 'development' && !process.env.VERCEL_ENV ? {} : { adapter: createSafeAdapter() }),
+  // Only set adapter if it's available
+  ...(createSafeAdapter() ? { adapter: createSafeAdapter() } : {}),
   
   providers: [
     GoogleProvider({

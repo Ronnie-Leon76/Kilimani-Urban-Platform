@@ -6,6 +6,12 @@ declare global {
 
 // Only initialize Prisma if we have a database URL and we're not in build mode
 const createPrismaClient = () => {
+  // Skip Prisma initialization during build
+  if (process.env.NODE_ENV === 'production' && !process.env.VERCEL_ENV && !process.env.DATABASE_URL) {
+    console.warn('Skipping Prisma initialization during build')
+    return null
+  }
+
   if (!process.env.DATABASE_URL) {
     console.warn('DATABASE_URL not found, skipping Prisma initialization')
     return null
