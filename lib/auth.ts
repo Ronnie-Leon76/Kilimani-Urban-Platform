@@ -1,36 +1,45 @@
-import type { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "./prisma"
 import { env } from "./env"
 
-// Create a safe adapter that handles build-time issues
-const createPrismaAdapter = () => {
-  try {
-    return PrismaAdapter(prisma)
-  } catch (error) {
-    console.warn('Prisma adapter initialization failed during build:', error)
-    return undefined
+// Helper function to safely create adapter only at runtime
+const createSafeAdapter = () => {
+  // Only create adapter if we're in a runtime environment with database access
+  if (process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'development') {
+    try {
+      return PrismaAdapter(prisma)
+    } catch (error) {
+      console.warn('Prisma adapter creation failed:', error)
+      return undefined
+    }
   }
+  return undefined
 }
 
-export const authOptions: NextAuthOptions = {
-  adapter: createPrismaAdapter(),
+export const authOptions = {
+  // Conditionally set adapter - undefined during build, PrismaAdapter at runtime
+  ...(process.env.NODE_ENV !== 'development' && !process.env.VERCEL_ENV ? {} : { adapter: createSafeAdapter() }),
+  
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  
+  // Use JWT strategy to avoid database dependency during build
   session: {
-    strategy: "jwt", // Use JWT strategy to avoid database dependency during build
+    strategy: "jwt" as const,
   },
+  
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user }: { token: Record<string, unknown>; user?: any }) => {
       if (user) {
         token.id = user.id
-        // Only try to get role from database if we're not in build mode
-        if (process.env.NODE_ENV !== 'production' || process.env.VERCEL_ENV) {
+        
+        // Only access database if we have an adapter (runtime environment)
+        if (createSafeAdapter()) {
           try {
             const dbUser = await prisma.user.findUnique({
               where: { id: user.id },
@@ -55,22 +64,25 @@ export const authOptions: NextAuthOptions = {
             token.role = "RESIDENT"
           }
         } else {
+          // Fallback during build or when database is unavailable
           token.role = "RESIDENT"
         }
       }
       return token
     },
+    
     session: async ({ session, token }: { session: any; token: any }) => {
       if (session?.user && token) {
-        session.user.id = token.id
-        session.user.role = token.role || "RESIDENT"
+        session.user.id = token.id as string
+        session.user.role = (token.role as string) || "RESIDENT"
       }
       return session
     },
   },
+  
   pages: {
     signIn: "/auth/signin",
   },
-  // Add debug mode for development
+  
   debug: process.env.NODE_ENV === "development",
 }
