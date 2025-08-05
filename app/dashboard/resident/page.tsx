@@ -5,6 +5,8 @@ import { ResidentDashboard } from "@/components/resident-dashboard"
 
 import { Session } from "next-auth"
 
+export const dynamic = 'force-dynamic'
+
 export default async function ResidentDashboardPage() {
   const session: Session | null = await getServerSession(authOptions)
 

@@ -5,6 +5,8 @@ import { AdminPanel } from "@/components/admin-panel"
 
 import { Session } from "next-auth"
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminDashboardPage() {
   const session = await getServerSession(authOptions) as Session | null
 
