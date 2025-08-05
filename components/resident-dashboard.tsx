@@ -20,11 +20,14 @@ import {
   Clock,
   User,
   Bell,
-  TrendingUp
+  TrendingUp,
+  Settings,
+  Shield
 } from "lucide-react"
 import { signOut } from "next-auth/react"
 import { KilimaniMap } from "./kilimani-map"
 import { ReportIssueDialog } from "./report-issue-dialog"
+import { useRouter } from "next/navigation"
 
 interface User {
   id: string
@@ -40,6 +43,11 @@ interface ResidentDashboardProps {
 
 export function ResidentDashboard({ user }: ResidentDashboardProps) {
   const [showReportDialog, setShowReportDialog] = useState(false)
+  const [activeTab, setActiveTab] = useState("map")
+  const router = useRouter()
+
+  const isAdmin = user.role === "ADMIN"
+  const isGovernment = user.role === "GOVERNMENT_OFFICIAL" || user.role === "ADMIN"
 
   const recentReports = [
     {
@@ -127,13 +135,42 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                 <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
                   Kilimani Urban Intelligence
                 </h1>
-                <p className="text-sm text-gray-600">Resident Dashboard</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm text-gray-600">
+                    {isAdmin ? "Admin Dashboard" : isGovernment ? "Government Dashboard" : "Resident Dashboard"}
+                  </p>
+                  <Badge className={`text-xs ${
+                    isAdmin 
+                      ? "bg-red-100 text-red-800" 
+                      : isGovernment 
+                        ? "bg-blue-100 text-blue-800" 
+                        : "bg-green-100 text-green-800"
+                  }`}>
+                    {user.role?.replace("_", " ")}
+                  </Badge>
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" className="mobile-button p-2">
                 <Bell className="w-5 h-5 text-gray-600" />
               </Button>
+              {isAdmin && (
+                <Button variant="outline" size="sm" className="mobile-button bg-gradient-to-r from-red-50 to-orange-50 border-red-200 text-red-700 hover:from-red-100 hover:to-orange-100"
+                  onClick={() => router.push('/dashboard/admin')}
+                >
+                  <Shield className="w-4 h-4 mr-1" />
+                  <span className="hidden sm:inline">Admin Panel</span>
+                </Button>
+              )}
+              {isGovernment && (
+                <Button variant="outline" size="sm" className="mobile-button bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 text-blue-700 hover:from-blue-100 hover:to-indigo-100"
+                  onClick={() => router.push('/dashboard/government')}
+                >
+                  <Settings className="w-4 h-4 mr-1" />
+                  <span className="hidden sm:inline">Gov Panel</span>
+                </Button>
+              )}
               <span className="hidden sm:block text-sm text-gray-600">Welcome, {user.name}</span>
               <Button 
                 variant="outline" 
@@ -149,6 +186,23 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
       </div>
 
       <div className="p-4 space-y-6 safe-area-bottom">
+        {/* Admin Welcome Message */}
+        {isAdmin && (
+          <Card className="card-mobile border-0 bg-gradient-to-r from-red-50 to-orange-50 border-red-100">
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-red-800">Welcome Admin!</h3>
+                  <p className="text-sm text-red-600">You have full access to all dashboards and admin features.</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Mobile-First Quick Actions & Stats */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           {/* Quick Actions Sidebar */}
@@ -172,6 +226,7 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
               <Button
                 size="lg"
                 variant="outline"
+                onClick={() => setActiveTab("analytics")}
                 className="w-full mobile-button bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-200 text-purple-700 hover:from-purple-100 hover:to-indigo-100"
               >
                 <BarChart3 className="w-5 h-5 mr-2" />
@@ -181,11 +236,38 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
               <Button
                 size="lg"
                 variant="outline"
+                onClick={() => setActiveTab("consultations")}
                 className="w-full mobile-button bg-gradient-to-r from-orange-50 to-red-50 border-orange-200 text-orange-700 hover:from-orange-100 hover:to-red-100"
               >
                 <MessageSquare className="w-5 h-5 mr-2" />
                 Public Consultations
               </Button>
+
+              {/* Admin Quick Access */}
+              {isAdmin && (
+                <>
+                  <hr className="my-3 border-gray-200" />
+                  <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Admin Access</p>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => router.push('/dashboard/admin')}
+                    className="w-full mobile-button bg-gradient-to-r from-red-50 to-orange-50 border-red-200 text-red-700 hover:from-red-100 hover:to-orange-100"
+                  >
+                    <Shield className="w-5 h-5 mr-2" />
+                    Admin Panel
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={() => router.push('/dashboard/government')}
+                    className="w-full mobile-button bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 text-blue-700 hover:from-blue-100 hover:to-indigo-100"
+                  >
+                    <Settings className="w-5 h-5 mr-2" />
+                    Government Panel
+                  </Button>
+                </>
+              )}
             </CardContent>
           </Card>
 
@@ -227,7 +309,7 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
         </div>
 
         {/* Mobile-Optimized Main Content Tabs */}
-        <Tabs defaultValue="map" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <div className="card-mobile p-2">
             <TabsList className="grid w-full grid-cols-4 h-auto gap-1 bg-transparent">
               <TabsTrigger 
@@ -269,7 +351,7 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                 <CardDescription>Interactive map showing reports, flood risks, and development areas</CardDescription>
               </CardHeader>
               <CardContent className="p-0">
-                <div className="h-64 sm:h-80 lg:h-96 rounded-b-2xl overflow-hidden">
+                <div className="h-64 sm:h-80 lg:h-96 rounded-b-2xl overflow-hidden bg-gray-100">
                   <KilimaniMap />
                 </div>
               </CardContent>
@@ -315,17 +397,17 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
           </TabsContent>
 
               <TabsContent value="analytics">
-                <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl overflow-hidden">
-                  <CardHeader className="pb-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
-                    <CardTitle className="text-white flex items-center space-x-2">
+                <Card className="card-mobile border-0">
+                  <CardHeader className="pb-4 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-t-2xl border-b border-purple-100">
+                    <CardTitle className="text-purple-800 flex items-center space-x-2">
                       <BarChart3 className="h-5 w-5" />
                       <span>Community Analytics</span>
                     </CardTitle>
-                    <CardDescription className="text-purple-100">
+                    <CardDescription className="text-purple-600">
                       Real-time insights and trends from community data
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="p-6">
+                  <CardContent className="p-6 bg-white">
                     {/* Stats Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                       <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
@@ -440,17 +522,17 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
               </TabsContent>
 
               <TabsContent value="consultations">
-                <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-xl overflow-hidden">
-                  <CardHeader className="pb-4 bg-gradient-to-r from-orange-600 to-red-600 text-white">
-                    <CardTitle className="text-white flex items-center space-x-2">
+                <Card className="card-mobile border-0">
+                  <CardHeader className="pb-4 bg-gradient-to-r from-orange-50 to-red-50 rounded-t-2xl border-b border-orange-100">
+                    <CardTitle className="text-orange-800 flex items-center space-x-2">
                       <Users className="h-5 w-5" />
                       <span>Public Consultations</span>
                     </CardTitle>
-                    <CardDescription className="text-orange-100">
+                    <CardDescription className="text-orange-600">
                       Participate in community planning and decision making
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="p-6">
+                  <CardContent className="p-6 bg-white">
                     {/* Active Consultations */}
                     <div className="mb-8">
                       <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">

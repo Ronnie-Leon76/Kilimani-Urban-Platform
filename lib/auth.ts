@@ -1,5 +1,6 @@
 import GoogleProvider from "next-auth/providers/google"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
+import { NextAuthOptions } from "next-auth"
 import { prisma } from "./prisma"
 import { env } from "./env"
 
@@ -22,7 +23,7 @@ const createSafeAdapter = () => {
   return undefined
 }
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   // Only set adapter if it's available
   ...(createSafeAdapter() ? { adapter: createSafeAdapter() } : {}),
   
@@ -30,16 +31,27 @@ export const authOptions = {
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+      httpOptions: {
+        timeout: 10000, // Increase timeout to 10 seconds
+      },
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
   ],
   
   // Use JWT strategy to avoid database dependency during build
   session: {
     strategy: "jwt" as const,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   
   callbacks: {
-    jwt: async ({ token, user }: { token: Record<string, unknown>; user?: any }) => {
+    jwt: async ({ token, user }) => {
       if (user) {
         token.id = user.id
         
@@ -76,7 +88,7 @@ export const authOptions = {
       return token
     },
     
-    session: async ({ session, token }: { session: any; token: any }) => {
+    session: async ({ session, token }) => {
       if (session?.user && token) {
         session.user.id = token.id as string
         session.user.role = (token.role as string) || "RESIDENT"
@@ -87,7 +99,18 @@ export const authOptions = {
   
   pages: {
     signIn: "/auth/signin",
+    error: "/auth/error",
   },
   
   debug: process.env.NODE_ENV === "development",
+  
+  // Add custom error handling
+  events: {
+    async signIn({ user, account, profile }) {
+      console.log(`User ${user.email} signed in with ${account?.provider}`)
+    },
+    async signOut() {
+      console.log(`User signed out`)
+    },
+  },
 }

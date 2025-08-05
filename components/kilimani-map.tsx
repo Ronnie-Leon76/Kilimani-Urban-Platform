@@ -156,26 +156,26 @@ export function KilimaniMap() {
   }
 
   return (
-    <div className="relative">
-      <div ref={mapContainer} className="h-96 w-full rounded-lg" />
-      <div className="absolute top-4 left-4 bg-white p-3 rounded-lg shadow-md">
-        <h4 className="font-semibold text-sm mb-2">Legend</h4>
+    <div className="map-container">
+      <div ref={mapContainer} className="h-full w-full rounded-lg" />
+      <div className="map-legend">
+        <h4 className="font-semibold text-xs sm:text-sm mb-1 sm:mb-2 text-gray-800">Legend</h4>
         <div className="space-y-1 text-xs">
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-            <span>Water Issues</span>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-blue-500 shadow-sm flex-shrink-0"></div>
+            <span className="text-gray-700">Water Issues</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <span>Infrastructure</span>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500 shadow-sm flex-shrink-0"></div>
+            <span className="text-gray-700">Infrastructure</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <span>Flooding</span>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500 shadow-sm flex-shrink-0"></div>
+            <span className="text-gray-700">Flooding</span>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-            <span>Waste Management</span>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-purple-500 shadow-sm flex-shrink-0"></div>
+            <span className="text-gray-700">Waste Mgmt</span>
           </div>
         </div>
       </div>

@@ -14,7 +14,9 @@ export default async function ResidentDashboardPage() {
     redirect("/auth/signin")
   }
 
-  if (session.user.role === "GOVERNMENT_OFFICIAL" || session.user.role === "ADMIN") {
+  // Allow admin users to access all dashboards
+  // Only redirect government officials (not admins) and only if they're not explicitly accessing resident dashboard
+  if (session.user.role === "GOVERNMENT_OFFICIAL") {
     redirect("/dashboard/government")
   }
 

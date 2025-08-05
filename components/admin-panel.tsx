@@ -32,6 +32,7 @@ import {
   Smartphone
 } from "lucide-react"
 import { signOut } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 interface User {
   id: string
@@ -48,6 +49,7 @@ interface AdminPanelProps {
 export function AdminPanel({ user }: AdminPanelProps) {
   const [activeTab, setActiveTab] = useState("overview")
   const [searchTerm, setSearchTerm] = useState("")
+  const router = useRouter()
 
   // Mock data for demonstration
   const stats = {
@@ -170,6 +172,24 @@ export function AdminPanel({ user }: AdminPanelProps) {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => router.push('/dashboard/government')}
+              className="hidden sm:flex bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 text-blue-700 hover:from-blue-100 hover:to-indigo-100"
+            >
+              <Settings className="w-4 h-4 mr-1" />
+              Government
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => router.push('/dashboard/resident')}
+              className="hidden sm:flex bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 hover:from-green-100 hover:to-emerald-100"
+            >
+              <Users className="w-4 h-4 mr-1" />
+              Resident
+            </Button>
             <span className="text-sm text-gray-600">Welcome, {user.name}</span>
             <Badge className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
               ADMIN
@@ -579,15 +599,35 @@ export function AdminPanel({ user }: AdminPanelProps) {
         </TabsContent>
       </Tabs>
 
-      {/* Mobile Bottom Navigation for Sign Out */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-gray-200 p-4 sm:hidden">
-        <Button 
-          variant="outline" 
-          onClick={() => signOut()}
-          className="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white border-0 hover:from-red-600 hover:to-pink-600"
-        >
-          Sign Out
-        </Button>
+      {/* Mobile Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-gray-200 p-3 sm:hidden">
+        <div className="grid grid-cols-3 gap-2">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => router.push('/dashboard/government')}
+            className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 text-blue-700 hover:from-blue-100 hover:to-indigo-100"
+          >
+            <Settings className="w-4 h-4 mr-1" />
+            Gov
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => router.push('/dashboard/resident')}
+            className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 text-green-700 hover:from-green-100 hover:to-emerald-100"
+          >
+            <Users className="w-4 h-4 mr-1" />
+            Resident
+          </Button>
+          <Button 
+            variant="outline" 
+            onClick={() => signOut()}
+            className="bg-gradient-to-r from-red-500 to-pink-500 text-white border-0 hover:from-red-600 hover:to-pink-600"
+          >
+            Sign Out
+          </Button>
+        </div>
       </div>
     </div>
   )
