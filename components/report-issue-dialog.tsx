@@ -22,9 +22,10 @@ import { useToast } from "@/hooks/use-toast"
 interface ReportIssueDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  onSuccess?: () => void
 }
 
-export function ReportIssueDialog({ open, onOpenChange }: ReportIssueDialogProps) {
+export function ReportIssueDialog({ open, onOpenChange, onSuccess }: ReportIssueDialogProps) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -75,23 +76,44 @@ export function ReportIssueDialog({ open, onOpenChange }: ReportIssueDialogProps
     setIsSubmitting(true)
 
     try {
-      // Here you would typically send the data to your API
-      await new Promise((resolve) => setTimeout(resolve, 1000)) // Simulate API call
-
-      toast({
-        title: "Report submitted",
-        description: "Your report has been submitted successfully. We'll review it shortly.",
+      const response = await fetch('/api/reports', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: formData.title,
+          description: formData.description,
+          type: formData.type,
+          location: formData.address,
+          priority: 'MEDIUM',
+          images: []
+        }),
       })
 
-      onOpenChange(false)
-      setFormData({
-        title: "",
-        description: "",
-        type: "",
-        address: "",
-        latitude: "",
-        longitude: "",
-      })
+      if (response.ok) {
+        toast({
+          title: "Report submitted",
+          description: "Your report has been submitted successfully. We'll review it shortly.",
+        })
+
+        onOpenChange(false)
+        setFormData({
+          title: "",
+          description: "",
+          type: "",
+          address: "",
+          latitude: "",
+          longitude: "",
+        })
+        
+        // Call the success callback to refresh data
+        if (onSuccess) {
+          onSuccess()
+        }
+      } else {
+        throw new Error('Failed to submit report')
+      }
     } catch (error) {
       toast({
         title: "Submission failed",

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -22,7 +22,8 @@ import {
   Bell,
   TrendingUp,
   Settings,
-  Shield
+  Shield,
+  Loader2
 } from "lucide-react"
 import { signOut } from "next-auth/react"
 import { KilimaniMap } from "./kilimani-map"
@@ -37,6 +38,53 @@ interface User {
   role?: string
 }
 
+interface Report {
+  id: string
+  title: string
+  type: string
+  status: string
+  priority: string
+  location: string
+  createdAt: string
+  reporter: string
+}
+
+interface Consultation {
+  id: string
+  title: string
+  description: string
+  endDate: string
+  participants: number
+  comments: number
+  userParticipated: boolean
+  userVote: string | null
+}
+
+interface Analytics {
+  totalReports: number
+  resolvedReports: number
+  activeUsers: number
+  issueDistribution: {
+    water: number
+    infrastructure: number
+    flooding: number
+    waste: number
+  }
+}
+
+interface Participation {
+  consultationsJoined: number
+  commentsPosted: number
+  issuesReported: number
+}
+
+interface DashboardData {
+  reports: Report[]
+  analytics: Analytics
+  consultations: Consultation[]
+  participation: Participation
+}
+
 interface ResidentDashboardProps {
   user: User
 }
@@ -44,99 +92,129 @@ interface ResidentDashboardProps {
 export function ResidentDashboard({ user }: ResidentDashboardProps) {
   const [showReportDialog, setShowReportDialog] = useState(false)
   const [activeTab, setActiveTab] = useState("map")
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null)
+  const [loading, setLoading] = useState(true)
   const router = useRouter()
 
   const isAdmin = user.role === "ADMIN"
   const isGovernment = user.role === "GOVERNMENT_OFFICIAL" || user.role === "ADMIN"
 
-  const recentReports = [
-    {
-      id: 1,
-      title: "Water shortage on Argwings Kodhek Road",
-      type: "WATER_SHORTAGE",
-      status: "IN_PROGRESS",
-      priority: "HIGH",
-      createdAt: "2024-01-15",
-    },
-    {
-      id: 2,
-      title: "Pothole on Kilimani Road",
-      type: "INFRASTRUCTURE",
-      status: "PENDING",
-      priority: "MEDIUM",
-      createdAt: "2024-01-14",
-    },
-    {
-      id: 3,
-      title: "Flooding near Yaya Centre",
-      type: "FLOODING",
-      status: "RESOLVED",
-      priority: "CRITICAL",
-      createdAt: "2024-01-12",
-    },
-  ]
+  // Fetch dashboard data
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch('/api/dashboard/resident')
+        if (response.ok) {
+          const data = await response.json()
+          setDashboardData(data)
+        } else {
+          console.error('Failed to fetch dashboard data')
+        }
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchDashboardData()
+  }, [])
+
+  // Helper functions
+  const getTypeIcon = (type: string) => {
+    switch (type.toLowerCase()) {
+      case 'water_shortage':
+        return <Droplets className="h-5 w-5 text-white" />
+      case 'infrastructure':
+        return <Construction className="h-5 w-5 text-white" />
+      case 'flooding':
+        return <AlertTriangle className="h-5 w-5 text-white" />
+      case 'waste_management':
+        return <Trash2 className="h-5 w-5 text-white" />
+      default:
+        return <AlertTriangle className="h-5 w-5 text-white" />
+    }
+  }
 
   const getStatusColor = (status: string) => {
-    switch (status) {
-      case "PENDING":
-        return "bg-yellow-100 text-yellow-800"
-      case "IN_PROGRESS":
-        return "bg-blue-100 text-blue-800"
-      case "RESOLVED":
-        return "bg-green-100 text-green-800"
-      case "REJECTED":
-        return "bg-red-100 text-red-800"
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return "bg-yellow-100 text-yellow-800 border-yellow-300"
+      case 'in_progress':
+        return "bg-blue-100 text-blue-800 border-blue-300"
+      case 'resolved':
+        return "bg-green-100 text-green-800 border-green-300"
       default:
-        return "bg-gray-100 text-gray-800"
+        return "bg-gray-100 text-gray-800 border-gray-300"
     }
   }
 
   const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "LOW":
-        return "bg-gray-100 text-gray-800"
-      case "MEDIUM":
-        return "bg-yellow-100 text-yellow-800"
-      case "HIGH":
-        return "bg-orange-100 text-orange-800"
-      case "CRITICAL":
-        return "bg-red-100 text-red-800"
+    switch (priority.toLowerCase()) {
+      case 'low':
+        return "bg-green-100 text-green-800 border-green-300"
+      case 'medium':
+        return "bg-yellow-100 text-yellow-800 border-yellow-300"
+      case 'high':
+        return "bg-orange-100 text-orange-800 border-orange-300"
+      case 'critical':
+        return "bg-red-100 text-red-800 border-red-300"
       default:
-        return "bg-gray-100 text-gray-800"
+        return "bg-gray-100 text-gray-800 border-gray-300"
     }
   }
 
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case "WATER_SHORTAGE":
-        return <Droplets className="h-4 w-4" />
-      case "INFRASTRUCTURE":
-        return <Construction className="h-4 w-4" />
-      case "FLOODING":
-        return <AlertTriangle className="h-4 w-4" />
-      case "WASTE_MANAGEMENT":
-        return <Trash2 className="h-4 w-4" />
-      default:
-        return <AlertTriangle className="h-4 w-4" />
+  const handleReportSuccess = () => {
+    setShowReportDialog(false)
+    // Refresh dashboard data
+    const fetchDashboardData = async () => {
+      try {
+        const response = await fetch('/api/dashboard/resident')
+        if (response.ok) {
+          const data = await response.json()
+          setDashboardData(data)
+        }
+      } catch (error) {
+        console.error('Error refreshing dashboard data:', error)
+      }
     }
+    fetchDashboardData()
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 animate-spin text-blue-600 mx-auto mb-4" />
+          <p className="text-gray-600 text-lg">Loading dashboard...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50 safe-area-inset">
-      {/* Mobile-First Header */}
-      <div className="bg-white/90 backdrop-blur-mobile shadow-xl sticky top-0 z-50 safe-area-top">
-        <div className="p-4 border-b border-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 safe-area-inset relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-1/2 -right-1/2 w-96 h-96 bg-gradient-to-br from-green-100/20 to-blue-100/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-1/2 -left-1/2 w-96 h-96 bg-gradient-to-tr from-blue-100/20 to-purple-100/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      {/* Enhanced Mobile-First Header */}
+      <div className="relative bg-white/95 backdrop-blur-xl shadow-2xl sticky top-0 z-50 safe-area-top animate-in slide-in-from-top duration-500">
+        <div className="p-6 border-b border-gray-100/50">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <MapPin className="w-7 h-7 text-white" />
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 rounded-3xl flex items-center justify-center shadow-2xl animate-pulse">
+                <MapPin className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent animate-in slide-in-from-left duration-700">
                   Kilimani Urban Intelligence
                 </h1>
-                <div className="flex items-center gap-2">
-                  <p className="text-sm text-gray-600">
+                <div className="flex items-center gap-2 animate-in slide-in-from-left duration-700 delay-100">
+                  <p className="text-sm text-gray-600 font-medium">
                     {isAdmin ? "Admin Dashboard" : isGovernment ? "Government Dashboard" : "Resident Dashboard"}
                   </p>
                   <Badge className={`text-xs ${
@@ -203,23 +281,27 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
           </Card>
         )}
 
-        {/* Mobile-First Quick Actions & Stats */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-          {/* Quick Actions Sidebar */}
-          <Card className="card-mobile border-0 lg:col-span-1">
-            <CardHeader className="pb-3">
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <User className="w-5 h-5 text-green-600" />
-                Quick Actions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
+        {/* Enhanced Mobile-First Quick Actions & Stats */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Enhanced Quick Actions Sidebar */}
+          <Card className="bg-white/95 backdrop-blur-xl border-0 shadow-2xl rounded-3xl lg:col-span-1 overflow-hidden animate-in slide-in-from-left duration-700">
+            <div className="bg-gradient-to-r from-green-50 via-blue-50 to-purple-50 p-1">
+              <CardHeader className="bg-white/90 rounded-t-3xl pb-4">
+                <CardTitle className="flex items-center gap-3 text-xl">
+                  <div className="p-2 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl shadow-lg">
+                    <User className="w-6 h-6 text-white" />
+                  </div>
+                  <span className="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">Quick Actions</span>
+                </CardTitle>
+              </CardHeader>
+            </div>
+            <CardContent className="space-y-4 p-6">
               <Button
                 size="lg"
                 onClick={() => setShowReportDialog(true)}
-                className="w-full mobile-button bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg"
+                className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 rounded-2xl py-4 group"
               >
-                <Plus className="w-5 h-5 mr-2" />
+                <Plus className="w-5 h-5 mr-2 group-hover:animate-bounce" />
                 Report Issue
               </Button>
               
@@ -227,9 +309,9 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                 size="lg"
                 variant="outline"
                 onClick={() => setActiveTab("analytics")}
-                className="w-full mobile-button bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-200 text-purple-700 hover:from-purple-100 hover:to-indigo-100"
+                className="w-full bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-200 text-purple-700 hover:from-purple-100 hover:to-indigo-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 rounded-2xl py-4 group"
               >
-                <BarChart3 className="w-5 h-5 mr-2" />
+                <BarChart3 className="w-5 h-5 mr-2 group-hover:animate-bounce" />
                 View Analytics
               </Button>
               
@@ -237,17 +319,17 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                 size="lg"
                 variant="outline"
                 onClick={() => setActiveTab("consultations")}
-                className="w-full mobile-button bg-gradient-to-r from-orange-50 to-red-50 border-orange-200 text-orange-700 hover:from-orange-100 hover:to-red-100"
+                className="w-full bg-gradient-to-r from-orange-50 to-red-50 border-orange-200 text-orange-700 hover:from-orange-100 hover:to-red-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 rounded-2xl py-4 group"
               >
-                <MessageSquare className="w-5 h-5 mr-2" />
+                <MessageSquare className="w-5 h-5 mr-2 group-hover:animate-bounce" />
                 Public Consultations
               </Button>
 
-              {/* Admin Quick Access */}
+              {/* Enhanced Admin Quick Access */}
               {isAdmin && (
                 <>
-                  <hr className="my-3 border-gray-200" />
-                  <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Admin Access</p>
+                  <hr className="my-4 border-gray-200" />
+                  <p className="text-xs font-bold text-gray-600 uppercase tracking-wide mb-3">Admin Access</p>
                   <Button
                     size="lg"
                     variant="outline"
@@ -261,9 +343,9 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                     size="lg"
                     variant="outline"
                     onClick={() => router.push('/dashboard/government')}
-                    className="w-full mobile-button bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 text-blue-700 hover:from-blue-100 hover:to-indigo-100"
+                    className="w-full bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 text-blue-700 hover:from-blue-100 hover:to-indigo-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 rounded-2xl py-4 group"
                   >
-                    <Settings className="w-5 h-5 mr-2" />
+                    <Settings className="w-5 h-5 mr-2 group-hover:animate-bounce" />
                     Government Panel
                   </Button>
                 </>
@@ -271,23 +353,38 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
             </CardContent>
           </Card>
 
-          {/* Mobile-Optimized Recent Reports */}
-          <Card className="card-mobile border-0 lg:col-span-3">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg">Your Recent Reports</CardTitle>
-              <CardDescription>Track your submitted issues and their progress</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {recentReports.map((report) => (
-                  <div key={report.id} className="mobile-card bg-gray-50 rounded-xl p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
+          {/* Enhanced Recent Reports Section */}
+          <Card className="bg-white/95 backdrop-blur-xl border-0 shadow-2xl rounded-3xl lg:col-span-3 overflow-hidden animate-in slide-in-from-right duration-700">
+            <div className="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 p-1">
+              <CardHeader className="bg-white/90 rounded-t-3xl pb-4">
+                <CardTitle className="text-xl flex items-center gap-3">
+                  <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl shadow-lg">
+                    <AlertTriangle className="w-6 h-6 text-white" />
+                  </div>
+                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Your Recent Reports</span>
+                </CardTitle>
+                <CardDescription className="text-gray-600">Track your submitted issues and their progress</CardDescription>
+              </CardHeader>
+            </div>
+            <CardContent className="p-6">
+              <div className="space-y-4">
+                {dashboardData?.reports?.length ? dashboardData.reports.map((report, index) => (
+                  <div 
+                    key={report.id} 
+                    className="group bg-gradient-to-r from-white to-gray-50/50 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] animate-in slide-in-from-bottom duration-500"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:animate-pulse">
                         {getTypeIcon(report.type)}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-gray-900 truncate">{report.title}</h4>
-                        <p className="text-sm text-gray-600 mt-1">{report.createdAt}</p>
+                        <h4 className="font-semibold text-gray-900 truncate group-hover:text-blue-600 transition-colors duration-300">{report.title}</h4>
+                        <p className="text-sm text-gray-600 mt-1 flex items-center gap-2">
+                          <span>{report.createdAt}</span>
+                          <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+                          <span className="capitalize">{report.type.toLowerCase().replace('_', ' ')}</span>
+                        </p>
                         <div className="flex items-center gap-2 mt-2">
                           <Badge className={getStatusColor(report.status)}>
                             {report.status.replace("_", " ")}
@@ -302,7 +399,19 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                       </Button>
                     </div>
                   </div>
-                ))}
+                )) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <AlertTriangle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                    <p>No reports yet. Report your first issue!</p>
+                    <Button 
+                      onClick={() => setShowReportDialog(true)}
+                      className="mt-4 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-lg"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Report Issue
+                    </Button>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>
@@ -367,7 +476,7 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {recentReports.map((report) => (
+                  {dashboardData?.reports?.length ? dashboardData.reports.slice(0, 5).map((report) => (
                     <div key={report.id} className="mobile-card bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-4">
                       <div className="flex items-start gap-3">
                         <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
@@ -390,7 +499,12 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                         </Button>
                       </div>
                     </div>
-                  ))}
+                  )) : (
+                    <div className="text-center py-6 text-gray-500">
+                      <AlertTriangle className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                      <p className="text-sm">No reports available</p>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -419,7 +533,7 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                             +12% this month
                           </span>
                         </div>
-                        <h3 className="text-2xl font-bold text-blue-900">247</h3>
+                        <h3 className="text-2xl font-bold text-blue-900">{dashboardData?.analytics?.totalReports || 0}</h3>
                         <p className="text-sm text-blue-700">Total Reports</p>
                       </div>
                       
@@ -432,7 +546,7 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                             +23% resolved
                           </span>
                         </div>
-                        <h3 className="text-2xl font-bold text-green-900">158</h3>
+                        <h3 className="text-2xl font-bold text-green-900">{dashboardData?.analytics?.resolvedReports || 0}</h3>
                         <p className="text-sm text-green-700">Issues Resolved</p>
                       </div>
                       
@@ -445,7 +559,7 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                             +8% growth
                           </span>
                         </div>
-                        <h3 className="text-2xl font-bold text-amber-900">1,234</h3>
+                        <h3 className="text-2xl font-bold text-amber-900">{dashboardData?.analytics?.activeUsers || 0}</h3>
                         <p className="text-sm text-amber-700">Active Users</p>
                       </div>
                     </div>
@@ -462,28 +576,28 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                             <Droplets className="h-8 w-8 text-white" />
                           </div>
                           <p className="text-sm font-medium text-gray-900">Water Issues</p>
-                          <p className="text-lg font-bold text-blue-600">34%</p>
+                          <p className="text-lg font-bold text-blue-600">{dashboardData?.analytics?.issueDistribution?.water || 0}%</p>
                         </div>
                         <div className="text-center">
                           <div className="w-16 h-16 mx-auto bg-amber-500 rounded-full flex items-center justify-center mb-2">
                             <Construction className="h-8 w-8 text-white" />
                           </div>
                           <p className="text-sm font-medium text-gray-900">Infrastructure</p>
-                          <p className="text-lg font-bold text-amber-600">28%</p>
+                          <p className="text-lg font-bold text-amber-600">{dashboardData?.analytics?.issueDistribution?.infrastructure || 0}%</p>
                         </div>
                         <div className="text-center">
                           <div className="w-16 h-16 mx-auto bg-red-500 rounded-full flex items-center justify-center mb-2">
                             <AlertTriangle className="h-8 w-8 text-white" />
                           </div>
                           <p className="text-sm font-medium text-gray-900">Flooding</p>
-                          <p className="text-lg font-bold text-red-600">22%</p>
+                          <p className="text-lg font-bold text-red-600">{dashboardData?.analytics?.issueDistribution?.flooding || 0}%</p>
                         </div>
                         <div className="text-center">
                           <div className="w-16 h-16 mx-auto bg-purple-500 rounded-full flex items-center justify-center mb-2">
                             <Trash2 className="h-8 w-8 text-white" />
                           </div>
                           <p className="text-sm font-medium text-gray-900">Waste</p>
-                          <p className="text-lg font-bold text-purple-600">16%</p>
+                          <p className="text-lg font-bold text-purple-600">{dashboardData?.analytics?.issueDistribution?.waste || 0}%</p>
                         </div>
                       </div>
                     </div>
@@ -508,7 +622,7 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                         <div>
                           <div className="flex items-center justify-between mb-2">
                             <span className="text-sm font-medium text-gray-700">Resolution Rate</span>
-                            <span className="text-lg font-bold text-green-600">87%</span>
+                            <span className="text-lg font-bold text-green-600">{dashboardData?.analytics?.totalReports && dashboardData?.analytics?.totalReports > 0 ? Math.round((dashboardData.analytics.resolvedReports / dashboardData.analytics.totalReports) * 100) : 0}%</span>
                           </div>
                           <div className="w-full bg-gray-200 rounded-full h-2">
                             <div className="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style={{width: '87%'}}></div>
@@ -540,75 +654,46 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                         Active Consultations
                       </h4>
                       <div className="space-y-4">
-                        <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 border border-orange-200">
-                          <div className="flex items-start justify-between mb-3">
-                            <div className="flex-1">
-                              <h5 className="text-lg font-semibold text-gray-900 mb-2">Kilimani Road Expansion Project</h5>
-                              <p className="text-gray-600 text-sm mb-3">
-                                Community consultation on the proposed road widening project along Kilimani Road. 
-                                Your input is valuable for planning the construction timeline and minimizing disruption.
-                              </p>
-                              <div className="flex items-center space-x-4 text-sm">
-                                <span className="flex items-center text-green-600">
-                                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                                  Active until Jan 30, 2024
-                                </span>
-                                <span className="flex items-center text-blue-600">
-                                  <Users className="h-4 w-4 mr-1" />
-                                  234 participants
-                                </span>
+                        {dashboardData?.consultations?.length ? dashboardData.consultations.map((consultation, index) => (
+                          <div key={consultation.id} className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 border border-orange-200">
+                            <div className="flex items-start justify-between mb-3">
+                              <div className="flex-1">
+                                <h5 className="text-lg font-semibold text-gray-900 mb-2">{consultation.title}</h5>
+                                <p className="text-gray-600 text-sm mb-3">
+                                  {consultation.description}
+                                </p>
+                                <div className="flex items-center space-x-4 text-sm">
+                                  <span className="flex items-center text-green-600">
+                                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                                    Active until {consultation.endDate}
+                                  </span>
+                                  <span className="flex items-center text-blue-600">
+                                    <Users className="h-4 w-4 mr-1" />
+                                    {consultation.participants} participants
+                                  </span>
+                                </div>
                               </div>
+                              <Button 
+                                className={`${consultation.userParticipated 
+                                  ? 'bg-green-600 hover:bg-green-700' 
+                                  : 'bg-orange-600 hover:bg-orange-700'
+                                } text-white`}
+                              >
+                                {consultation.userParticipated ? 'Participated' : 'Participate'}
+                              </Button>
                             </div>
-                            <Button className="bg-orange-600 hover:bg-orange-700 text-white">
-                              Participate
-                            </Button>
-                          </div>
-                          <div className="grid grid-cols-3 gap-4 mt-4">
-                            <div className="text-center bg-white rounded-lg p-3">
-                              <p className="text-2xl font-bold text-green-600">67%</p>
-                              <p className="text-xs text-gray-600">Support</p>
-                            </div>
-                            <div className="text-center bg-white rounded-lg p-3">
-                              <p className="text-2xl font-bold text-red-600">18%</p>
-                              <p className="text-xs text-gray-600">Oppose</p>
-                            </div>
-                            <div className="text-center bg-white rounded-lg p-3">
-                              <p className="text-2xl font-bold text-gray-600">15%</p>
-                              <p className="text-xs text-gray-600">Neutral</p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
-                          <div className="flex items-start justify-between mb-3">
-                            <div className="flex-1">
-                              <h5 className="text-lg font-semibold text-gray-900 mb-2">Community Park Development</h5>
-                              <p className="text-gray-600 text-sm mb-3">
-                                Planning for the new community park near Yaya Centre. Help us decide on facilities, 
-                                recreational areas, and environmental conservation features.
-                              </p>
-                              <div className="flex items-center space-x-4 text-sm">
-                                <span className="flex items-center text-green-600">
-                                  <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                                  Active until Feb 15, 2024
-                                </span>
-                                <span className="flex items-center text-blue-600">
-                                  <Users className="h-4 w-4 mr-1" />
-                                  189 participants
-                                </span>
+                            {consultation.userVote && (
+                              <div className="mb-4 text-sm text-gray-600">
+                                Your vote: <span className="font-semibold capitalize">{consultation.userVote}</span>
                               </div>
-                            </div>
-                            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                              Join Discussion
-                            </Button>
+                            )}
                           </div>
-                          <div className="flex flex-wrap gap-2 mt-4">
-                            <span className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Playground</span>
-                            <span className="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">Green Spaces</span>
-                            <span className="bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full">Sports Facilities</span>
-                            <span className="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">Walking Paths</span>
+                        )) : (
+                          <div className="text-center py-8 text-gray-500">
+                            <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                            <p>No active consultations at the moment</p>
                           </div>
-                        </div>
+                        )}
                       </div>
                     </div>
 
@@ -623,22 +708,22 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                           <div className="w-20 h-20 mx-auto bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center mb-3">
                             <MessageSquare className="h-10 w-10 text-white" />
                           </div>
-                          <p className="text-2xl font-bold text-indigo-600">5</p>
+                          <p className="text-2xl font-bold text-indigo-600">{dashboardData?.participation?.consultationsJoined || 0}</p>
                           <p className="text-sm text-gray-600">Consultations Joined</p>
                         </div>
                         <div className="text-center">
                           <div className="w-20 h-20 mx-auto bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mb-3">
                             <Users className="h-10 w-10 text-white" />
                           </div>
-                          <p className="text-2xl font-bold text-green-600">12</p>
+                          <p className="text-2xl font-bold text-green-600">{dashboardData?.participation?.commentsPosted || 0}</p>
                           <p className="text-sm text-gray-600">Comments Posted</p>
                         </div>
                         <div className="text-center">
                           <div className="w-20 h-20 mx-auto bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mb-3">
                             <AlertTriangle className="h-10 w-10 text-white" />
                           </div>
-                          <p className="text-2xl font-bold text-orange-600">8</p>
-                          <p className="text-sm text-gray-600">Votes Cast</p>
+                          <p className="text-2xl font-bold text-orange-600">{dashboardData?.participation?.issuesReported || 0}</p>
+                          <p className="text-sm text-gray-600">Issues Reported</p>
                         </div>
                       </div>
                     </div>
@@ -648,7 +733,11 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
         </Tabs>
       </div>
 
-      <ReportIssueDialog open={showReportDialog} onOpenChange={setShowReportDialog} />
+      <ReportIssueDialog 
+        open={showReportDialog} 
+        onOpenChange={setShowReportDialog} 
+        onSuccess={handleReportSuccess}
+      />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import GoogleProvider from "next-auth/providers/google"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import { NextAuthOptions } from "next-auth"
+import type { AuthOptions } from "next-auth"
 import { prisma } from "./prisma"
 import { env } from "./env"
 
@@ -23,7 +23,7 @@ const createSafeAdapter = () => {
   return undefined
 }
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: AuthOptions = {
   // Only set adapter if it's available
   ...(createSafeAdapter() ? { adapter: createSafeAdapter() } : {}),
   
@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
   },
   
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user }: any) => {
       if (user) {
         token.id = user.id
         
@@ -88,7 +88,7 @@ export const authOptions: NextAuthOptions = {
       return token
     },
     
-    session: async ({ session, token }) => {
+    session: async ({ session, token }: any) => {
       if (session?.user && token) {
         session.user.id = token.id as string
         session.user.role = (token.role as string) || "RESIDENT"
@@ -106,7 +106,7 @@ export const authOptions: NextAuthOptions = {
   
   // Add custom error handling
   events: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account, profile }: any) {
       console.log(`User ${user.email} signed in with ${account?.provider}`)
     },
     async signOut() {
