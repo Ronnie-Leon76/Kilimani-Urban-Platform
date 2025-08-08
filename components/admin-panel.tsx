@@ -66,6 +66,16 @@ interface AdminDashboardData {
     avgResponseTime: number
   }
   recentReports: Report[]
+  systemUsers: Array<{
+    id: string
+    name: string
+    email: string
+    role: string
+    status: string
+    joinDate: string
+    reportsCount: number
+    lastActive: string
+  }>
   analytics: {
     weeklyGrowth: number
     resolutionRate: number
@@ -153,39 +163,6 @@ export function AdminPanel({ user }: AdminPanelProps) {
   }
 
   // Remove dummy data since we're using API data
-
-  const systemUsers = [
-    { 
-      id: 1, 
-      name: "John Doe", 
-      email: "john@example.com", 
-      role: "RESIDENT", 
-      status: "active", 
-      joinDate: "2024-01-10",
-      reportsCount: 5,
-      lastActive: "2 hours ago"
-    },
-    { 
-      id: 2, 
-      name: "Jane Smith", 
-      email: "jane@example.com", 
-      role: "GOVERNMENT_OFFICIAL", 
-      status: "active", 
-      joinDate: "2024-01-08",
-      reportsCount: 12,
-      lastActive: "1 day ago"
-    },
-    { 
-      id: 3, 
-      name: "Mike Johnson", 
-      email: "mike@example.com", 
-      role: "RESIDENT", 
-      status: "inactive", 
-      joinDate: "2024-01-05",
-      reportsCount: 2,
-      lastActive: "1 week ago"
-    }
-  ]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 p-2 sm:p-4 pb-20 sm:pb-4">
@@ -520,42 +497,61 @@ export function AdminPanel({ user }: AdminPanelProps) {
 
               {/* Enhanced Users List */}
               <div className="space-y-4">
-                {systemUsers.map((systemUser, index) => (
-                  <div 
-                    key={systemUser.id} 
-                    className="group flex items-center justify-between p-6 bg-gradient-to-r from-white to-gray-50/50 rounded-2xl border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] animate-in slide-in-from-left duration-500"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <div className="flex items-center gap-4 flex-1 min-w-0">
-                      <div className="w-14 h-14 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:animate-pulse">
-                        {systemUser.name.charAt(0)}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold truncate text-gray-900 group-hover:text-blue-600 transition-colors duration-300">{systemUser.name}</p>
-                        <p className="text-sm text-gray-600 truncate mt-1">{systemUser.email}</p>
-                        <div className="flex items-center gap-3 mt-2">
-                          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">{systemUser.reportsCount} reports</span>
-                          <span className="text-xs text-gray-500">Last active: {systemUser.lastActive}</span>
+                {loading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="w-6 h-6 animate-spin text-blue-500" />
+                    <span className="ml-2 text-gray-500">Loading users...</span>
+                  </div>
+                ) : dashboardData?.systemUsers && dashboardData.systemUsers.length > 0 ? (
+                  dashboardData.systemUsers
+                    .filter(systemUser => 
+                      searchTerm === "" || 
+                      systemUser.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      systemUser.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      systemUser.role.toLowerCase().includes(searchTerm.toLowerCase())
+                    )
+                    .map((systemUser, index) => (
+                      <div 
+                        key={systemUser.id} 
+                        className="group flex items-center justify-between p-6 bg-gradient-to-r from-white to-gray-50/50 rounded-2xl border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] animate-in slide-in-from-left duration-500"
+                        style={{ animationDelay: `${index * 100}ms` }}
+                      >
+                        <div className="flex items-center gap-4 flex-1 min-w-0">
+                          <div className="w-14 h-14 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:animate-pulse">
+                            {systemUser.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-semibold truncate text-gray-900 group-hover:text-blue-600 transition-colors duration-300">{systemUser.name}</p>
+                            <p className="text-sm text-gray-600 truncate mt-1">{systemUser.email}</p>
+                            <div className="flex items-center gap-3 mt-2">
+                              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">{systemUser.reportsCount} reports</span>
+                              <span className="text-xs text-gray-500">Last active: {systemUser.lastActive}</span>
+                              <span className="text-xs text-gray-500">Joined: {systemUser.joinDate}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 ml-4">
+                          <Badge className={`${getRoleColor(systemUser.role)} text-xs px-3 py-1 rounded-full shadow-md hover:shadow-lg transition-all duration-300`}>
+                            {systemUser.role}
+                          </Badge>
+                          <Badge className={`${getStatusColor(systemUser.status)} text-xs px-3 py-1 rounded-full shadow-md hover:shadow-lg transition-all duration-300`}>
+                            {systemUser.status.toUpperCase()}
+                          </Badge>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all duration-300 group-hover:scale-110"
+                          >
+                            <MoreVertical className="w-4 h-4" />
+                          </Button>
                         </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-3 ml-4">
-                      <Badge className={`${getRoleColor(systemUser.role)} text-xs px-3 py-1 rounded-full shadow-md hover:shadow-lg transition-all duration-300`}>
-                        {systemUser.role}
-                      </Badge>
-                      <Badge className={`${getStatusColor(systemUser.status)} text-xs px-3 py-1 rounded-full shadow-md hover:shadow-lg transition-all duration-300`}>
-                        {systemUser.status.toUpperCase()}
-                      </Badge>
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all duration-300 group-hover:scale-110"
-                      >
-                        <MoreVertical className="w-4 h-4" />
-                      </Button>
-                    </div>
+                    ))
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    No users found
                   </div>
-                ))}
+                )}
               </div>
             </CardContent>
           </Card>

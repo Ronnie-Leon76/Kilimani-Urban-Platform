@@ -1,31 +1,11 @@
 import GoogleProvider from "next-auth/providers/google"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import type { AuthOptions } from "next-auth"
 import { prisma } from "./prisma"
 import { env } from "./env"
 
-// Helper function to safely create adapter only at runtime
-const createSafeAdapter = () => {
-  // Skip adapter creation during build phase
-  if (process.env.NODE_ENV === 'production' && !process.env.VERCEL_ENV) {
-    return undefined
-  }
-  
-  // Only create adapter if we have database access
-  if (process.env.DATABASE_URL) {
-    try {
-      return PrismaAdapter(prisma)
-    } catch (error) {
-      console.warn('Prisma adapter creation failed:', error)
-      return undefined
-    }
-  }
-  return undefined
-}
-
-export const authOptions: AuthOptions = {
-  // Only set adapter if it's available
-  ...(createSafeAdapter() ? { adapter: createSafeAdapter() } : {}),
+export const authOptions = {
+  // Always use adapter to ensure users are created in database
+  adapter: PrismaAdapter(prisma),
   
   providers: [
     GoogleProvider({
@@ -44,54 +24,46 @@ export const authOptions: AuthOptions = {
     }),
   ],
   
-  // Use JWT strategy to avoid database dependency during build
+  // Use database strategy to create users in database
   session: {
-    strategy: "jwt" as const,
+    strategy: "database" as const,
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   
   callbacks: {
-    jwt: async ({ token, user }: any) => {
-      if (user) {
-        token.id = user.id
-        
-        // Only access database if we have an adapter (runtime environment)
-        if (createSafeAdapter()) {
-          try {
-            const dbUser = await prisma.user.findUnique({
-              where: { id: user.id },
-              select: { role: true },
-            })
-            
-            if (!dbUser?.role) {
-              const userCount = await prisma.user.count()
-              const newRole = userCount === 1 ? "ADMIN" : "RESIDENT"
-              
-              await prisma.user.update({
-                where: { id: user.id },
-                data: { role: newRole }
-              })
-              
-              token.role = newRole
-            } else {
-              token.role = dbUser.role
-            }
-          } catch (error) {
-            console.error('Error updating user role:', error)
-            token.role = "RESIDENT"
-          }
-        } else {
-          // Fallback during build or when database is unavailable
-          token.role = "RESIDENT"
-        }
-      }
-      return token
+    signIn: async ({ user, account, profile }: any) => {
+      // This callback runs when user signs in
+      // The adapter will automatically create the user if they don't exist
+      console.log(`User ${user.email} signing in with ${account?.provider}`)
+      return true
     },
     
-    session: async ({ session, token }: any) => {
-      if (session?.user && token) {
-        session.user.id = token.id as string
-        session.user.role = (token.role as string) || "RESIDENT"
+    session: async ({ session, user }: any) => {
+      // With database strategy, we get the user from database
+      if (session?.user && user) {
+        session.user.id = user.id
+        
+        // Check if user has a role, if not assign one
+        let dbUser = await prisma.user.findUnique({
+          where: { id: user.id },
+          select: { role: true },
+        })
+        
+        if (!dbUser?.role) {
+          // Count total users to determine if this should be admin
+          const userCount = await prisma.user.count()
+          const newRole = userCount === 1 ? "ADMIN" : "RESIDENT"
+          
+          // Update user role
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { role: newRole }
+          })
+          
+          session.user.role = newRole
+        } else {
+          session.user.role = dbUser.role
+        }
       }
       return session
     },
@@ -104,9 +76,12 @@ export const authOptions: AuthOptions = {
   
   debug: process.env.NODE_ENV === "development",
   
-  // Add custom error handling
+  // Add custom event logging
   events: {
-    async signIn({ user, account, profile }: any) {
+    async createUser({ user }: any) {
+      console.log(`New user created: ${user.email}`)
+    },
+    async signIn({ user, account }: any) {
       console.log(`User ${user.email} signed in with ${account?.provider}`)
     },
     async signOut() {

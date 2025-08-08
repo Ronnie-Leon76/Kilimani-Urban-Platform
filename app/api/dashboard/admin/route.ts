@@ -33,7 +33,8 @@ export async function GET(request: NextRequest) {
       avgResponseTime,
       recentReports,
       usersByRole,
-      reportsTrend
+      reportsTrend,
+      systemUsers
     ] = await Promise.all([
       // Total users
       prisma.user.count(),
@@ -122,6 +123,27 @@ export async function GET(request: NextRequest) {
         _count: {
           id: true
         }
+      }),
+      
+      // System users with reports count
+      prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          createdAt: true,
+          updatedAt: true,
+          _count: {
+            select: {
+              reports: true
+            }
+          }
+        },
+        orderBy: [
+          { createdAt: 'desc' }
+        ],
+        take: 50 // Limit to 50 users for performance
       })
     ])
 
@@ -135,6 +157,34 @@ export async function GET(request: NextRequest) {
       reporter: report.user?.name || 'Anonymous',
       createdAt: report.createdAt.toLocaleDateString()
     }))
+
+    // Format system users
+    const formattedSystemUsers = systemUsers.map(user => ({
+      id: user.id,
+      name: user.name || 'No Name',
+      email: user.email || 'No Email',
+      role: user.role,
+      status: user.updatedAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) ? 'active' : 'inactive',
+      joinDate: user.createdAt.toLocaleDateString(),
+      reportsCount: user._count.reports,
+      lastActive: getLastActiveTime(user.updatedAt)
+    }))
+
+    // Helper function for last active time
+    function getLastActiveTime(updatedAt: Date): string {
+      const now = new Date()
+      const diff = now.getTime() - updatedAt.getTime()
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+      const hours = Math.floor(diff / (1000 * 60 * 60))
+      
+      if (days > 0) {
+        return days === 1 ? '1 day ago' : `${days} days ago`
+      } else if (hours > 0) {
+        return hours === 1 ? '1 hour ago' : `${hours} hours ago`
+      } else {
+        return 'Just now'
+      }
+    }
 
     // Calculate role distribution
     const roleStats = usersByRole.reduce((acc, role) => {
@@ -158,6 +208,7 @@ export async function GET(request: NextRequest) {
         avgResponseTime
       },
       recentReports: formattedReports,
+      systemUsers: formattedSystemUsers,
       analytics: {
         weeklyGrowth,
         resolutionRate: totalReports > 0 ? Math.round((resolvedReports / totalReports) * 100) : 0,
