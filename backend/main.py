@@ -2,10 +2,10 @@ from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel
 from typing import List
 from datetime import datetime
+from openai import OpenAI
 import os
 import json
 import asyncpg
-import openai
 import boto3
 from twilio.rest import Client as TwilioClient
 from dotenv import load_dotenv
@@ -16,7 +16,9 @@ load_dotenv()
 
 # OpenAI API config
 base_url = os.getenv("BASE_URL")
-openai.api_key = os.getenv("OPENAI_API_KEY")
+OpenAI.api_key = os.getenv("OPENAI_API_KEY")
+
+client = OpenAI()
 
 # Database URL
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -131,12 +133,12 @@ async def report_issue(issue: IssueReport):
     """
 
     try:
-        completion = openai.ChatCompletion.create(
+        completion = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}],
             temperature=0
         )
-        message = completion.choices[0].message["content"]
+        message = completion.choices[0].message.content
 
         try:
             parsed = json.loads(message)
