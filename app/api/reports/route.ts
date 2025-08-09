@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
     // Create the report
     const report = await prisma.report.create({
       data: {
+        id: `rpt_${Date.now().toString(36)}${Math.random().toString(36).substr(2, 9)}`,
         title,
         description,
         type,
@@ -78,11 +79,13 @@ export async function GET(request: NextRequest) {
     const userId = searchParams.get('userId')
     const status = searchParams.get('status')
     const type = searchParams.get('type')
+    const scope = searchParams.get('scope') // 'user' for user-specific, 'community' for all reports
 
     // Build where clause
     const where: any = {}
     
-    if (userId) {
+    // Only filter by user if explicitly requested or if scope is 'user'
+    if (userId && scope === 'user') {
       where.userId = userId
     }
     
@@ -94,7 +97,7 @@ export async function GET(request: NextRequest) {
       where.type = type
     }
 
-    // Get reports with filters
+    // Get reports with filters, default to showing all community reports
     const reports = await prisma.report.findMany({
       where,
       include: {
@@ -102,10 +105,11 @@ export async function GET(request: NextRequest) {
           select: { name: true, email: true }
         }
       },
-      orderBy: { createdAt: "desc" }
+      orderBy: { createdAt: "desc" },
+      take: 50 // Limit to last 50 reports for performance
     })
 
-    const formattedReports = reports.map((report: typeof reports[0] & { User?: { name?: string } }) => ({
+    const formattedReports = reports.map((report: typeof reports[0]) => ({
       id: report.id,
       title: report.title,
       description: report.description,
@@ -114,8 +118,12 @@ export async function GET(request: NextRequest) {
       priority: report.priority,
       location: report.address || 'Location not specified',
       images: report.images,
+      latitude: report.latitude,
+      longitude: report.longitude,
+      infringedLaws: report.infringedLaws,
+      lawAnalysisDate: report.lawAnalysisDate,
       createdAt: report.createdAt.toLocaleDateString(),
-      reporter: report.User?.name || 'Anonymous'
+      reporter: report.User?.name ?? 'Anonymous'
     }))
 
     return NextResponse.json({ reports: formattedReports })

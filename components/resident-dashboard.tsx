@@ -29,6 +29,7 @@ import { signOut } from "next-auth/react"
 import { KilimaniMap } from "./kilimani-map"
 import { ReportIssueDialog } from "./report-issue-dialog"
 import { LegalChatbot } from "./legal-chatbot"
+import { PublicConsultationsView } from "./public-consultations-view"
 import { useRouter } from "next/navigation"
 
 interface User {
@@ -80,7 +81,8 @@ interface Participation {
 }
 
 interface DashboardData {
-  reports: Report[]
+  reports: Report[] // User's personal reports
+  communityReports: Report[] // All community reports
   analytics: Analytics
   consultations: Consultation[]
   participation: Participation
@@ -477,7 +479,7 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {dashboardData?.reports?.length ? dashboardData.reports.slice(0, 5).map((report) => (
+                  {dashboardData?.communityReports?.length ? dashboardData.communityReports.slice(0, 10).map((report) => (
                     <div key={report.id} className="mobile-card bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-4">
                       <div className="flex items-start gap-3">
                         <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
@@ -485,7 +487,8 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                         </div>
                         <div className="flex-1 min-w-0">
                           <h3 className="font-medium text-gray-900">{report.title}</h3>
-                          <p className="text-sm text-gray-600 mt-1">{report.createdAt}</p>
+                          <p className="text-sm text-gray-600 mt-1">{report.location}</p>
+                          <p className="text-xs text-gray-500 mt-1">Reported by {report.reporter} on {report.createdAt}</p>
                           <div className="flex items-center gap-2 mt-2">
                             <Badge className={getPriorityColor(report.priority)}>
                               {report.priority}
@@ -503,7 +506,7 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                   )) : (
                     <div className="text-center py-6 text-gray-500">
                       <AlertTriangle className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                      <p className="text-sm">No reports available</p>
+                      <p className="text-sm">No community reports available</p>
                     </div>
                   )}
                 </div>
@@ -644,90 +647,11 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
                       <span>Public Consultations</span>
                     </CardTitle>
                     <CardDescription className="text-orange-600">
-                      Participate in community planning and decision making
+                      Participate in community planning and decision making on high priority issues
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="p-6 bg-white">
-                    {/* Active Consultations */}
-                    <div className="mb-8">
-                      <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                        <MessageSquare className="h-5 w-5 mr-2 text-orange-600" />
-                        Active Consultations
-                      </h4>
-                      <div className="space-y-4">
-                        {dashboardData?.consultations?.length ? dashboardData.consultations.map((consultation, index) => (
-                          <div key={consultation.id} className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 border border-orange-200">
-                            <div className="flex items-start justify-between mb-3">
-                              <div className="flex-1">
-                                <h5 className="text-lg font-semibold text-gray-900 mb-2">{consultation.title}</h5>
-                                <p className="text-gray-600 text-sm mb-3">
-                                  {consultation.description}
-                                </p>
-                                <div className="flex items-center space-x-4 text-sm">
-                                  <span className="flex items-center text-green-600">
-                                    <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
-                                    Active until {consultation.endDate}
-                                  </span>
-                                  <span className="flex items-center text-blue-600">
-                                    <Users className="h-4 w-4 mr-1" />
-                                    {consultation.participants} participants
-                                  </span>
-                                </div>
-                              </div>
-                              <Button 
-                                className={`${consultation.userParticipated 
-                                  ? 'bg-green-600 hover:bg-green-700' 
-                                  : 'bg-orange-600 hover:bg-orange-700'
-                                } text-white`}
-                              >
-                                {consultation.userParticipated ? 'Participated' : 'Participate'}
-                              </Button>
-                            </div>
-                            {consultation.userVote && (
-                              <div className="mb-4 text-sm text-gray-600">
-                                Your vote: <span className="font-semibold capitalize">{consultation.userVote}</span>
-                              </div>
-                            )}
-                          </div>
-                        )) : (
-                          <div className="text-center py-8 text-gray-500">
-                            <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                            <p>No active consultations at the moment</p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Participation Stats */}
-                    <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6">
-                      <h4 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                        <BarChart3 className="h-5 w-5 mr-2 text-indigo-600" />
-                        Your Participation
-                      </h4>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="text-center">
-                          <div className="w-20 h-20 mx-auto bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center mb-3">
-                            <MessageSquare className="h-10 w-10 text-white" />
-                          </div>
-                          <p className="text-2xl font-bold text-indigo-600">{dashboardData?.participation?.consultationsJoined || 0}</p>
-                          <p className="text-sm text-gray-600">Consultations Joined</p>
-                        </div>
-                        <div className="text-center">
-                          <div className="w-20 h-20 mx-auto bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mb-3">
-                            <Users className="h-10 w-10 text-white" />
-                          </div>
-                          <p className="text-2xl font-bold text-green-600">{dashboardData?.participation?.commentsPosted || 0}</p>
-                          <p className="text-sm text-gray-600">Comments Posted</p>
-                        </div>
-                        <div className="text-center">
-                          <div className="w-20 h-20 mx-auto bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mb-3">
-                            <AlertTriangle className="h-10 w-10 text-white" />
-                          </div>
-                          <p className="text-2xl font-bold text-orange-600">{dashboardData?.participation?.issuesReported || 0}</p>
-                          <p className="text-sm text-gray-600">Issues Reported</p>
-                        </div>
-                      </div>
-                    </div>
+                    <PublicConsultationsView />
                   </CardContent>
                 </Card>
               </TabsContent>

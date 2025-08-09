@@ -93,14 +93,18 @@ export async function POST(request: NextRequest) {
     // If it's high priority and requires public consultation, create a public consultation
     if (lawAnalysis.isHighPriority && lawAnalysis.requiresPublicConsultation) {
       try {
-        await prisma.publicConsultation.create({
+        const consultation = await prisma.publicConsultation.create({
           data: {
-            id: crypto.randomUUID(), // Generate a unique id, or use another method as per your schema
+            id: `pc_${Date.now().toString(36)}${Math.random().toString(36).substr(2, 9)}`,
             title: `Public Consultation: ${title}`,
             description: `
+**URGENT COMMUNITY ISSUE REQUIRING PUBLIC INPUT**
+
 **Original Report:** ${description}
 
-**Legal Analysis:**
+**Location:** ${address || `Coordinates: ${latitude}, ${longitude}`}
+
+**Legal Analysis Summary:**
 ${lawAnalysis.legalSummary}
 
 **Laws Potentially Infringed:**
@@ -109,7 +113,15 @@ ${lawAnalysis.infringedLaws.map(law => `• ${law}`).join('\n')}
 **Recommended Actions:**
 ${lawAnalysis.recommendedActions.map(action => `• ${action}`).join('\n')}
 
-**Public Input Required:** This case has been classified as high priority requiring community input before official action.
+**Why Public Input is Needed:**
+This case has been classified as high priority based on legal analysis. The severity score is ${lawAnalysis.severityScore}/10, indicating significant community impact. Your vote and comments will help determine the appropriate response and priority level for government action.
+
+**How to Participate:**
+- Vote: Support urgent action, Oppose the proposed response, or remain Neutral
+- Comment: Share your experience, concerns, or suggestions
+- Deadline: You have 14 days to participate in this consultation
+
+**Legal Basis:** ${lawAnalysis.legalSummary}
             `,
             startDate: new Date(),
             endDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days
@@ -121,7 +133,17 @@ ${lawAnalysis.recommendedActions.map(action => `• ${action}`).join('\n')}
           }
         })
 
-        console.log('Public consultation created for high priority report')
+        console.log('Public consultation created for high priority report:', consultation.id)
+        
+        // Link the consultation to the report by updating the report with consultation reference
+        await prisma.report.update({
+          where: { id: report.id },
+          data: {
+            // Add a custom field to track linked consultation if your schema supports it
+            // consultationId: consultation.id // Uncomment if you add this field to your schema
+          }
+        })
+
       } catch (consultationError) {
         console.error('Failed to create public consultation:', consultationError)
         // Continue anyway - the report was created successfully

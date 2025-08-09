@@ -30,20 +30,33 @@ export async function GET(
     }
 
     return NextResponse.json({
-      id: report.id,
-      title: report.title,
-      description: report.description,
-      type: report.type,
-      status: report.status,
-      priority: report.priority,
-      address: report.address,
-      latitude: report.latitude,
-      longitude: report.longitude,
-      reporter: report.User?.name || 'Anonymous',
-      reporterEmail: report.User?.email,
-      createdAt: report.createdAt.toISOString(),
-      updatedAt: report.updatedAt.toISOString(),
-      resolvedAt: report.resolvedAt?.toISOString() || null
+      report: {
+        id: report.id,
+        title: report.title,
+        description: report.description,
+        type: report.type,
+        status: report.status,
+        priority: report.priority,
+        address: report.address,
+        latitude: report.latitude,
+        longitude: report.longitude,
+        images: report.images,
+        reporter: report.User?.name || 'Anonymous',
+        reporterEmail: report.User?.email,
+        createdAt: report.createdAt.toISOString(),
+        updatedAt: report.updatedAt.toISOString(),
+        resolvedAt: report.resolvedAt?.toISOString(),
+        infringedLaws: report.infringedLaws,
+        lawAnalysisDate: report.lawAnalysisDate?.toISOString(),
+        publicVotingEnabled: report.publicVotingEnabled,
+        votesFor: report.votesFor,
+        votesAgainst: report.votesAgainst,
+        votingDeadline: report.votingDeadline?.toISOString(),
+        meetingScheduled: report.meetingScheduled,
+        meetingDate: report.meetingDate?.toISOString(),
+        finalVerdict: report.finalVerdict,
+        verdictDate: report.verdictDate?.toISOString()
+      }
     })
 
   } catch (error) {

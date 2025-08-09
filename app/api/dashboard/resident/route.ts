@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
     const userId = session.user.id;
 
-    // Get user's reports
+    // Get user's reports (for personal tracking)
     const userReports = await prisma.report.findMany({
       where: { userId: userId },
       include: {
@@ -23,6 +23,17 @@ export async function GET(request: NextRequest) {
       },
       orderBy: { createdAt: "desc" },
       take: 10
+    })
+
+    // Get all community reports (for community view)
+    const communityReports = await prisma.report.findMany({
+      include: {
+        User: {
+          select: { name: true, email: true }
+        }
+      },
+      orderBy: { createdAt: "desc" },
+      take: 50 // Show more for community view
     })
 
     // Get community analytics
@@ -104,14 +115,32 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    // Format reports data
-    const formattedReports = userReports.map(report => ({
+    // Format reports data (user's personal reports)
+    const formattedUserReports = userReports.map(report => ({
       id: report.id,
       title: report.title,
       type: report.type,
       status: report.status,
       priority: report.priority,
       location: report.address || 'Location not specified',
+      createdAt: report.createdAt.toLocaleDateString(),
+      reporter: report.User?.name || 'Anonymous'
+    }))
+
+    // Format community reports data (all reports for community view)
+    const formattedCommunityReports = communityReports.map(report => ({
+      id: report.id,
+      title: report.title,
+      type: report.type,
+      status: report.status,
+      priority: report.priority,
+      location: report.address || 'Location not specified',
+      latitude: report.latitude,
+      longitude: report.longitude,
+      description: report.description,
+      images: report.images,
+      infringedLaws: report.infringedLaws,
+      lawAnalysisDate: report.lawAnalysisDate,
       createdAt: report.createdAt.toLocaleDateString(),
       reporter: report.User?.name || 'Anonymous'
     }))
@@ -134,7 +163,8 @@ export async function GET(request: NextRequest) {
     })
 
     return NextResponse.json({
-      reports: formattedReports,
+      reports: formattedUserReports, // Personal reports for user tracking
+      communityReports: formattedCommunityReports, // All community reports
       analytics: {
         totalReports,
         resolvedReports,

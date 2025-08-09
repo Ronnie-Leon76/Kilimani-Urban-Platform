@@ -32,6 +32,7 @@ import {
 import { signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { LegalChatbot } from "./legal-chatbot"
+import { ReportDetailsModal } from "./report-details-modal"
 
 interface User {
   id: string
@@ -250,12 +251,28 @@ export function GovernmentDashboard({ user }: GovernmentDashboardProps) {
     }
   }
 
-  // Handler functions for report actions
-  const handleViewReport = (reportId: string) => {
-    // Open a detailed view of the report
-    console.log(`Viewing report: ${reportId}`)
-    // You can add modal logic or navigation here
-    alert(`Viewing detailed information for report ID: ${reportId}`)
+  const refreshData = async () => {
+    try {
+      setLoading(true)
+      const [dashboardResponse, consultationResponse] = await Promise.all([
+        fetch('/api/dashboard/government'),
+        fetch('/api/consultations')
+      ])
+
+      if (dashboardResponse.ok) {
+        const dashboardData = await dashboardResponse.json()
+        setDashboardData(dashboardData)
+      }
+
+      if (consultationResponse.ok) {
+        const consultationData = await consultationResponse.json()
+        setConsultationData(consultationData)
+      }
+    } catch (error) {
+      console.error('Error refreshing dashboard data:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleTakeAction = async (reportId: string, currentStatus: string) => {
@@ -531,15 +548,19 @@ export function GovernmentDashboard({ user }: GovernmentDashboardProps) {
                           </div>
                         </div>
                         <div className="flex gap-2 flex-col sm:flex-row ml-auto">
-                          <Button 
-                            size="sm" 
-                            variant="outline" 
-                            className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 text-blue-700 hover:from-blue-100 hover:to-indigo-100 hover:scale-105 transition-all duration-300 shadow-md"
-                            onClick={() => handleViewReport(report.id)}
+                          <ReportDetailsModal 
+                            reportId={report.id}
+                            onActionTaken={refreshData}
                           >
-                            <Eye className="w-4 h-4 mr-2" />
-                            View
-                          </Button>
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 text-blue-700 hover:from-blue-100 hover:to-indigo-100 hover:scale-105 transition-all duration-300 shadow-md"
+                            >
+                              <Eye className="w-4 h-4 mr-2" />
+                              View Details
+                            </Button>
+                          </ReportDetailsModal>
                           <Button 
                             size="sm" 
                             className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-lg hover:scale-105 transition-all duration-300"

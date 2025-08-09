@@ -83,6 +83,21 @@ export type VerificationToken = $Result.DefaultSelection<Prisma.$VerificationTok
  * 
  */
 export type WaterDemandAnalysis = $Result.DefaultSelection<Prisma.$WaterDemandAnalysisPayload>
+/**
+ * Model ReportEscalation
+ * 
+ */
+export type ReportEscalation = $Result.DefaultSelection<Prisma.$ReportEscalationPayload>
+/**
+ * Model ReportActivity
+ * 
+ */
+export type ReportActivity = $Result.DefaultSelection<Prisma.$ReportActivityPayload>
+/**
+ * Model CommunityMeeting
+ * 
+ */
+export type CommunityMeeting = $Result.DefaultSelection<Prisma.$CommunityMeetingPayload>
 
 /**
  * Enums
@@ -102,7 +117,9 @@ export const ReportStatus: {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',
   RESOLVED: 'RESOLVED',
-  REJECTED: 'REJECTED'
+  REJECTED: 'REJECTED',
+  ESCALATED: 'ESCALATED',
+  UNDER_REVIEW: 'UNDER_REVIEW'
 };
 
 export type ReportStatus = (typeof ReportStatus)[keyof typeof ReportStatus]
@@ -410,6 +427,36 @@ export class PrismaClient<
     * ```
     */
   get waterDemandAnalysis(): Prisma.WaterDemandAnalysisDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.reportEscalation`: Exposes CRUD operations for the **ReportEscalation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ReportEscalations
+    * const reportEscalations = await prisma.reportEscalation.findMany()
+    * ```
+    */
+  get reportEscalation(): Prisma.ReportEscalationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.reportActivity`: Exposes CRUD operations for the **ReportActivity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ReportActivities
+    * const reportActivities = await prisma.reportActivity.findMany()
+    * ```
+    */
+  get reportActivity(): Prisma.ReportActivityDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.communityMeeting`: Exposes CRUD operations for the **CommunityMeeting** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CommunityMeetings
+    * const communityMeetings = await prisma.communityMeeting.findMany()
+    * ```
+    */
+  get communityMeeting(): Prisma.CommunityMeetingDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -863,7 +910,10 @@ export namespace Prisma {
     Session: 'Session',
     User: 'User',
     VerificationToken: 'VerificationToken',
-    WaterDemandAnalysis: 'WaterDemandAnalysis'
+    WaterDemandAnalysis: 'WaterDemandAnalysis',
+    ReportEscalation: 'ReportEscalation',
+    ReportActivity: 'ReportActivity',
+    CommunityMeeting: 'CommunityMeeting'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -882,7 +932,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "consultationComment" | "consultationVote" | "developmentPlan" | "floodRiskArea" | "publicConsultation" | "report" | "reportUpdate" | "reportVote" | "satelliteAnalysis" | "session" | "user" | "verificationToken" | "waterDemandAnalysis"
+      modelProps: "account" | "consultationComment" | "consultationVote" | "developmentPlan" | "floodRiskArea" | "publicConsultation" | "report" | "reportUpdate" | "reportVote" | "satelliteAnalysis" | "session" | "user" | "verificationToken" | "waterDemandAnalysis" | "reportEscalation" | "reportActivity" | "communityMeeting"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1866,6 +1916,216 @@ export namespace Prisma {
           }
         }
       }
+      ReportEscalation: {
+        payload: Prisma.$ReportEscalationPayload<ExtArgs>
+        fields: Prisma.ReportEscalationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReportEscalationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportEscalationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReportEscalationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportEscalationPayload>
+          }
+          findFirst: {
+            args: Prisma.ReportEscalationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportEscalationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReportEscalationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportEscalationPayload>
+          }
+          findMany: {
+            args: Prisma.ReportEscalationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportEscalationPayload>[]
+          }
+          create: {
+            args: Prisma.ReportEscalationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportEscalationPayload>
+          }
+          createMany: {
+            args: Prisma.ReportEscalationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ReportEscalationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportEscalationPayload>[]
+          }
+          delete: {
+            args: Prisma.ReportEscalationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportEscalationPayload>
+          }
+          update: {
+            args: Prisma.ReportEscalationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportEscalationPayload>
+          }
+          deleteMany: {
+            args: Prisma.ReportEscalationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReportEscalationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ReportEscalationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportEscalationPayload>
+          }
+          aggregate: {
+            args: Prisma.ReportEscalationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReportEscalation>
+          }
+          groupBy: {
+            args: Prisma.ReportEscalationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReportEscalationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReportEscalationCountArgs<ExtArgs>
+            result: $Utils.Optional<ReportEscalationCountAggregateOutputType> | number
+          }
+        }
+      }
+      ReportActivity: {
+        payload: Prisma.$ReportActivityPayload<ExtArgs>
+        fields: Prisma.ReportActivityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReportActivityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportActivityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReportActivityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportActivityPayload>
+          }
+          findFirst: {
+            args: Prisma.ReportActivityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportActivityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReportActivityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportActivityPayload>
+          }
+          findMany: {
+            args: Prisma.ReportActivityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportActivityPayload>[]
+          }
+          create: {
+            args: Prisma.ReportActivityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportActivityPayload>
+          }
+          createMany: {
+            args: Prisma.ReportActivityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ReportActivityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportActivityPayload>[]
+          }
+          delete: {
+            args: Prisma.ReportActivityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportActivityPayload>
+          }
+          update: {
+            args: Prisma.ReportActivityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportActivityPayload>
+          }
+          deleteMany: {
+            args: Prisma.ReportActivityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReportActivityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ReportActivityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportActivityPayload>
+          }
+          aggregate: {
+            args: Prisma.ReportActivityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReportActivity>
+          }
+          groupBy: {
+            args: Prisma.ReportActivityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReportActivityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReportActivityCountArgs<ExtArgs>
+            result: $Utils.Optional<ReportActivityCountAggregateOutputType> | number
+          }
+        }
+      }
+      CommunityMeeting: {
+        payload: Prisma.$CommunityMeetingPayload<ExtArgs>
+        fields: Prisma.CommunityMeetingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CommunityMeetingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityMeetingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CommunityMeetingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityMeetingPayload>
+          }
+          findFirst: {
+            args: Prisma.CommunityMeetingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityMeetingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CommunityMeetingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityMeetingPayload>
+          }
+          findMany: {
+            args: Prisma.CommunityMeetingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityMeetingPayload>[]
+          }
+          create: {
+            args: Prisma.CommunityMeetingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityMeetingPayload>
+          }
+          createMany: {
+            args: Prisma.CommunityMeetingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CommunityMeetingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityMeetingPayload>[]
+          }
+          delete: {
+            args: Prisma.CommunityMeetingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityMeetingPayload>
+          }
+          update: {
+            args: Prisma.CommunityMeetingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityMeetingPayload>
+          }
+          deleteMany: {
+            args: Prisma.CommunityMeetingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CommunityMeetingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CommunityMeetingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommunityMeetingPayload>
+          }
+          aggregate: {
+            args: Prisma.CommunityMeetingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCommunityMeeting>
+          }
+          groupBy: {
+            args: Prisma.CommunityMeetingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CommunityMeetingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CommunityMeetingCountArgs<ExtArgs>
+            result: $Utils.Optional<CommunityMeetingCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1972,6 +2232,9 @@ export namespace Prisma {
     user?: UserOmit
     verificationToken?: VerificationTokenOmit
     waterDemandAnalysis?: WaterDemandAnalysisOmit
+    reportEscalation?: ReportEscalationOmit
+    reportActivity?: ReportActivityOmit
+    communityMeeting?: CommunityMeetingOmit
   }
 
   /* Types for Logging */
@@ -2114,12 +2377,18 @@ export namespace Prisma {
     ReportUpdate: number
     ReportVote: number
     SatelliteAnalysis: number
+    ReportEscalation: number
+    ReportActivity: number
+    CommunityMeeting: number
   }
 
   export type ReportCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ReportUpdate?: boolean | ReportCountOutputTypeCountReportUpdateArgs
     ReportVote?: boolean | ReportCountOutputTypeCountReportVoteArgs
     SatelliteAnalysis?: boolean | ReportCountOutputTypeCountSatelliteAnalysisArgs
+    ReportEscalation?: boolean | ReportCountOutputTypeCountReportEscalationArgs
+    ReportActivity?: boolean | ReportCountOutputTypeCountReportActivityArgs
+    CommunityMeeting?: boolean | ReportCountOutputTypeCountCommunityMeetingArgs
   }
 
   // Custom InputTypes
@@ -2154,6 +2423,27 @@ export namespace Prisma {
     where?: SatelliteAnalysisWhereInput
   }
 
+  /**
+   * ReportCountOutputType without action
+   */
+  export type ReportCountOutputTypeCountReportEscalationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReportEscalationWhereInput
+  }
+
+  /**
+   * ReportCountOutputType without action
+   */
+  export type ReportCountOutputTypeCountReportActivityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReportActivityWhereInput
+  }
+
+  /**
+   * ReportCountOutputType without action
+   */
+  export type ReportCountOutputTypeCountCommunityMeetingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommunityMeetingWhereInput
+  }
+
 
   /**
    * Count Type UserCountOutputType
@@ -2166,6 +2456,10 @@ export namespace Prisma {
     Report: number
     ReportVote: number
     Session: number
+    EscalationsCreated: number
+    EscalationsResolved: number
+    ReportActivity: number
+    CommunityMeeting: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2175,6 +2469,10 @@ export namespace Prisma {
     Report?: boolean | UserCountOutputTypeCountReportArgs
     ReportVote?: boolean | UserCountOutputTypeCountReportVoteArgs
     Session?: boolean | UserCountOutputTypeCountSessionArgs
+    EscalationsCreated?: boolean | UserCountOutputTypeCountEscalationsCreatedArgs
+    EscalationsResolved?: boolean | UserCountOutputTypeCountEscalationsResolvedArgs
+    ReportActivity?: boolean | UserCountOutputTypeCountReportActivityArgs
+    CommunityMeeting?: boolean | UserCountOutputTypeCountCommunityMeetingArgs
   }
 
   // Custom InputTypes
@@ -2228,6 +2526,34 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSessionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SessionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountEscalationsCreatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReportEscalationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountEscalationsResolvedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReportEscalationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReportActivityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReportActivityWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCommunityMeetingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommunityMeetingWhereInput
   }
 
 
@@ -3347,6 +3673,7 @@ export namespace Prisma {
     consultationId: string | null
     userId: string | null
     comment: string | null
+    vote: string | null
     createdAt: Date | null
   }
 
@@ -3355,6 +3682,7 @@ export namespace Prisma {
     consultationId: string | null
     userId: string | null
     comment: string | null
+    vote: string | null
     createdAt: Date | null
   }
 
@@ -3363,6 +3691,7 @@ export namespace Prisma {
     consultationId: number
     userId: number
     comment: number
+    vote: number
     createdAt: number
     _all: number
   }
@@ -3373,6 +3702,7 @@ export namespace Prisma {
     consultationId?: true
     userId?: true
     comment?: true
+    vote?: true
     createdAt?: true
   }
 
@@ -3381,6 +3711,7 @@ export namespace Prisma {
     consultationId?: true
     userId?: true
     comment?: true
+    vote?: true
     createdAt?: true
   }
 
@@ -3389,6 +3720,7 @@ export namespace Prisma {
     consultationId?: true
     userId?: true
     comment?: true
+    vote?: true
     createdAt?: true
     _all?: true
   }
@@ -3470,6 +3802,7 @@ export namespace Prisma {
     consultationId: string
     userId: string
     comment: string
+    vote: string | null
     createdAt: Date
     _count: ConsultationCommentCountAggregateOutputType | null
     _min: ConsultationCommentMinAggregateOutputType | null
@@ -3495,6 +3828,7 @@ export namespace Prisma {
     consultationId?: boolean
     userId?: boolean
     comment?: boolean
+    vote?: boolean
     createdAt?: boolean
     PublicConsultation?: boolean | PublicConsultationDefaultArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
@@ -3505,6 +3839,7 @@ export namespace Prisma {
     consultationId?: boolean
     userId?: boolean
     comment?: boolean
+    vote?: boolean
     createdAt?: boolean
     PublicConsultation?: boolean | PublicConsultationDefaultArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
@@ -3516,10 +3851,11 @@ export namespace Prisma {
     consultationId?: boolean
     userId?: boolean
     comment?: boolean
+    vote?: boolean
     createdAt?: boolean
   }
 
-  export type ConsultationCommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "consultationId" | "userId" | "comment" | "createdAt", ExtArgs["result"]["consultationComment"]>
+  export type ConsultationCommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "consultationId" | "userId" | "comment" | "vote" | "createdAt", ExtArgs["result"]["consultationComment"]>
   export type ConsultationCommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     PublicConsultation?: boolean | PublicConsultationDefaultArgs<ExtArgs>
     User?: boolean | UserDefaultArgs<ExtArgs>
@@ -3540,6 +3876,7 @@ export namespace Prisma {
       consultationId: string
       userId: string
       comment: string
+      vote: string | null
       createdAt: Date
     }, ExtArgs["result"]["consultationComment"]>
     composites: {}
@@ -3940,6 +4277,7 @@ export namespace Prisma {
     readonly consultationId: FieldRef<"ConsultationComment", 'String'>
     readonly userId: FieldRef<"ConsultationComment", 'String'>
     readonly comment: FieldRef<"ConsultationComment", 'String'>
+    readonly vote: FieldRef<"ConsultationComment", 'String'>
     readonly createdAt: FieldRef<"ConsultationComment", 'DateTime'>
   }
     
@@ -8622,6 +8960,9 @@ export namespace Prisma {
     ReportUpdate?: boolean | Report$ReportUpdateArgs<ExtArgs>
     ReportVote?: boolean | Report$ReportVoteArgs<ExtArgs>
     SatelliteAnalysis?: boolean | Report$SatelliteAnalysisArgs<ExtArgs>
+    ReportEscalation?: boolean | Report$ReportEscalationArgs<ExtArgs>
+    ReportActivity?: boolean | Report$ReportActivityArgs<ExtArgs>
+    CommunityMeeting?: boolean | Report$CommunityMeetingArgs<ExtArgs>
     _count?: boolean | ReportCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["report"]>
 
@@ -8689,6 +9030,9 @@ export namespace Prisma {
     ReportUpdate?: boolean | Report$ReportUpdateArgs<ExtArgs>
     ReportVote?: boolean | Report$ReportVoteArgs<ExtArgs>
     SatelliteAnalysis?: boolean | Report$SatelliteAnalysisArgs<ExtArgs>
+    ReportEscalation?: boolean | Report$ReportEscalationArgs<ExtArgs>
+    ReportActivity?: boolean | Report$ReportActivityArgs<ExtArgs>
+    CommunityMeeting?: boolean | Report$CommunityMeetingArgs<ExtArgs>
     _count?: boolean | ReportCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8702,6 +9046,9 @@ export namespace Prisma {
       ReportUpdate: Prisma.$ReportUpdatePayload<ExtArgs>[]
       ReportVote: Prisma.$ReportVotePayload<ExtArgs>[]
       SatelliteAnalysis: Prisma.$SatelliteAnalysisPayload<ExtArgs>[]
+      ReportEscalation: Prisma.$ReportEscalationPayload<ExtArgs>[]
+      ReportActivity: Prisma.$ReportActivityPayload<ExtArgs>[]
+      CommunityMeeting: Prisma.$CommunityMeetingPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9097,6 +9444,9 @@ export namespace Prisma {
     ReportUpdate<T extends Report$ReportUpdateArgs<ExtArgs> = {}>(args?: Subset<T, Report$ReportUpdateArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportUpdatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ReportVote<T extends Report$ReportVoteArgs<ExtArgs> = {}>(args?: Subset<T, Report$ReportVoteArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportVotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     SatelliteAnalysis<T extends Report$SatelliteAnalysisArgs<ExtArgs> = {}>(args?: Subset<T, Report$SatelliteAnalysisArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SatelliteAnalysisPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ReportEscalation<T extends Report$ReportEscalationArgs<ExtArgs> = {}>(args?: Subset<T, Report$ReportEscalationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ReportActivity<T extends Report$ReportActivityArgs<ExtArgs> = {}>(args?: Subset<T, Report$ReportActivityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    CommunityMeeting<T extends Report$CommunityMeetingArgs<ExtArgs> = {}>(args?: Subset<T, Report$CommunityMeetingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9578,6 +9928,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SatelliteAnalysisScalarFieldEnum | SatelliteAnalysisScalarFieldEnum[]
+  }
+
+  /**
+   * Report.ReportEscalation
+   */
+  export type Report$ReportEscalationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    where?: ReportEscalationWhereInput
+    orderBy?: ReportEscalationOrderByWithRelationInput | ReportEscalationOrderByWithRelationInput[]
+    cursor?: ReportEscalationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReportEscalationScalarFieldEnum | ReportEscalationScalarFieldEnum[]
+  }
+
+  /**
+   * Report.ReportActivity
+   */
+  export type Report$ReportActivityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+    where?: ReportActivityWhereInput
+    orderBy?: ReportActivityOrderByWithRelationInput | ReportActivityOrderByWithRelationInput[]
+    cursor?: ReportActivityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReportActivityScalarFieldEnum | ReportActivityScalarFieldEnum[]
+  }
+
+  /**
+   * Report.CommunityMeeting
+   */
+  export type Report$CommunityMeetingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+    where?: CommunityMeetingWhereInput
+    orderBy?: CommunityMeetingOrderByWithRelationInput | CommunityMeetingOrderByWithRelationInput[]
+    cursor?: CommunityMeetingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommunityMeetingScalarFieldEnum | CommunityMeetingScalarFieldEnum[]
   }
 
   /**
@@ -13860,6 +14282,10 @@ export namespace Prisma {
     Report?: boolean | User$ReportArgs<ExtArgs>
     ReportVote?: boolean | User$ReportVoteArgs<ExtArgs>
     Session?: boolean | User$SessionArgs<ExtArgs>
+    EscalationsCreated?: boolean | User$EscalationsCreatedArgs<ExtArgs>
+    EscalationsResolved?: boolean | User$EscalationsResolvedArgs<ExtArgs>
+    ReportActivity?: boolean | User$ReportActivityArgs<ExtArgs>
+    CommunityMeeting?: boolean | User$CommunityMeetingArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -13898,6 +14324,10 @@ export namespace Prisma {
     Report?: boolean | User$ReportArgs<ExtArgs>
     ReportVote?: boolean | User$ReportVoteArgs<ExtArgs>
     Session?: boolean | User$SessionArgs<ExtArgs>
+    EscalationsCreated?: boolean | User$EscalationsCreatedArgs<ExtArgs>
+    EscalationsResolved?: boolean | User$EscalationsResolvedArgs<ExtArgs>
+    ReportActivity?: boolean | User$ReportActivityArgs<ExtArgs>
+    CommunityMeeting?: boolean | User$CommunityMeetingArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -13911,6 +14341,10 @@ export namespace Prisma {
       Report: Prisma.$ReportPayload<ExtArgs>[]
       ReportVote: Prisma.$ReportVotePayload<ExtArgs>[]
       Session: Prisma.$SessionPayload<ExtArgs>[]
+      EscalationsCreated: Prisma.$ReportEscalationPayload<ExtArgs>[]
+      EscalationsResolved: Prisma.$ReportEscalationPayload<ExtArgs>[]
+      ReportActivity: Prisma.$ReportActivityPayload<ExtArgs>[]
+      CommunityMeeting: Prisma.$CommunityMeetingPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -14293,6 +14727,10 @@ export namespace Prisma {
     Report<T extends User$ReportArgs<ExtArgs> = {}>(args?: Subset<T, User$ReportArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ReportVote<T extends User$ReportVoteArgs<ExtArgs> = {}>(args?: Subset<T, User$ReportVoteArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportVotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Session<T extends User$SessionArgs<ExtArgs> = {}>(args?: Subset<T, User$SessionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    EscalationsCreated<T extends User$EscalationsCreatedArgs<ExtArgs> = {}>(args?: Subset<T, User$EscalationsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    EscalationsResolved<T extends User$EscalationsResolvedArgs<ExtArgs> = {}>(args?: Subset<T, User$EscalationsResolvedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ReportActivity<T extends User$ReportActivityArgs<ExtArgs> = {}>(args?: Subset<T, User$ReportActivityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    CommunityMeeting<T extends User$CommunityMeetingArgs<ExtArgs> = {}>(args?: Subset<T, User$CommunityMeetingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14827,6 +15265,102 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * User.EscalationsCreated
+   */
+  export type User$EscalationsCreatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    where?: ReportEscalationWhereInput
+    orderBy?: ReportEscalationOrderByWithRelationInput | ReportEscalationOrderByWithRelationInput[]
+    cursor?: ReportEscalationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReportEscalationScalarFieldEnum | ReportEscalationScalarFieldEnum[]
+  }
+
+  /**
+   * User.EscalationsResolved
+   */
+  export type User$EscalationsResolvedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    where?: ReportEscalationWhereInput
+    orderBy?: ReportEscalationOrderByWithRelationInput | ReportEscalationOrderByWithRelationInput[]
+    cursor?: ReportEscalationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReportEscalationScalarFieldEnum | ReportEscalationScalarFieldEnum[]
+  }
+
+  /**
+   * User.ReportActivity
+   */
+  export type User$ReportActivityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+    where?: ReportActivityWhereInput
+    orderBy?: ReportActivityOrderByWithRelationInput | ReportActivityOrderByWithRelationInput[]
+    cursor?: ReportActivityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReportActivityScalarFieldEnum | ReportActivityScalarFieldEnum[]
+  }
+
+  /**
+   * User.CommunityMeeting
+   */
+  export type User$CommunityMeetingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+    where?: CommunityMeetingWhereInput
+    orderBy?: CommunityMeetingOrderByWithRelationInput | CommunityMeetingOrderByWithRelationInput[]
+    cursor?: CommunityMeetingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommunityMeetingScalarFieldEnum | CommunityMeetingScalarFieldEnum[]
   }
 
   /**
@@ -16751,6 +17285,3225 @@ export namespace Prisma {
 
 
   /**
+   * Model ReportEscalation
+   */
+
+  export type AggregateReportEscalation = {
+    _count: ReportEscalationCountAggregateOutputType | null
+    _min: ReportEscalationMinAggregateOutputType | null
+    _max: ReportEscalationMaxAggregateOutputType | null
+  }
+
+  export type ReportEscalationMinAggregateOutputType = {
+    id: string | null
+    reportId: string | null
+    escalatedBy: string | null
+    escalationType: string | null
+    escalationLevel: string | null
+    escalationReason: string | null
+    escalatedAt: Date | null
+    status: string | null
+    priority: string | null
+    resolvedAt: Date | null
+    resolvedBy: string | null
+    resolution: string | null
+  }
+
+  export type ReportEscalationMaxAggregateOutputType = {
+    id: string | null
+    reportId: string | null
+    escalatedBy: string | null
+    escalationType: string | null
+    escalationLevel: string | null
+    escalationReason: string | null
+    escalatedAt: Date | null
+    status: string | null
+    priority: string | null
+    resolvedAt: Date | null
+    resolvedBy: string | null
+    resolution: string | null
+  }
+
+  export type ReportEscalationCountAggregateOutputType = {
+    id: number
+    reportId: number
+    escalatedBy: number
+    escalationType: number
+    escalationLevel: number
+    votingData: number
+    escalationReason: number
+    escalatedAt: number
+    status: number
+    priority: number
+    resolvedAt: number
+    resolvedBy: number
+    resolution: number
+    _all: number
+  }
+
+
+  export type ReportEscalationMinAggregateInputType = {
+    id?: true
+    reportId?: true
+    escalatedBy?: true
+    escalationType?: true
+    escalationLevel?: true
+    escalationReason?: true
+    escalatedAt?: true
+    status?: true
+    priority?: true
+    resolvedAt?: true
+    resolvedBy?: true
+    resolution?: true
+  }
+
+  export type ReportEscalationMaxAggregateInputType = {
+    id?: true
+    reportId?: true
+    escalatedBy?: true
+    escalationType?: true
+    escalationLevel?: true
+    escalationReason?: true
+    escalatedAt?: true
+    status?: true
+    priority?: true
+    resolvedAt?: true
+    resolvedBy?: true
+    resolution?: true
+  }
+
+  export type ReportEscalationCountAggregateInputType = {
+    id?: true
+    reportId?: true
+    escalatedBy?: true
+    escalationType?: true
+    escalationLevel?: true
+    votingData?: true
+    escalationReason?: true
+    escalatedAt?: true
+    status?: true
+    priority?: true
+    resolvedAt?: true
+    resolvedBy?: true
+    resolution?: true
+    _all?: true
+  }
+
+  export type ReportEscalationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReportEscalation to aggregate.
+     */
+    where?: ReportEscalationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReportEscalations to fetch.
+     */
+    orderBy?: ReportEscalationOrderByWithRelationInput | ReportEscalationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReportEscalationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReportEscalations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReportEscalations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ReportEscalations
+    **/
+    _count?: true | ReportEscalationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReportEscalationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReportEscalationMaxAggregateInputType
+  }
+
+  export type GetReportEscalationAggregateType<T extends ReportEscalationAggregateArgs> = {
+        [P in keyof T & keyof AggregateReportEscalation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReportEscalation[P]>
+      : GetScalarType<T[P], AggregateReportEscalation[P]>
+  }
+
+
+
+
+  export type ReportEscalationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReportEscalationWhereInput
+    orderBy?: ReportEscalationOrderByWithAggregationInput | ReportEscalationOrderByWithAggregationInput[]
+    by: ReportEscalationScalarFieldEnum[] | ReportEscalationScalarFieldEnum
+    having?: ReportEscalationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReportEscalationCountAggregateInputType | true
+    _min?: ReportEscalationMinAggregateInputType
+    _max?: ReportEscalationMaxAggregateInputType
+  }
+
+  export type ReportEscalationGroupByOutputType = {
+    id: string
+    reportId: string
+    escalatedBy: string
+    escalationType: string
+    escalationLevel: string
+    votingData: JsonValue | null
+    escalationReason: string
+    escalatedAt: Date
+    status: string
+    priority: string
+    resolvedAt: Date | null
+    resolvedBy: string | null
+    resolution: string | null
+    _count: ReportEscalationCountAggregateOutputType | null
+    _min: ReportEscalationMinAggregateOutputType | null
+    _max: ReportEscalationMaxAggregateOutputType | null
+  }
+
+  type GetReportEscalationGroupByPayload<T extends ReportEscalationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReportEscalationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReportEscalationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReportEscalationGroupByOutputType[P]>
+            : GetScalarType<T[P], ReportEscalationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReportEscalationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reportId?: boolean
+    escalatedBy?: boolean
+    escalationType?: boolean
+    escalationLevel?: boolean
+    votingData?: boolean
+    escalationReason?: boolean
+    escalatedAt?: boolean
+    status?: boolean
+    priority?: boolean
+    resolvedAt?: boolean
+    resolvedBy?: boolean
+    resolution?: boolean
+    Report?: boolean | ReportDefaultArgs<ExtArgs>
+    EscalatedBy?: boolean | UserDefaultArgs<ExtArgs>
+    ResolvedBy?: boolean | ReportEscalation$ResolvedByArgs<ExtArgs>
+  }, ExtArgs["result"]["reportEscalation"]>
+
+  export type ReportEscalationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reportId?: boolean
+    escalatedBy?: boolean
+    escalationType?: boolean
+    escalationLevel?: boolean
+    votingData?: boolean
+    escalationReason?: boolean
+    escalatedAt?: boolean
+    status?: boolean
+    priority?: boolean
+    resolvedAt?: boolean
+    resolvedBy?: boolean
+    resolution?: boolean
+    Report?: boolean | ReportDefaultArgs<ExtArgs>
+    EscalatedBy?: boolean | UserDefaultArgs<ExtArgs>
+    ResolvedBy?: boolean | ReportEscalation$ResolvedByArgs<ExtArgs>
+  }, ExtArgs["result"]["reportEscalation"]>
+
+
+  export type ReportEscalationSelectScalar = {
+    id?: boolean
+    reportId?: boolean
+    escalatedBy?: boolean
+    escalationType?: boolean
+    escalationLevel?: boolean
+    votingData?: boolean
+    escalationReason?: boolean
+    escalatedAt?: boolean
+    status?: boolean
+    priority?: boolean
+    resolvedAt?: boolean
+    resolvedBy?: boolean
+    resolution?: boolean
+  }
+
+  export type ReportEscalationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reportId" | "escalatedBy" | "escalationType" | "escalationLevel" | "votingData" | "escalationReason" | "escalatedAt" | "status" | "priority" | "resolvedAt" | "resolvedBy" | "resolution", ExtArgs["result"]["reportEscalation"]>
+  export type ReportEscalationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Report?: boolean | ReportDefaultArgs<ExtArgs>
+    EscalatedBy?: boolean | UserDefaultArgs<ExtArgs>
+    ResolvedBy?: boolean | ReportEscalation$ResolvedByArgs<ExtArgs>
+  }
+  export type ReportEscalationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Report?: boolean | ReportDefaultArgs<ExtArgs>
+    EscalatedBy?: boolean | UserDefaultArgs<ExtArgs>
+    ResolvedBy?: boolean | ReportEscalation$ResolvedByArgs<ExtArgs>
+  }
+
+  export type $ReportEscalationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ReportEscalation"
+    objects: {
+      Report: Prisma.$ReportPayload<ExtArgs>
+      EscalatedBy: Prisma.$UserPayload<ExtArgs>
+      ResolvedBy: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      reportId: string
+      escalatedBy: string
+      escalationType: string
+      escalationLevel: string
+      votingData: Prisma.JsonValue | null
+      escalationReason: string
+      escalatedAt: Date
+      status: string
+      priority: string
+      resolvedAt: Date | null
+      resolvedBy: string | null
+      resolution: string | null
+    }, ExtArgs["result"]["reportEscalation"]>
+    composites: {}
+  }
+
+  type ReportEscalationGetPayload<S extends boolean | null | undefined | ReportEscalationDefaultArgs> = $Result.GetResult<Prisma.$ReportEscalationPayload, S>
+
+  type ReportEscalationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ReportEscalationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ReportEscalationCountAggregateInputType | true
+    }
+
+  export interface ReportEscalationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ReportEscalation'], meta: { name: 'ReportEscalation' } }
+    /**
+     * Find zero or one ReportEscalation that matches the filter.
+     * @param {ReportEscalationFindUniqueArgs} args - Arguments to find a ReportEscalation
+     * @example
+     * // Get one ReportEscalation
+     * const reportEscalation = await prisma.reportEscalation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ReportEscalationFindUniqueArgs>(args: SelectSubset<T, ReportEscalationFindUniqueArgs<ExtArgs>>): Prisma__ReportEscalationClient<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ReportEscalation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ReportEscalationFindUniqueOrThrowArgs} args - Arguments to find a ReportEscalation
+     * @example
+     * // Get one ReportEscalation
+     * const reportEscalation = await prisma.reportEscalation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ReportEscalationFindUniqueOrThrowArgs>(args: SelectSubset<T, ReportEscalationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReportEscalationClient<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ReportEscalation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportEscalationFindFirstArgs} args - Arguments to find a ReportEscalation
+     * @example
+     * // Get one ReportEscalation
+     * const reportEscalation = await prisma.reportEscalation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ReportEscalationFindFirstArgs>(args?: SelectSubset<T, ReportEscalationFindFirstArgs<ExtArgs>>): Prisma__ReportEscalationClient<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ReportEscalation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportEscalationFindFirstOrThrowArgs} args - Arguments to find a ReportEscalation
+     * @example
+     * // Get one ReportEscalation
+     * const reportEscalation = await prisma.reportEscalation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ReportEscalationFindFirstOrThrowArgs>(args?: SelectSubset<T, ReportEscalationFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReportEscalationClient<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ReportEscalations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportEscalationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ReportEscalations
+     * const reportEscalations = await prisma.reportEscalation.findMany()
+     * 
+     * // Get first 10 ReportEscalations
+     * const reportEscalations = await prisma.reportEscalation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const reportEscalationWithIdOnly = await prisma.reportEscalation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ReportEscalationFindManyArgs>(args?: SelectSubset<T, ReportEscalationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ReportEscalation.
+     * @param {ReportEscalationCreateArgs} args - Arguments to create a ReportEscalation.
+     * @example
+     * // Create one ReportEscalation
+     * const ReportEscalation = await prisma.reportEscalation.create({
+     *   data: {
+     *     // ... data to create a ReportEscalation
+     *   }
+     * })
+     * 
+     */
+    create<T extends ReportEscalationCreateArgs>(args: SelectSubset<T, ReportEscalationCreateArgs<ExtArgs>>): Prisma__ReportEscalationClient<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ReportEscalations.
+     * @param {ReportEscalationCreateManyArgs} args - Arguments to create many ReportEscalations.
+     * @example
+     * // Create many ReportEscalations
+     * const reportEscalation = await prisma.reportEscalation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ReportEscalationCreateManyArgs>(args?: SelectSubset<T, ReportEscalationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ReportEscalations and returns the data saved in the database.
+     * @param {ReportEscalationCreateManyAndReturnArgs} args - Arguments to create many ReportEscalations.
+     * @example
+     * // Create many ReportEscalations
+     * const reportEscalation = await prisma.reportEscalation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ReportEscalations and only return the `id`
+     * const reportEscalationWithIdOnly = await prisma.reportEscalation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ReportEscalationCreateManyAndReturnArgs>(args?: SelectSubset<T, ReportEscalationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ReportEscalation.
+     * @param {ReportEscalationDeleteArgs} args - Arguments to delete one ReportEscalation.
+     * @example
+     * // Delete one ReportEscalation
+     * const ReportEscalation = await prisma.reportEscalation.delete({
+     *   where: {
+     *     // ... filter to delete one ReportEscalation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ReportEscalationDeleteArgs>(args: SelectSubset<T, ReportEscalationDeleteArgs<ExtArgs>>): Prisma__ReportEscalationClient<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ReportEscalation.
+     * @param {ReportEscalationUpdateArgs} args - Arguments to update one ReportEscalation.
+     * @example
+     * // Update one ReportEscalation
+     * const reportEscalation = await prisma.reportEscalation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ReportEscalationUpdateArgs>(args: SelectSubset<T, ReportEscalationUpdateArgs<ExtArgs>>): Prisma__ReportEscalationClient<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ReportEscalations.
+     * @param {ReportEscalationDeleteManyArgs} args - Arguments to filter ReportEscalations to delete.
+     * @example
+     * // Delete a few ReportEscalations
+     * const { count } = await prisma.reportEscalation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ReportEscalationDeleteManyArgs>(args?: SelectSubset<T, ReportEscalationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ReportEscalations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportEscalationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ReportEscalations
+     * const reportEscalation = await prisma.reportEscalation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ReportEscalationUpdateManyArgs>(args: SelectSubset<T, ReportEscalationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ReportEscalation.
+     * @param {ReportEscalationUpsertArgs} args - Arguments to update or create a ReportEscalation.
+     * @example
+     * // Update or create a ReportEscalation
+     * const reportEscalation = await prisma.reportEscalation.upsert({
+     *   create: {
+     *     // ... data to create a ReportEscalation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ReportEscalation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ReportEscalationUpsertArgs>(args: SelectSubset<T, ReportEscalationUpsertArgs<ExtArgs>>): Prisma__ReportEscalationClient<$Result.GetResult<Prisma.$ReportEscalationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ReportEscalations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportEscalationCountArgs} args - Arguments to filter ReportEscalations to count.
+     * @example
+     * // Count the number of ReportEscalations
+     * const count = await prisma.reportEscalation.count({
+     *   where: {
+     *     // ... the filter for the ReportEscalations we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReportEscalationCountArgs>(
+      args?: Subset<T, ReportEscalationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReportEscalationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ReportEscalation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportEscalationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReportEscalationAggregateArgs>(args: Subset<T, ReportEscalationAggregateArgs>): Prisma.PrismaPromise<GetReportEscalationAggregateType<T>>
+
+    /**
+     * Group by ReportEscalation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportEscalationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReportEscalationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReportEscalationGroupByArgs['orderBy'] }
+        : { orderBy?: ReportEscalationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReportEscalationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReportEscalationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ReportEscalation model
+   */
+  readonly fields: ReportEscalationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ReportEscalation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReportEscalationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Report<T extends ReportDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ReportDefaultArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    EscalatedBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    ResolvedBy<T extends ReportEscalation$ResolvedByArgs<ExtArgs> = {}>(args?: Subset<T, ReportEscalation$ResolvedByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ReportEscalation model
+   */
+  interface ReportEscalationFieldRefs {
+    readonly id: FieldRef<"ReportEscalation", 'String'>
+    readonly reportId: FieldRef<"ReportEscalation", 'String'>
+    readonly escalatedBy: FieldRef<"ReportEscalation", 'String'>
+    readonly escalationType: FieldRef<"ReportEscalation", 'String'>
+    readonly escalationLevel: FieldRef<"ReportEscalation", 'String'>
+    readonly votingData: FieldRef<"ReportEscalation", 'Json'>
+    readonly escalationReason: FieldRef<"ReportEscalation", 'String'>
+    readonly escalatedAt: FieldRef<"ReportEscalation", 'DateTime'>
+    readonly status: FieldRef<"ReportEscalation", 'String'>
+    readonly priority: FieldRef<"ReportEscalation", 'String'>
+    readonly resolvedAt: FieldRef<"ReportEscalation", 'DateTime'>
+    readonly resolvedBy: FieldRef<"ReportEscalation", 'String'>
+    readonly resolution: FieldRef<"ReportEscalation", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ReportEscalation findUnique
+   */
+  export type ReportEscalationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    /**
+     * Filter, which ReportEscalation to fetch.
+     */
+    where: ReportEscalationWhereUniqueInput
+  }
+
+  /**
+   * ReportEscalation findUniqueOrThrow
+   */
+  export type ReportEscalationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    /**
+     * Filter, which ReportEscalation to fetch.
+     */
+    where: ReportEscalationWhereUniqueInput
+  }
+
+  /**
+   * ReportEscalation findFirst
+   */
+  export type ReportEscalationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    /**
+     * Filter, which ReportEscalation to fetch.
+     */
+    where?: ReportEscalationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReportEscalations to fetch.
+     */
+    orderBy?: ReportEscalationOrderByWithRelationInput | ReportEscalationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReportEscalations.
+     */
+    cursor?: ReportEscalationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReportEscalations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReportEscalations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReportEscalations.
+     */
+    distinct?: ReportEscalationScalarFieldEnum | ReportEscalationScalarFieldEnum[]
+  }
+
+  /**
+   * ReportEscalation findFirstOrThrow
+   */
+  export type ReportEscalationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    /**
+     * Filter, which ReportEscalation to fetch.
+     */
+    where?: ReportEscalationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReportEscalations to fetch.
+     */
+    orderBy?: ReportEscalationOrderByWithRelationInput | ReportEscalationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReportEscalations.
+     */
+    cursor?: ReportEscalationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReportEscalations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReportEscalations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReportEscalations.
+     */
+    distinct?: ReportEscalationScalarFieldEnum | ReportEscalationScalarFieldEnum[]
+  }
+
+  /**
+   * ReportEscalation findMany
+   */
+  export type ReportEscalationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    /**
+     * Filter, which ReportEscalations to fetch.
+     */
+    where?: ReportEscalationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReportEscalations to fetch.
+     */
+    orderBy?: ReportEscalationOrderByWithRelationInput | ReportEscalationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ReportEscalations.
+     */
+    cursor?: ReportEscalationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReportEscalations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReportEscalations.
+     */
+    skip?: number
+    distinct?: ReportEscalationScalarFieldEnum | ReportEscalationScalarFieldEnum[]
+  }
+
+  /**
+   * ReportEscalation create
+   */
+  export type ReportEscalationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ReportEscalation.
+     */
+    data: XOR<ReportEscalationCreateInput, ReportEscalationUncheckedCreateInput>
+  }
+
+  /**
+   * ReportEscalation createMany
+   */
+  export type ReportEscalationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ReportEscalations.
+     */
+    data: ReportEscalationCreateManyInput | ReportEscalationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ReportEscalation createManyAndReturn
+   */
+  export type ReportEscalationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * The data used to create many ReportEscalations.
+     */
+    data: ReportEscalationCreateManyInput | ReportEscalationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ReportEscalation update
+   */
+  export type ReportEscalationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ReportEscalation.
+     */
+    data: XOR<ReportEscalationUpdateInput, ReportEscalationUncheckedUpdateInput>
+    /**
+     * Choose, which ReportEscalation to update.
+     */
+    where: ReportEscalationWhereUniqueInput
+  }
+
+  /**
+   * ReportEscalation updateMany
+   */
+  export type ReportEscalationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ReportEscalations.
+     */
+    data: XOR<ReportEscalationUpdateManyMutationInput, ReportEscalationUncheckedUpdateManyInput>
+    /**
+     * Filter which ReportEscalations to update
+     */
+    where?: ReportEscalationWhereInput
+  }
+
+  /**
+   * ReportEscalation upsert
+   */
+  export type ReportEscalationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ReportEscalation to update in case it exists.
+     */
+    where: ReportEscalationWhereUniqueInput
+    /**
+     * In case the ReportEscalation found by the `where` argument doesn't exist, create a new ReportEscalation with this data.
+     */
+    create: XOR<ReportEscalationCreateInput, ReportEscalationUncheckedCreateInput>
+    /**
+     * In case the ReportEscalation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReportEscalationUpdateInput, ReportEscalationUncheckedUpdateInput>
+  }
+
+  /**
+   * ReportEscalation delete
+   */
+  export type ReportEscalationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+    /**
+     * Filter which ReportEscalation to delete.
+     */
+    where: ReportEscalationWhereUniqueInput
+  }
+
+  /**
+   * ReportEscalation deleteMany
+   */
+  export type ReportEscalationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReportEscalations to delete
+     */
+    where?: ReportEscalationWhereInput
+  }
+
+  /**
+   * ReportEscalation.ResolvedBy
+   */
+  export type ReportEscalation$ResolvedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * ReportEscalation without action
+   */
+  export type ReportEscalationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportEscalation
+     */
+    select?: ReportEscalationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportEscalation
+     */
+    omit?: ReportEscalationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportEscalationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ReportActivity
+   */
+
+  export type AggregateReportActivity = {
+    _count: ReportActivityCountAggregateOutputType | null
+    _min: ReportActivityMinAggregateOutputType | null
+    _max: ReportActivityMaxAggregateOutputType | null
+  }
+
+  export type ReportActivityMinAggregateOutputType = {
+    id: string | null
+    reportId: string | null
+    userId: string | null
+    action: string | null
+    description: string | null
+    createdAt: Date | null
+  }
+
+  export type ReportActivityMaxAggregateOutputType = {
+    id: string | null
+    reportId: string | null
+    userId: string | null
+    action: string | null
+    description: string | null
+    createdAt: Date | null
+  }
+
+  export type ReportActivityCountAggregateOutputType = {
+    id: number
+    reportId: number
+    userId: number
+    action: number
+    description: number
+    metadata: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ReportActivityMinAggregateInputType = {
+    id?: true
+    reportId?: true
+    userId?: true
+    action?: true
+    description?: true
+    createdAt?: true
+  }
+
+  export type ReportActivityMaxAggregateInputType = {
+    id?: true
+    reportId?: true
+    userId?: true
+    action?: true
+    description?: true
+    createdAt?: true
+  }
+
+  export type ReportActivityCountAggregateInputType = {
+    id?: true
+    reportId?: true
+    userId?: true
+    action?: true
+    description?: true
+    metadata?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ReportActivityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReportActivity to aggregate.
+     */
+    where?: ReportActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReportActivities to fetch.
+     */
+    orderBy?: ReportActivityOrderByWithRelationInput | ReportActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReportActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReportActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReportActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ReportActivities
+    **/
+    _count?: true | ReportActivityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReportActivityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReportActivityMaxAggregateInputType
+  }
+
+  export type GetReportActivityAggregateType<T extends ReportActivityAggregateArgs> = {
+        [P in keyof T & keyof AggregateReportActivity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReportActivity[P]>
+      : GetScalarType<T[P], AggregateReportActivity[P]>
+  }
+
+
+
+
+  export type ReportActivityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReportActivityWhereInput
+    orderBy?: ReportActivityOrderByWithAggregationInput | ReportActivityOrderByWithAggregationInput[]
+    by: ReportActivityScalarFieldEnum[] | ReportActivityScalarFieldEnum
+    having?: ReportActivityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReportActivityCountAggregateInputType | true
+    _min?: ReportActivityMinAggregateInputType
+    _max?: ReportActivityMaxAggregateInputType
+  }
+
+  export type ReportActivityGroupByOutputType = {
+    id: string
+    reportId: string
+    userId: string
+    action: string
+    description: string
+    metadata: JsonValue | null
+    createdAt: Date
+    _count: ReportActivityCountAggregateOutputType | null
+    _min: ReportActivityMinAggregateOutputType | null
+    _max: ReportActivityMaxAggregateOutputType | null
+  }
+
+  type GetReportActivityGroupByPayload<T extends ReportActivityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReportActivityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReportActivityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReportActivityGroupByOutputType[P]>
+            : GetScalarType<T[P], ReportActivityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReportActivitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reportId?: boolean
+    userId?: boolean
+    action?: boolean
+    description?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    Report?: boolean | ReportDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["reportActivity"]>
+
+  export type ReportActivitySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reportId?: boolean
+    userId?: boolean
+    action?: boolean
+    description?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    Report?: boolean | ReportDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["reportActivity"]>
+
+
+  export type ReportActivitySelectScalar = {
+    id?: boolean
+    reportId?: boolean
+    userId?: boolean
+    action?: boolean
+    description?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+  }
+
+  export type ReportActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reportId" | "userId" | "action" | "description" | "metadata" | "createdAt", ExtArgs["result"]["reportActivity"]>
+  export type ReportActivityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Report?: boolean | ReportDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ReportActivityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Report?: boolean | ReportDefaultArgs<ExtArgs>
+    User?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ReportActivityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ReportActivity"
+    objects: {
+      Report: Prisma.$ReportPayload<ExtArgs>
+      User: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      reportId: string
+      userId: string
+      action: string
+      description: string
+      metadata: Prisma.JsonValue | null
+      createdAt: Date
+    }, ExtArgs["result"]["reportActivity"]>
+    composites: {}
+  }
+
+  type ReportActivityGetPayload<S extends boolean | null | undefined | ReportActivityDefaultArgs> = $Result.GetResult<Prisma.$ReportActivityPayload, S>
+
+  type ReportActivityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ReportActivityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ReportActivityCountAggregateInputType | true
+    }
+
+  export interface ReportActivityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ReportActivity'], meta: { name: 'ReportActivity' } }
+    /**
+     * Find zero or one ReportActivity that matches the filter.
+     * @param {ReportActivityFindUniqueArgs} args - Arguments to find a ReportActivity
+     * @example
+     * // Get one ReportActivity
+     * const reportActivity = await prisma.reportActivity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ReportActivityFindUniqueArgs>(args: SelectSubset<T, ReportActivityFindUniqueArgs<ExtArgs>>): Prisma__ReportActivityClient<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ReportActivity that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ReportActivityFindUniqueOrThrowArgs} args - Arguments to find a ReportActivity
+     * @example
+     * // Get one ReportActivity
+     * const reportActivity = await prisma.reportActivity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ReportActivityFindUniqueOrThrowArgs>(args: SelectSubset<T, ReportActivityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReportActivityClient<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ReportActivity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportActivityFindFirstArgs} args - Arguments to find a ReportActivity
+     * @example
+     * // Get one ReportActivity
+     * const reportActivity = await prisma.reportActivity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ReportActivityFindFirstArgs>(args?: SelectSubset<T, ReportActivityFindFirstArgs<ExtArgs>>): Prisma__ReportActivityClient<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ReportActivity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportActivityFindFirstOrThrowArgs} args - Arguments to find a ReportActivity
+     * @example
+     * // Get one ReportActivity
+     * const reportActivity = await prisma.reportActivity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ReportActivityFindFirstOrThrowArgs>(args?: SelectSubset<T, ReportActivityFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReportActivityClient<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ReportActivities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportActivityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ReportActivities
+     * const reportActivities = await prisma.reportActivity.findMany()
+     * 
+     * // Get first 10 ReportActivities
+     * const reportActivities = await prisma.reportActivity.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const reportActivityWithIdOnly = await prisma.reportActivity.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ReportActivityFindManyArgs>(args?: SelectSubset<T, ReportActivityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ReportActivity.
+     * @param {ReportActivityCreateArgs} args - Arguments to create a ReportActivity.
+     * @example
+     * // Create one ReportActivity
+     * const ReportActivity = await prisma.reportActivity.create({
+     *   data: {
+     *     // ... data to create a ReportActivity
+     *   }
+     * })
+     * 
+     */
+    create<T extends ReportActivityCreateArgs>(args: SelectSubset<T, ReportActivityCreateArgs<ExtArgs>>): Prisma__ReportActivityClient<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ReportActivities.
+     * @param {ReportActivityCreateManyArgs} args - Arguments to create many ReportActivities.
+     * @example
+     * // Create many ReportActivities
+     * const reportActivity = await prisma.reportActivity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ReportActivityCreateManyArgs>(args?: SelectSubset<T, ReportActivityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ReportActivities and returns the data saved in the database.
+     * @param {ReportActivityCreateManyAndReturnArgs} args - Arguments to create many ReportActivities.
+     * @example
+     * // Create many ReportActivities
+     * const reportActivity = await prisma.reportActivity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ReportActivities and only return the `id`
+     * const reportActivityWithIdOnly = await prisma.reportActivity.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ReportActivityCreateManyAndReturnArgs>(args?: SelectSubset<T, ReportActivityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ReportActivity.
+     * @param {ReportActivityDeleteArgs} args - Arguments to delete one ReportActivity.
+     * @example
+     * // Delete one ReportActivity
+     * const ReportActivity = await prisma.reportActivity.delete({
+     *   where: {
+     *     // ... filter to delete one ReportActivity
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ReportActivityDeleteArgs>(args: SelectSubset<T, ReportActivityDeleteArgs<ExtArgs>>): Prisma__ReportActivityClient<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ReportActivity.
+     * @param {ReportActivityUpdateArgs} args - Arguments to update one ReportActivity.
+     * @example
+     * // Update one ReportActivity
+     * const reportActivity = await prisma.reportActivity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ReportActivityUpdateArgs>(args: SelectSubset<T, ReportActivityUpdateArgs<ExtArgs>>): Prisma__ReportActivityClient<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ReportActivities.
+     * @param {ReportActivityDeleteManyArgs} args - Arguments to filter ReportActivities to delete.
+     * @example
+     * // Delete a few ReportActivities
+     * const { count } = await prisma.reportActivity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ReportActivityDeleteManyArgs>(args?: SelectSubset<T, ReportActivityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ReportActivities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportActivityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ReportActivities
+     * const reportActivity = await prisma.reportActivity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ReportActivityUpdateManyArgs>(args: SelectSubset<T, ReportActivityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ReportActivity.
+     * @param {ReportActivityUpsertArgs} args - Arguments to update or create a ReportActivity.
+     * @example
+     * // Update or create a ReportActivity
+     * const reportActivity = await prisma.reportActivity.upsert({
+     *   create: {
+     *     // ... data to create a ReportActivity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ReportActivity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ReportActivityUpsertArgs>(args: SelectSubset<T, ReportActivityUpsertArgs<ExtArgs>>): Prisma__ReportActivityClient<$Result.GetResult<Prisma.$ReportActivityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ReportActivities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportActivityCountArgs} args - Arguments to filter ReportActivities to count.
+     * @example
+     * // Count the number of ReportActivities
+     * const count = await prisma.reportActivity.count({
+     *   where: {
+     *     // ... the filter for the ReportActivities we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReportActivityCountArgs>(
+      args?: Subset<T, ReportActivityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReportActivityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ReportActivity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportActivityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReportActivityAggregateArgs>(args: Subset<T, ReportActivityAggregateArgs>): Prisma.PrismaPromise<GetReportActivityAggregateType<T>>
+
+    /**
+     * Group by ReportActivity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportActivityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReportActivityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReportActivityGroupByArgs['orderBy'] }
+        : { orderBy?: ReportActivityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReportActivityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReportActivityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ReportActivity model
+   */
+  readonly fields: ReportActivityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ReportActivity.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReportActivityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Report<T extends ReportDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ReportDefaultArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ReportActivity model
+   */
+  interface ReportActivityFieldRefs {
+    readonly id: FieldRef<"ReportActivity", 'String'>
+    readonly reportId: FieldRef<"ReportActivity", 'String'>
+    readonly userId: FieldRef<"ReportActivity", 'String'>
+    readonly action: FieldRef<"ReportActivity", 'String'>
+    readonly description: FieldRef<"ReportActivity", 'String'>
+    readonly metadata: FieldRef<"ReportActivity", 'Json'>
+    readonly createdAt: FieldRef<"ReportActivity", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ReportActivity findUnique
+   */
+  export type ReportActivityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which ReportActivity to fetch.
+     */
+    where: ReportActivityWhereUniqueInput
+  }
+
+  /**
+   * ReportActivity findUniqueOrThrow
+   */
+  export type ReportActivityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which ReportActivity to fetch.
+     */
+    where: ReportActivityWhereUniqueInput
+  }
+
+  /**
+   * ReportActivity findFirst
+   */
+  export type ReportActivityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which ReportActivity to fetch.
+     */
+    where?: ReportActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReportActivities to fetch.
+     */
+    orderBy?: ReportActivityOrderByWithRelationInput | ReportActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReportActivities.
+     */
+    cursor?: ReportActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReportActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReportActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReportActivities.
+     */
+    distinct?: ReportActivityScalarFieldEnum | ReportActivityScalarFieldEnum[]
+  }
+
+  /**
+   * ReportActivity findFirstOrThrow
+   */
+  export type ReportActivityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which ReportActivity to fetch.
+     */
+    where?: ReportActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReportActivities to fetch.
+     */
+    orderBy?: ReportActivityOrderByWithRelationInput | ReportActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ReportActivities.
+     */
+    cursor?: ReportActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReportActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReportActivities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ReportActivities.
+     */
+    distinct?: ReportActivityScalarFieldEnum | ReportActivityScalarFieldEnum[]
+  }
+
+  /**
+   * ReportActivity findMany
+   */
+  export type ReportActivityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+    /**
+     * Filter, which ReportActivities to fetch.
+     */
+    where?: ReportActivityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ReportActivities to fetch.
+     */
+    orderBy?: ReportActivityOrderByWithRelationInput | ReportActivityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ReportActivities.
+     */
+    cursor?: ReportActivityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ReportActivities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ReportActivities.
+     */
+    skip?: number
+    distinct?: ReportActivityScalarFieldEnum | ReportActivityScalarFieldEnum[]
+  }
+
+  /**
+   * ReportActivity create
+   */
+  export type ReportActivityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ReportActivity.
+     */
+    data: XOR<ReportActivityCreateInput, ReportActivityUncheckedCreateInput>
+  }
+
+  /**
+   * ReportActivity createMany
+   */
+  export type ReportActivityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ReportActivities.
+     */
+    data: ReportActivityCreateManyInput | ReportActivityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ReportActivity createManyAndReturn
+   */
+  export type ReportActivityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * The data used to create many ReportActivities.
+     */
+    data: ReportActivityCreateManyInput | ReportActivityCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ReportActivity update
+   */
+  export type ReportActivityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ReportActivity.
+     */
+    data: XOR<ReportActivityUpdateInput, ReportActivityUncheckedUpdateInput>
+    /**
+     * Choose, which ReportActivity to update.
+     */
+    where: ReportActivityWhereUniqueInput
+  }
+
+  /**
+   * ReportActivity updateMany
+   */
+  export type ReportActivityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ReportActivities.
+     */
+    data: XOR<ReportActivityUpdateManyMutationInput, ReportActivityUncheckedUpdateManyInput>
+    /**
+     * Filter which ReportActivities to update
+     */
+    where?: ReportActivityWhereInput
+  }
+
+  /**
+   * ReportActivity upsert
+   */
+  export type ReportActivityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ReportActivity to update in case it exists.
+     */
+    where: ReportActivityWhereUniqueInput
+    /**
+     * In case the ReportActivity found by the `where` argument doesn't exist, create a new ReportActivity with this data.
+     */
+    create: XOR<ReportActivityCreateInput, ReportActivityUncheckedCreateInput>
+    /**
+     * In case the ReportActivity was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReportActivityUpdateInput, ReportActivityUncheckedUpdateInput>
+  }
+
+  /**
+   * ReportActivity delete
+   */
+  export type ReportActivityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+    /**
+     * Filter which ReportActivity to delete.
+     */
+    where: ReportActivityWhereUniqueInput
+  }
+
+  /**
+   * ReportActivity deleteMany
+   */
+  export type ReportActivityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ReportActivities to delete
+     */
+    where?: ReportActivityWhereInput
+  }
+
+  /**
+   * ReportActivity without action
+   */
+  export type ReportActivityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ReportActivity
+     */
+    select?: ReportActivitySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ReportActivity
+     */
+    omit?: ReportActivityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportActivityInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CommunityMeeting
+   */
+
+  export type AggregateCommunityMeeting = {
+    _count: CommunityMeetingCountAggregateOutputType | null
+    _min: CommunityMeetingMinAggregateOutputType | null
+    _max: CommunityMeetingMaxAggregateOutputType | null
+  }
+
+  export type CommunityMeetingMinAggregateOutputType = {
+    id: string | null
+    reportId: string | null
+    title: string | null
+    description: string | null
+    scheduledDate: Date | null
+    location: string | null
+    organizer: string | null
+    status: string | null
+    meetingType: string | null
+    minutes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CommunityMeetingMaxAggregateOutputType = {
+    id: string | null
+    reportId: string | null
+    title: string | null
+    description: string | null
+    scheduledDate: Date | null
+    location: string | null
+    organizer: string | null
+    status: string | null
+    meetingType: string | null
+    minutes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CommunityMeetingCountAggregateOutputType = {
+    id: number
+    reportId: number
+    title: number
+    description: number
+    scheduledDate: number
+    location: number
+    organizer: number
+    status: number
+    meetingType: number
+    agenda: number
+    minutes: number
+    attendees: number
+    outcomes: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CommunityMeetingMinAggregateInputType = {
+    id?: true
+    reportId?: true
+    title?: true
+    description?: true
+    scheduledDate?: true
+    location?: true
+    organizer?: true
+    status?: true
+    meetingType?: true
+    minutes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CommunityMeetingMaxAggregateInputType = {
+    id?: true
+    reportId?: true
+    title?: true
+    description?: true
+    scheduledDate?: true
+    location?: true
+    organizer?: true
+    status?: true
+    meetingType?: true
+    minutes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CommunityMeetingCountAggregateInputType = {
+    id?: true
+    reportId?: true
+    title?: true
+    description?: true
+    scheduledDate?: true
+    location?: true
+    organizer?: true
+    status?: true
+    meetingType?: true
+    agenda?: true
+    minutes?: true
+    attendees?: true
+    outcomes?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CommunityMeetingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CommunityMeeting to aggregate.
+     */
+    where?: CommunityMeetingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CommunityMeetings to fetch.
+     */
+    orderBy?: CommunityMeetingOrderByWithRelationInput | CommunityMeetingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CommunityMeetingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CommunityMeetings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CommunityMeetings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CommunityMeetings
+    **/
+    _count?: true | CommunityMeetingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CommunityMeetingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CommunityMeetingMaxAggregateInputType
+  }
+
+  export type GetCommunityMeetingAggregateType<T extends CommunityMeetingAggregateArgs> = {
+        [P in keyof T & keyof AggregateCommunityMeeting]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCommunityMeeting[P]>
+      : GetScalarType<T[P], AggregateCommunityMeeting[P]>
+  }
+
+
+
+
+  export type CommunityMeetingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommunityMeetingWhereInput
+    orderBy?: CommunityMeetingOrderByWithAggregationInput | CommunityMeetingOrderByWithAggregationInput[]
+    by: CommunityMeetingScalarFieldEnum[] | CommunityMeetingScalarFieldEnum
+    having?: CommunityMeetingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CommunityMeetingCountAggregateInputType | true
+    _min?: CommunityMeetingMinAggregateInputType
+    _max?: CommunityMeetingMaxAggregateInputType
+  }
+
+  export type CommunityMeetingGroupByOutputType = {
+    id: string
+    reportId: string | null
+    title: string
+    description: string
+    scheduledDate: Date
+    location: string
+    organizer: string
+    status: string
+    meetingType: string
+    agenda: string[]
+    minutes: string | null
+    attendees: string[]
+    outcomes: string[]
+    createdAt: Date
+    updatedAt: Date
+    _count: CommunityMeetingCountAggregateOutputType | null
+    _min: CommunityMeetingMinAggregateOutputType | null
+    _max: CommunityMeetingMaxAggregateOutputType | null
+  }
+
+  type GetCommunityMeetingGroupByPayload<T extends CommunityMeetingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CommunityMeetingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CommunityMeetingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CommunityMeetingGroupByOutputType[P]>
+            : GetScalarType<T[P], CommunityMeetingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CommunityMeetingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reportId?: boolean
+    title?: boolean
+    description?: boolean
+    scheduledDate?: boolean
+    location?: boolean
+    organizer?: boolean
+    status?: boolean
+    meetingType?: boolean
+    agenda?: boolean
+    minutes?: boolean
+    attendees?: boolean
+    outcomes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    Report?: boolean | CommunityMeeting$ReportArgs<ExtArgs>
+    Organizer?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["communityMeeting"]>
+
+  export type CommunityMeetingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reportId?: boolean
+    title?: boolean
+    description?: boolean
+    scheduledDate?: boolean
+    location?: boolean
+    organizer?: boolean
+    status?: boolean
+    meetingType?: boolean
+    agenda?: boolean
+    minutes?: boolean
+    attendees?: boolean
+    outcomes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    Report?: boolean | CommunityMeeting$ReportArgs<ExtArgs>
+    Organizer?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["communityMeeting"]>
+
+
+  export type CommunityMeetingSelectScalar = {
+    id?: boolean
+    reportId?: boolean
+    title?: boolean
+    description?: boolean
+    scheduledDate?: boolean
+    location?: boolean
+    organizer?: boolean
+    status?: boolean
+    meetingType?: boolean
+    agenda?: boolean
+    minutes?: boolean
+    attendees?: boolean
+    outcomes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CommunityMeetingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reportId" | "title" | "description" | "scheduledDate" | "location" | "organizer" | "status" | "meetingType" | "agenda" | "minutes" | "attendees" | "outcomes" | "createdAt" | "updatedAt", ExtArgs["result"]["communityMeeting"]>
+  export type CommunityMeetingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Report?: boolean | CommunityMeeting$ReportArgs<ExtArgs>
+    Organizer?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CommunityMeetingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Report?: boolean | CommunityMeeting$ReportArgs<ExtArgs>
+    Organizer?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CommunityMeetingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CommunityMeeting"
+    objects: {
+      Report: Prisma.$ReportPayload<ExtArgs> | null
+      Organizer: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      reportId: string | null
+      title: string
+      description: string
+      scheduledDate: Date
+      location: string
+      organizer: string
+      status: string
+      meetingType: string
+      agenda: string[]
+      minutes: string | null
+      attendees: string[]
+      outcomes: string[]
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["communityMeeting"]>
+    composites: {}
+  }
+
+  type CommunityMeetingGetPayload<S extends boolean | null | undefined | CommunityMeetingDefaultArgs> = $Result.GetResult<Prisma.$CommunityMeetingPayload, S>
+
+  type CommunityMeetingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CommunityMeetingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CommunityMeetingCountAggregateInputType | true
+    }
+
+  export interface CommunityMeetingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CommunityMeeting'], meta: { name: 'CommunityMeeting' } }
+    /**
+     * Find zero or one CommunityMeeting that matches the filter.
+     * @param {CommunityMeetingFindUniqueArgs} args - Arguments to find a CommunityMeeting
+     * @example
+     * // Get one CommunityMeeting
+     * const communityMeeting = await prisma.communityMeeting.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CommunityMeetingFindUniqueArgs>(args: SelectSubset<T, CommunityMeetingFindUniqueArgs<ExtArgs>>): Prisma__CommunityMeetingClient<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CommunityMeeting that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CommunityMeetingFindUniqueOrThrowArgs} args - Arguments to find a CommunityMeeting
+     * @example
+     * // Get one CommunityMeeting
+     * const communityMeeting = await prisma.communityMeeting.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CommunityMeetingFindUniqueOrThrowArgs>(args: SelectSubset<T, CommunityMeetingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CommunityMeetingClient<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CommunityMeeting that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityMeetingFindFirstArgs} args - Arguments to find a CommunityMeeting
+     * @example
+     * // Get one CommunityMeeting
+     * const communityMeeting = await prisma.communityMeeting.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CommunityMeetingFindFirstArgs>(args?: SelectSubset<T, CommunityMeetingFindFirstArgs<ExtArgs>>): Prisma__CommunityMeetingClient<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CommunityMeeting that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityMeetingFindFirstOrThrowArgs} args - Arguments to find a CommunityMeeting
+     * @example
+     * // Get one CommunityMeeting
+     * const communityMeeting = await prisma.communityMeeting.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CommunityMeetingFindFirstOrThrowArgs>(args?: SelectSubset<T, CommunityMeetingFindFirstOrThrowArgs<ExtArgs>>): Prisma__CommunityMeetingClient<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CommunityMeetings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityMeetingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CommunityMeetings
+     * const communityMeetings = await prisma.communityMeeting.findMany()
+     * 
+     * // Get first 10 CommunityMeetings
+     * const communityMeetings = await prisma.communityMeeting.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const communityMeetingWithIdOnly = await prisma.communityMeeting.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CommunityMeetingFindManyArgs>(args?: SelectSubset<T, CommunityMeetingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CommunityMeeting.
+     * @param {CommunityMeetingCreateArgs} args - Arguments to create a CommunityMeeting.
+     * @example
+     * // Create one CommunityMeeting
+     * const CommunityMeeting = await prisma.communityMeeting.create({
+     *   data: {
+     *     // ... data to create a CommunityMeeting
+     *   }
+     * })
+     * 
+     */
+    create<T extends CommunityMeetingCreateArgs>(args: SelectSubset<T, CommunityMeetingCreateArgs<ExtArgs>>): Prisma__CommunityMeetingClient<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CommunityMeetings.
+     * @param {CommunityMeetingCreateManyArgs} args - Arguments to create many CommunityMeetings.
+     * @example
+     * // Create many CommunityMeetings
+     * const communityMeeting = await prisma.communityMeeting.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CommunityMeetingCreateManyArgs>(args?: SelectSubset<T, CommunityMeetingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CommunityMeetings and returns the data saved in the database.
+     * @param {CommunityMeetingCreateManyAndReturnArgs} args - Arguments to create many CommunityMeetings.
+     * @example
+     * // Create many CommunityMeetings
+     * const communityMeeting = await prisma.communityMeeting.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CommunityMeetings and only return the `id`
+     * const communityMeetingWithIdOnly = await prisma.communityMeeting.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CommunityMeetingCreateManyAndReturnArgs>(args?: SelectSubset<T, CommunityMeetingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CommunityMeeting.
+     * @param {CommunityMeetingDeleteArgs} args - Arguments to delete one CommunityMeeting.
+     * @example
+     * // Delete one CommunityMeeting
+     * const CommunityMeeting = await prisma.communityMeeting.delete({
+     *   where: {
+     *     // ... filter to delete one CommunityMeeting
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CommunityMeetingDeleteArgs>(args: SelectSubset<T, CommunityMeetingDeleteArgs<ExtArgs>>): Prisma__CommunityMeetingClient<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CommunityMeeting.
+     * @param {CommunityMeetingUpdateArgs} args - Arguments to update one CommunityMeeting.
+     * @example
+     * // Update one CommunityMeeting
+     * const communityMeeting = await prisma.communityMeeting.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CommunityMeetingUpdateArgs>(args: SelectSubset<T, CommunityMeetingUpdateArgs<ExtArgs>>): Prisma__CommunityMeetingClient<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CommunityMeetings.
+     * @param {CommunityMeetingDeleteManyArgs} args - Arguments to filter CommunityMeetings to delete.
+     * @example
+     * // Delete a few CommunityMeetings
+     * const { count } = await prisma.communityMeeting.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CommunityMeetingDeleteManyArgs>(args?: SelectSubset<T, CommunityMeetingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CommunityMeetings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityMeetingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CommunityMeetings
+     * const communityMeeting = await prisma.communityMeeting.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CommunityMeetingUpdateManyArgs>(args: SelectSubset<T, CommunityMeetingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CommunityMeeting.
+     * @param {CommunityMeetingUpsertArgs} args - Arguments to update or create a CommunityMeeting.
+     * @example
+     * // Update or create a CommunityMeeting
+     * const communityMeeting = await prisma.communityMeeting.upsert({
+     *   create: {
+     *     // ... data to create a CommunityMeeting
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CommunityMeeting we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CommunityMeetingUpsertArgs>(args: SelectSubset<T, CommunityMeetingUpsertArgs<ExtArgs>>): Prisma__CommunityMeetingClient<$Result.GetResult<Prisma.$CommunityMeetingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CommunityMeetings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityMeetingCountArgs} args - Arguments to filter CommunityMeetings to count.
+     * @example
+     * // Count the number of CommunityMeetings
+     * const count = await prisma.communityMeeting.count({
+     *   where: {
+     *     // ... the filter for the CommunityMeetings we want to count
+     *   }
+     * })
+    **/
+    count<T extends CommunityMeetingCountArgs>(
+      args?: Subset<T, CommunityMeetingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CommunityMeetingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CommunityMeeting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityMeetingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CommunityMeetingAggregateArgs>(args: Subset<T, CommunityMeetingAggregateArgs>): Prisma.PrismaPromise<GetCommunityMeetingAggregateType<T>>
+
+    /**
+     * Group by CommunityMeeting.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommunityMeetingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CommunityMeetingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CommunityMeetingGroupByArgs['orderBy'] }
+        : { orderBy?: CommunityMeetingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CommunityMeetingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCommunityMeetingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CommunityMeeting model
+   */
+  readonly fields: CommunityMeetingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CommunityMeeting.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CommunityMeetingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Report<T extends CommunityMeeting$ReportArgs<ExtArgs> = {}>(args?: Subset<T, CommunityMeeting$ReportArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    Organizer<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CommunityMeeting model
+   */
+  interface CommunityMeetingFieldRefs {
+    readonly id: FieldRef<"CommunityMeeting", 'String'>
+    readonly reportId: FieldRef<"CommunityMeeting", 'String'>
+    readonly title: FieldRef<"CommunityMeeting", 'String'>
+    readonly description: FieldRef<"CommunityMeeting", 'String'>
+    readonly scheduledDate: FieldRef<"CommunityMeeting", 'DateTime'>
+    readonly location: FieldRef<"CommunityMeeting", 'String'>
+    readonly organizer: FieldRef<"CommunityMeeting", 'String'>
+    readonly status: FieldRef<"CommunityMeeting", 'String'>
+    readonly meetingType: FieldRef<"CommunityMeeting", 'String'>
+    readonly agenda: FieldRef<"CommunityMeeting", 'String[]'>
+    readonly minutes: FieldRef<"CommunityMeeting", 'String'>
+    readonly attendees: FieldRef<"CommunityMeeting", 'String[]'>
+    readonly outcomes: FieldRef<"CommunityMeeting", 'String[]'>
+    readonly createdAt: FieldRef<"CommunityMeeting", 'DateTime'>
+    readonly updatedAt: FieldRef<"CommunityMeeting", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CommunityMeeting findUnique
+   */
+  export type CommunityMeetingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+    /**
+     * Filter, which CommunityMeeting to fetch.
+     */
+    where: CommunityMeetingWhereUniqueInput
+  }
+
+  /**
+   * CommunityMeeting findUniqueOrThrow
+   */
+  export type CommunityMeetingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+    /**
+     * Filter, which CommunityMeeting to fetch.
+     */
+    where: CommunityMeetingWhereUniqueInput
+  }
+
+  /**
+   * CommunityMeeting findFirst
+   */
+  export type CommunityMeetingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+    /**
+     * Filter, which CommunityMeeting to fetch.
+     */
+    where?: CommunityMeetingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CommunityMeetings to fetch.
+     */
+    orderBy?: CommunityMeetingOrderByWithRelationInput | CommunityMeetingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CommunityMeetings.
+     */
+    cursor?: CommunityMeetingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CommunityMeetings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CommunityMeetings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CommunityMeetings.
+     */
+    distinct?: CommunityMeetingScalarFieldEnum | CommunityMeetingScalarFieldEnum[]
+  }
+
+  /**
+   * CommunityMeeting findFirstOrThrow
+   */
+  export type CommunityMeetingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+    /**
+     * Filter, which CommunityMeeting to fetch.
+     */
+    where?: CommunityMeetingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CommunityMeetings to fetch.
+     */
+    orderBy?: CommunityMeetingOrderByWithRelationInput | CommunityMeetingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CommunityMeetings.
+     */
+    cursor?: CommunityMeetingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CommunityMeetings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CommunityMeetings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CommunityMeetings.
+     */
+    distinct?: CommunityMeetingScalarFieldEnum | CommunityMeetingScalarFieldEnum[]
+  }
+
+  /**
+   * CommunityMeeting findMany
+   */
+  export type CommunityMeetingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+    /**
+     * Filter, which CommunityMeetings to fetch.
+     */
+    where?: CommunityMeetingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CommunityMeetings to fetch.
+     */
+    orderBy?: CommunityMeetingOrderByWithRelationInput | CommunityMeetingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CommunityMeetings.
+     */
+    cursor?: CommunityMeetingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CommunityMeetings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CommunityMeetings.
+     */
+    skip?: number
+    distinct?: CommunityMeetingScalarFieldEnum | CommunityMeetingScalarFieldEnum[]
+  }
+
+  /**
+   * CommunityMeeting create
+   */
+  export type CommunityMeetingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CommunityMeeting.
+     */
+    data: XOR<CommunityMeetingCreateInput, CommunityMeetingUncheckedCreateInput>
+  }
+
+  /**
+   * CommunityMeeting createMany
+   */
+  export type CommunityMeetingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CommunityMeetings.
+     */
+    data: CommunityMeetingCreateManyInput | CommunityMeetingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CommunityMeeting createManyAndReturn
+   */
+  export type CommunityMeetingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * The data used to create many CommunityMeetings.
+     */
+    data: CommunityMeetingCreateManyInput | CommunityMeetingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CommunityMeeting update
+   */
+  export type CommunityMeetingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CommunityMeeting.
+     */
+    data: XOR<CommunityMeetingUpdateInput, CommunityMeetingUncheckedUpdateInput>
+    /**
+     * Choose, which CommunityMeeting to update.
+     */
+    where: CommunityMeetingWhereUniqueInput
+  }
+
+  /**
+   * CommunityMeeting updateMany
+   */
+  export type CommunityMeetingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CommunityMeetings.
+     */
+    data: XOR<CommunityMeetingUpdateManyMutationInput, CommunityMeetingUncheckedUpdateManyInput>
+    /**
+     * Filter which CommunityMeetings to update
+     */
+    where?: CommunityMeetingWhereInput
+  }
+
+  /**
+   * CommunityMeeting upsert
+   */
+  export type CommunityMeetingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CommunityMeeting to update in case it exists.
+     */
+    where: CommunityMeetingWhereUniqueInput
+    /**
+     * In case the CommunityMeeting found by the `where` argument doesn't exist, create a new CommunityMeeting with this data.
+     */
+    create: XOR<CommunityMeetingCreateInput, CommunityMeetingUncheckedCreateInput>
+    /**
+     * In case the CommunityMeeting was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CommunityMeetingUpdateInput, CommunityMeetingUncheckedUpdateInput>
+  }
+
+  /**
+   * CommunityMeeting delete
+   */
+  export type CommunityMeetingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+    /**
+     * Filter which CommunityMeeting to delete.
+     */
+    where: CommunityMeetingWhereUniqueInput
+  }
+
+  /**
+   * CommunityMeeting deleteMany
+   */
+  export type CommunityMeetingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CommunityMeetings to delete
+     */
+    where?: CommunityMeetingWhereInput
+  }
+
+  /**
+   * CommunityMeeting.Report
+   */
+  export type CommunityMeeting$ReportArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    where?: ReportWhereInput
+  }
+
+  /**
+   * CommunityMeeting without action
+   */
+  export type CommunityMeetingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommunityMeeting
+     */
+    select?: CommunityMeetingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommunityMeeting
+     */
+    omit?: CommunityMeetingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommunityMeetingInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -16787,6 +20540,7 @@ export namespace Prisma {
     consultationId: 'consultationId',
     userId: 'userId',
     comment: 'comment',
+    vote: 'vote',
     createdAt: 'createdAt'
   };
 
@@ -16963,6 +20717,59 @@ export namespace Prisma {
   };
 
   export type WaterDemandAnalysisScalarFieldEnum = (typeof WaterDemandAnalysisScalarFieldEnum)[keyof typeof WaterDemandAnalysisScalarFieldEnum]
+
+
+  export const ReportEscalationScalarFieldEnum: {
+    id: 'id',
+    reportId: 'reportId',
+    escalatedBy: 'escalatedBy',
+    escalationType: 'escalationType',
+    escalationLevel: 'escalationLevel',
+    votingData: 'votingData',
+    escalationReason: 'escalationReason',
+    escalatedAt: 'escalatedAt',
+    status: 'status',
+    priority: 'priority',
+    resolvedAt: 'resolvedAt',
+    resolvedBy: 'resolvedBy',
+    resolution: 'resolution'
+  };
+
+  export type ReportEscalationScalarFieldEnum = (typeof ReportEscalationScalarFieldEnum)[keyof typeof ReportEscalationScalarFieldEnum]
+
+
+  export const ReportActivityScalarFieldEnum: {
+    id: 'id',
+    reportId: 'reportId',
+    userId: 'userId',
+    action: 'action',
+    description: 'description',
+    metadata: 'metadata',
+    createdAt: 'createdAt'
+  };
+
+  export type ReportActivityScalarFieldEnum = (typeof ReportActivityScalarFieldEnum)[keyof typeof ReportActivityScalarFieldEnum]
+
+
+  export const CommunityMeetingScalarFieldEnum: {
+    id: 'id',
+    reportId: 'reportId',
+    title: 'title',
+    description: 'description',
+    scheduledDate: 'scheduledDate',
+    location: 'location',
+    organizer: 'organizer',
+    status: 'status',
+    meetingType: 'meetingType',
+    agenda: 'agenda',
+    minutes: 'minutes',
+    attendees: 'attendees',
+    outcomes: 'outcomes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CommunityMeetingScalarFieldEnum = (typeof CommunityMeetingScalarFieldEnum)[keyof typeof CommunityMeetingScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -17248,6 +21055,7 @@ export namespace Prisma {
     consultationId?: StringFilter<"ConsultationComment"> | string
     userId?: StringFilter<"ConsultationComment"> | string
     comment?: StringFilter<"ConsultationComment"> | string
+    vote?: StringNullableFilter<"ConsultationComment"> | string | null
     createdAt?: DateTimeFilter<"ConsultationComment"> | Date | string
     PublicConsultation?: XOR<PublicConsultationRelationFilter, PublicConsultationWhereInput>
     User?: XOR<UserRelationFilter, UserWhereInput>
@@ -17258,6 +21066,7 @@ export namespace Prisma {
     consultationId?: SortOrder
     userId?: SortOrder
     comment?: SortOrder
+    vote?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     PublicConsultation?: PublicConsultationOrderByWithRelationInput
     User?: UserOrderByWithRelationInput
@@ -17271,6 +21080,7 @@ export namespace Prisma {
     consultationId?: StringFilter<"ConsultationComment"> | string
     userId?: StringFilter<"ConsultationComment"> | string
     comment?: StringFilter<"ConsultationComment"> | string
+    vote?: StringNullableFilter<"ConsultationComment"> | string | null
     createdAt?: DateTimeFilter<"ConsultationComment"> | Date | string
     PublicConsultation?: XOR<PublicConsultationRelationFilter, PublicConsultationWhereInput>
     User?: XOR<UserRelationFilter, UserWhereInput>
@@ -17281,6 +21091,7 @@ export namespace Prisma {
     consultationId?: SortOrder
     userId?: SortOrder
     comment?: SortOrder
+    vote?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: ConsultationCommentCountOrderByAggregateInput
     _max?: ConsultationCommentMaxOrderByAggregateInput
@@ -17295,6 +21106,7 @@ export namespace Prisma {
     consultationId?: StringWithAggregatesFilter<"ConsultationComment"> | string
     userId?: StringWithAggregatesFilter<"ConsultationComment"> | string
     comment?: StringWithAggregatesFilter<"ConsultationComment"> | string
+    vote?: StringNullableWithAggregatesFilter<"ConsultationComment"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ConsultationComment"> | Date | string
   }
 
@@ -17592,6 +21404,9 @@ export namespace Prisma {
     ReportUpdate?: ReportUpdateListRelationFilter
     ReportVote?: ReportVoteListRelationFilter
     SatelliteAnalysis?: SatelliteAnalysisListRelationFilter
+    ReportEscalation?: ReportEscalationListRelationFilter
+    ReportActivity?: ReportActivityListRelationFilter
+    CommunityMeeting?: CommunityMeetingListRelationFilter
   }
 
   export type ReportOrderByWithRelationInput = {
@@ -17624,6 +21439,9 @@ export namespace Prisma {
     ReportUpdate?: ReportUpdateOrderByRelationAggregateInput
     ReportVote?: ReportVoteOrderByRelationAggregateInput
     SatelliteAnalysis?: SatelliteAnalysisOrderByRelationAggregateInput
+    ReportEscalation?: ReportEscalationOrderByRelationAggregateInput
+    ReportActivity?: ReportActivityOrderByRelationAggregateInput
+    CommunityMeeting?: CommunityMeetingOrderByRelationAggregateInput
   }
 
   export type ReportWhereUniqueInput = Prisma.AtLeast<{
@@ -17659,6 +21477,9 @@ export namespace Prisma {
     ReportUpdate?: ReportUpdateListRelationFilter
     ReportVote?: ReportVoteListRelationFilter
     SatelliteAnalysis?: SatelliteAnalysisListRelationFilter
+    ReportEscalation?: ReportEscalationListRelationFilter
+    ReportActivity?: ReportActivityListRelationFilter
+    CommunityMeeting?: CommunityMeetingListRelationFilter
   }, "id">
 
   export type ReportOrderByWithAggregationInput = {
@@ -18001,6 +21822,10 @@ export namespace Prisma {
     Report?: ReportListRelationFilter
     ReportVote?: ReportVoteListRelationFilter
     Session?: SessionListRelationFilter
+    EscalationsCreated?: ReportEscalationListRelationFilter
+    EscalationsResolved?: ReportEscalationListRelationFilter
+    ReportActivity?: ReportActivityListRelationFilter
+    CommunityMeeting?: CommunityMeetingListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -18020,6 +21845,10 @@ export namespace Prisma {
     Report?: ReportOrderByRelationAggregateInput
     ReportVote?: ReportVoteOrderByRelationAggregateInput
     Session?: SessionOrderByRelationAggregateInput
+    EscalationsCreated?: ReportEscalationOrderByRelationAggregateInput
+    EscalationsResolved?: ReportEscalationOrderByRelationAggregateInput
+    ReportActivity?: ReportActivityOrderByRelationAggregateInput
+    CommunityMeeting?: CommunityMeetingOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -18042,6 +21871,10 @@ export namespace Prisma {
     Report?: ReportListRelationFilter
     ReportVote?: ReportVoteListRelationFilter
     Session?: SessionListRelationFilter
+    EscalationsCreated?: ReportEscalationListRelationFilter
+    EscalationsResolved?: ReportEscalationListRelationFilter
+    ReportActivity?: ReportActivityListRelationFilter
+    CommunityMeeting?: CommunityMeetingListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -18188,6 +22021,283 @@ export namespace Prisma {
     analysisDate?: DateTimeWithAggregatesFilter<"WaterDemandAnalysis"> | Date | string
   }
 
+  export type ReportEscalationWhereInput = {
+    AND?: ReportEscalationWhereInput | ReportEscalationWhereInput[]
+    OR?: ReportEscalationWhereInput[]
+    NOT?: ReportEscalationWhereInput | ReportEscalationWhereInput[]
+    id?: StringFilter<"ReportEscalation"> | string
+    reportId?: StringFilter<"ReportEscalation"> | string
+    escalatedBy?: StringFilter<"ReportEscalation"> | string
+    escalationType?: StringFilter<"ReportEscalation"> | string
+    escalationLevel?: StringFilter<"ReportEscalation"> | string
+    votingData?: JsonNullableFilter<"ReportEscalation">
+    escalationReason?: StringFilter<"ReportEscalation"> | string
+    escalatedAt?: DateTimeFilter<"ReportEscalation"> | Date | string
+    status?: StringFilter<"ReportEscalation"> | string
+    priority?: StringFilter<"ReportEscalation"> | string
+    resolvedAt?: DateTimeNullableFilter<"ReportEscalation"> | Date | string | null
+    resolvedBy?: StringNullableFilter<"ReportEscalation"> | string | null
+    resolution?: StringNullableFilter<"ReportEscalation"> | string | null
+    Report?: XOR<ReportRelationFilter, ReportWhereInput>
+    EscalatedBy?: XOR<UserRelationFilter, UserWhereInput>
+    ResolvedBy?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }
+
+  export type ReportEscalationOrderByWithRelationInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    escalatedBy?: SortOrder
+    escalationType?: SortOrder
+    escalationLevel?: SortOrder
+    votingData?: SortOrderInput | SortOrder
+    escalationReason?: SortOrder
+    escalatedAt?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    resolvedAt?: SortOrderInput | SortOrder
+    resolvedBy?: SortOrderInput | SortOrder
+    resolution?: SortOrderInput | SortOrder
+    Report?: ReportOrderByWithRelationInput
+    EscalatedBy?: UserOrderByWithRelationInput
+    ResolvedBy?: UserOrderByWithRelationInput
+  }
+
+  export type ReportEscalationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ReportEscalationWhereInput | ReportEscalationWhereInput[]
+    OR?: ReportEscalationWhereInput[]
+    NOT?: ReportEscalationWhereInput | ReportEscalationWhereInput[]
+    reportId?: StringFilter<"ReportEscalation"> | string
+    escalatedBy?: StringFilter<"ReportEscalation"> | string
+    escalationType?: StringFilter<"ReportEscalation"> | string
+    escalationLevel?: StringFilter<"ReportEscalation"> | string
+    votingData?: JsonNullableFilter<"ReportEscalation">
+    escalationReason?: StringFilter<"ReportEscalation"> | string
+    escalatedAt?: DateTimeFilter<"ReportEscalation"> | Date | string
+    status?: StringFilter<"ReportEscalation"> | string
+    priority?: StringFilter<"ReportEscalation"> | string
+    resolvedAt?: DateTimeNullableFilter<"ReportEscalation"> | Date | string | null
+    resolvedBy?: StringNullableFilter<"ReportEscalation"> | string | null
+    resolution?: StringNullableFilter<"ReportEscalation"> | string | null
+    Report?: XOR<ReportRelationFilter, ReportWhereInput>
+    EscalatedBy?: XOR<UserRelationFilter, UserWhereInput>
+    ResolvedBy?: XOR<UserNullableRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type ReportEscalationOrderByWithAggregationInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    escalatedBy?: SortOrder
+    escalationType?: SortOrder
+    escalationLevel?: SortOrder
+    votingData?: SortOrderInput | SortOrder
+    escalationReason?: SortOrder
+    escalatedAt?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    resolvedAt?: SortOrderInput | SortOrder
+    resolvedBy?: SortOrderInput | SortOrder
+    resolution?: SortOrderInput | SortOrder
+    _count?: ReportEscalationCountOrderByAggregateInput
+    _max?: ReportEscalationMaxOrderByAggregateInput
+    _min?: ReportEscalationMinOrderByAggregateInput
+  }
+
+  export type ReportEscalationScalarWhereWithAggregatesInput = {
+    AND?: ReportEscalationScalarWhereWithAggregatesInput | ReportEscalationScalarWhereWithAggregatesInput[]
+    OR?: ReportEscalationScalarWhereWithAggregatesInput[]
+    NOT?: ReportEscalationScalarWhereWithAggregatesInput | ReportEscalationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ReportEscalation"> | string
+    reportId?: StringWithAggregatesFilter<"ReportEscalation"> | string
+    escalatedBy?: StringWithAggregatesFilter<"ReportEscalation"> | string
+    escalationType?: StringWithAggregatesFilter<"ReportEscalation"> | string
+    escalationLevel?: StringWithAggregatesFilter<"ReportEscalation"> | string
+    votingData?: JsonNullableWithAggregatesFilter<"ReportEscalation">
+    escalationReason?: StringWithAggregatesFilter<"ReportEscalation"> | string
+    escalatedAt?: DateTimeWithAggregatesFilter<"ReportEscalation"> | Date | string
+    status?: StringWithAggregatesFilter<"ReportEscalation"> | string
+    priority?: StringWithAggregatesFilter<"ReportEscalation"> | string
+    resolvedAt?: DateTimeNullableWithAggregatesFilter<"ReportEscalation"> | Date | string | null
+    resolvedBy?: StringNullableWithAggregatesFilter<"ReportEscalation"> | string | null
+    resolution?: StringNullableWithAggregatesFilter<"ReportEscalation"> | string | null
+  }
+
+  export type ReportActivityWhereInput = {
+    AND?: ReportActivityWhereInput | ReportActivityWhereInput[]
+    OR?: ReportActivityWhereInput[]
+    NOT?: ReportActivityWhereInput | ReportActivityWhereInput[]
+    id?: StringFilter<"ReportActivity"> | string
+    reportId?: StringFilter<"ReportActivity"> | string
+    userId?: StringFilter<"ReportActivity"> | string
+    action?: StringFilter<"ReportActivity"> | string
+    description?: StringFilter<"ReportActivity"> | string
+    metadata?: JsonNullableFilter<"ReportActivity">
+    createdAt?: DateTimeFilter<"ReportActivity"> | Date | string
+    Report?: XOR<ReportRelationFilter, ReportWhereInput>
+    User?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type ReportActivityOrderByWithRelationInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    description?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    Report?: ReportOrderByWithRelationInput
+    User?: UserOrderByWithRelationInput
+  }
+
+  export type ReportActivityWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ReportActivityWhereInput | ReportActivityWhereInput[]
+    OR?: ReportActivityWhereInput[]
+    NOT?: ReportActivityWhereInput | ReportActivityWhereInput[]
+    reportId?: StringFilter<"ReportActivity"> | string
+    userId?: StringFilter<"ReportActivity"> | string
+    action?: StringFilter<"ReportActivity"> | string
+    description?: StringFilter<"ReportActivity"> | string
+    metadata?: JsonNullableFilter<"ReportActivity">
+    createdAt?: DateTimeFilter<"ReportActivity"> | Date | string
+    Report?: XOR<ReportRelationFilter, ReportWhereInput>
+    User?: XOR<UserRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ReportActivityOrderByWithAggregationInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    description?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ReportActivityCountOrderByAggregateInput
+    _max?: ReportActivityMaxOrderByAggregateInput
+    _min?: ReportActivityMinOrderByAggregateInput
+  }
+
+  export type ReportActivityScalarWhereWithAggregatesInput = {
+    AND?: ReportActivityScalarWhereWithAggregatesInput | ReportActivityScalarWhereWithAggregatesInput[]
+    OR?: ReportActivityScalarWhereWithAggregatesInput[]
+    NOT?: ReportActivityScalarWhereWithAggregatesInput | ReportActivityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ReportActivity"> | string
+    reportId?: StringWithAggregatesFilter<"ReportActivity"> | string
+    userId?: StringWithAggregatesFilter<"ReportActivity"> | string
+    action?: StringWithAggregatesFilter<"ReportActivity"> | string
+    description?: StringWithAggregatesFilter<"ReportActivity"> | string
+    metadata?: JsonNullableWithAggregatesFilter<"ReportActivity">
+    createdAt?: DateTimeWithAggregatesFilter<"ReportActivity"> | Date | string
+  }
+
+  export type CommunityMeetingWhereInput = {
+    AND?: CommunityMeetingWhereInput | CommunityMeetingWhereInput[]
+    OR?: CommunityMeetingWhereInput[]
+    NOT?: CommunityMeetingWhereInput | CommunityMeetingWhereInput[]
+    id?: StringFilter<"CommunityMeeting"> | string
+    reportId?: StringNullableFilter<"CommunityMeeting"> | string | null
+    title?: StringFilter<"CommunityMeeting"> | string
+    description?: StringFilter<"CommunityMeeting"> | string
+    scheduledDate?: DateTimeFilter<"CommunityMeeting"> | Date | string
+    location?: StringFilter<"CommunityMeeting"> | string
+    organizer?: StringFilter<"CommunityMeeting"> | string
+    status?: StringFilter<"CommunityMeeting"> | string
+    meetingType?: StringFilter<"CommunityMeeting"> | string
+    agenda?: StringNullableListFilter<"CommunityMeeting">
+    minutes?: StringNullableFilter<"CommunityMeeting"> | string | null
+    attendees?: StringNullableListFilter<"CommunityMeeting">
+    outcomes?: StringNullableListFilter<"CommunityMeeting">
+    createdAt?: DateTimeFilter<"CommunityMeeting"> | Date | string
+    updatedAt?: DateTimeFilter<"CommunityMeeting"> | Date | string
+    Report?: XOR<ReportNullableRelationFilter, ReportWhereInput> | null
+    Organizer?: XOR<UserRelationFilter, UserWhereInput>
+  }
+
+  export type CommunityMeetingOrderByWithRelationInput = {
+    id?: SortOrder
+    reportId?: SortOrderInput | SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    scheduledDate?: SortOrder
+    location?: SortOrder
+    organizer?: SortOrder
+    status?: SortOrder
+    meetingType?: SortOrder
+    agenda?: SortOrder
+    minutes?: SortOrderInput | SortOrder
+    attendees?: SortOrder
+    outcomes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    Report?: ReportOrderByWithRelationInput
+    Organizer?: UserOrderByWithRelationInput
+  }
+
+  export type CommunityMeetingWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CommunityMeetingWhereInput | CommunityMeetingWhereInput[]
+    OR?: CommunityMeetingWhereInput[]
+    NOT?: CommunityMeetingWhereInput | CommunityMeetingWhereInput[]
+    reportId?: StringNullableFilter<"CommunityMeeting"> | string | null
+    title?: StringFilter<"CommunityMeeting"> | string
+    description?: StringFilter<"CommunityMeeting"> | string
+    scheduledDate?: DateTimeFilter<"CommunityMeeting"> | Date | string
+    location?: StringFilter<"CommunityMeeting"> | string
+    organizer?: StringFilter<"CommunityMeeting"> | string
+    status?: StringFilter<"CommunityMeeting"> | string
+    meetingType?: StringFilter<"CommunityMeeting"> | string
+    agenda?: StringNullableListFilter<"CommunityMeeting">
+    minutes?: StringNullableFilter<"CommunityMeeting"> | string | null
+    attendees?: StringNullableListFilter<"CommunityMeeting">
+    outcomes?: StringNullableListFilter<"CommunityMeeting">
+    createdAt?: DateTimeFilter<"CommunityMeeting"> | Date | string
+    updatedAt?: DateTimeFilter<"CommunityMeeting"> | Date | string
+    Report?: XOR<ReportNullableRelationFilter, ReportWhereInput> | null
+    Organizer?: XOR<UserRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type CommunityMeetingOrderByWithAggregationInput = {
+    id?: SortOrder
+    reportId?: SortOrderInput | SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    scheduledDate?: SortOrder
+    location?: SortOrder
+    organizer?: SortOrder
+    status?: SortOrder
+    meetingType?: SortOrder
+    agenda?: SortOrder
+    minutes?: SortOrderInput | SortOrder
+    attendees?: SortOrder
+    outcomes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CommunityMeetingCountOrderByAggregateInput
+    _max?: CommunityMeetingMaxOrderByAggregateInput
+    _min?: CommunityMeetingMinOrderByAggregateInput
+  }
+
+  export type CommunityMeetingScalarWhereWithAggregatesInput = {
+    AND?: CommunityMeetingScalarWhereWithAggregatesInput | CommunityMeetingScalarWhereWithAggregatesInput[]
+    OR?: CommunityMeetingScalarWhereWithAggregatesInput[]
+    NOT?: CommunityMeetingScalarWhereWithAggregatesInput | CommunityMeetingScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CommunityMeeting"> | string
+    reportId?: StringNullableWithAggregatesFilter<"CommunityMeeting"> | string | null
+    title?: StringWithAggregatesFilter<"CommunityMeeting"> | string
+    description?: StringWithAggregatesFilter<"CommunityMeeting"> | string
+    scheduledDate?: DateTimeWithAggregatesFilter<"CommunityMeeting"> | Date | string
+    location?: StringWithAggregatesFilter<"CommunityMeeting"> | string
+    organizer?: StringWithAggregatesFilter<"CommunityMeeting"> | string
+    status?: StringWithAggregatesFilter<"CommunityMeeting"> | string
+    meetingType?: StringWithAggregatesFilter<"CommunityMeeting"> | string
+    agenda?: StringNullableListFilter<"CommunityMeeting">
+    minutes?: StringNullableWithAggregatesFilter<"CommunityMeeting"> | string | null
+    attendees?: StringNullableListFilter<"CommunityMeeting">
+    outcomes?: StringNullableListFilter<"CommunityMeeting">
+    createdAt?: DateTimeWithAggregatesFilter<"CommunityMeeting"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CommunityMeeting"> | Date | string
+  }
+
   export type AccountCreateInput = {
     id: string
     type: string
@@ -18295,6 +22405,7 @@ export namespace Prisma {
   export type ConsultationCommentCreateInput = {
     id: string
     comment: string
+    vote?: string | null
     createdAt?: Date | string
     PublicConsultation: PublicConsultationCreateNestedOneWithoutConsultationCommentInput
     User: UserCreateNestedOneWithoutConsultationCommentInput
@@ -18305,12 +22416,14 @@ export namespace Prisma {
     consultationId: string
     userId: string
     comment: string
+    vote?: string | null
     createdAt?: Date | string
   }
 
   export type ConsultationCommentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     comment?: StringFieldUpdateOperationsInput | string
+    vote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     PublicConsultation?: PublicConsultationUpdateOneRequiredWithoutConsultationCommentNestedInput
     User?: UserUpdateOneRequiredWithoutConsultationCommentNestedInput
@@ -18321,6 +22434,7 @@ export namespace Prisma {
     consultationId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     comment?: StringFieldUpdateOperationsInput | string
+    vote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -18329,12 +22443,14 @@ export namespace Prisma {
     consultationId: string
     userId: string
     comment: string
+    vote?: string | null
     createdAt?: Date | string
   }
 
   export type ConsultationCommentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     comment?: StringFieldUpdateOperationsInput | string
+    vote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -18343,6 +22459,7 @@ export namespace Prisma {
     consultationId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     comment?: StringFieldUpdateOperationsInput | string
+    vote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -18661,6 +22778,9 @@ export namespace Prisma {
     ReportUpdate?: ReportUpdateCreateNestedManyWithoutReportInput
     ReportVote?: ReportVoteCreateNestedManyWithoutReportInput
     SatelliteAnalysis?: SatelliteAnalysisCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutReportInput
   }
 
   export type ReportUncheckedCreateInput = {
@@ -18692,6 +22812,9 @@ export namespace Prisma {
     ReportUpdate?: ReportUpdateUncheckedCreateNestedManyWithoutReportInput
     ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutReportInput
     SatelliteAnalysis?: SatelliteAnalysisUncheckedCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationUncheckedCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutReportInput
   }
 
   export type ReportUpdateInput = {
@@ -18723,6 +22846,9 @@ export namespace Prisma {
     ReportUpdate?: ReportUpdateUpdateManyWithoutReportNestedInput
     ReportVote?: ReportVoteUpdateManyWithoutReportNestedInput
     SatelliteAnalysis?: SatelliteAnalysisUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutReportNestedInput
   }
 
   export type ReportUncheckedUpdateInput = {
@@ -18754,6 +22880,9 @@ export namespace Prisma {
     ReportUpdate?: ReportUpdateUncheckedUpdateManyWithoutReportNestedInput
     ReportVote?: ReportVoteUncheckedUpdateManyWithoutReportNestedInput
     SatelliteAnalysis?: SatelliteAnalysisUncheckedUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUncheckedUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutReportNestedInput
   }
 
   export type ReportCreateManyInput = {
@@ -19117,6 +23246,10 @@ export namespace Prisma {
     Report?: ReportCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteCreateNestedManyWithoutUserInput
     Session?: SessionCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -19136,6 +23269,10 @@ export namespace Prisma {
     Report?: ReportUncheckedCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutUserInput
     Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationUncheckedCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationUncheckedCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserUpdateInput = {
@@ -19155,6 +23292,10 @@ export namespace Prisma {
     Report?: ReportUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUpdateManyWithoutUserNestedInput
     Session?: SessionUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutOrganizerNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -19174,6 +23315,10 @@ export namespace Prisma {
     Report?: ReportUncheckedUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUncheckedUpdateManyWithoutUserNestedInput
     Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUncheckedUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUncheckedUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -19332,6 +23477,307 @@ export namespace Prisma {
     currentSupply?: NullableFloatFieldUpdateOperationsInput | number | null
     shortage?: NullableFloatFieldUpdateOperationsInput | number | null
     analysisDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReportEscalationCreateInput = {
+    id?: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolution?: string | null
+    Report: ReportCreateNestedOneWithoutReportEscalationInput
+    EscalatedBy: UserCreateNestedOneWithoutEscalationsCreatedInput
+    ResolvedBy?: UserCreateNestedOneWithoutEscalationsResolvedInput
+  }
+
+  export type ReportEscalationUncheckedCreateInput = {
+    id?: string
+    reportId: string
+    escalatedBy: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolvedBy?: string | null
+    resolution?: string | null
+  }
+
+  export type ReportEscalationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+    Report?: ReportUpdateOneRequiredWithoutReportEscalationNestedInput
+    EscalatedBy?: UserUpdateOneRequiredWithoutEscalationsCreatedNestedInput
+    ResolvedBy?: UserUpdateOneWithoutEscalationsResolvedNestedInput
+  }
+
+  export type ReportEscalationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    escalatedBy?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportEscalationCreateManyInput = {
+    id?: string
+    reportId: string
+    escalatedBy: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolvedBy?: string | null
+    resolution?: string | null
+  }
+
+  export type ReportEscalationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportEscalationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    escalatedBy?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportActivityCreateInput = {
+    id?: string
+    action: string
+    description: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    Report: ReportCreateNestedOneWithoutReportActivityInput
+    User: UserCreateNestedOneWithoutReportActivityInput
+  }
+
+  export type ReportActivityUncheckedCreateInput = {
+    id?: string
+    reportId: string
+    userId: string
+    action: string
+    description: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ReportActivityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Report?: ReportUpdateOneRequiredWithoutReportActivityNestedInput
+    User?: UserUpdateOneRequiredWithoutReportActivityNestedInput
+  }
+
+  export type ReportActivityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReportActivityCreateManyInput = {
+    id?: string
+    reportId: string
+    userId: string
+    action: string
+    description: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ReportActivityUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReportActivityUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommunityMeetingCreateInput = {
+    id?: string
+    title: string
+    description: string
+    scheduledDate: Date | string
+    location: string
+    status?: string
+    meetingType: string
+    agenda?: CommunityMeetingCreateagendaInput | string[]
+    minutes?: string | null
+    attendees?: CommunityMeetingCreateattendeesInput | string[]
+    outcomes?: CommunityMeetingCreateoutcomesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Report?: ReportCreateNestedOneWithoutCommunityMeetingInput
+    Organizer: UserCreateNestedOneWithoutCommunityMeetingInput
+  }
+
+  export type CommunityMeetingUncheckedCreateInput = {
+    id?: string
+    reportId?: string | null
+    title: string
+    description: string
+    scheduledDate: Date | string
+    location: string
+    organizer: string
+    status?: string
+    meetingType: string
+    agenda?: CommunityMeetingCreateagendaInput | string[]
+    minutes?: string | null
+    attendees?: CommunityMeetingCreateattendeesInput | string[]
+    outcomes?: CommunityMeetingCreateoutcomesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommunityMeetingUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    meetingType?: StringFieldUpdateOperationsInput | string
+    agenda?: CommunityMeetingUpdateagendaInput | string[]
+    minutes?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: CommunityMeetingUpdateattendeesInput | string[]
+    outcomes?: CommunityMeetingUpdateoutcomesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Report?: ReportUpdateOneWithoutCommunityMeetingNestedInput
+    Organizer?: UserUpdateOneRequiredWithoutCommunityMeetingNestedInput
+  }
+
+  export type CommunityMeetingUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: StringFieldUpdateOperationsInput | string
+    organizer?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    meetingType?: StringFieldUpdateOperationsInput | string
+    agenda?: CommunityMeetingUpdateagendaInput | string[]
+    minutes?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: CommunityMeetingUpdateattendeesInput | string[]
+    outcomes?: CommunityMeetingUpdateoutcomesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommunityMeetingCreateManyInput = {
+    id?: string
+    reportId?: string | null
+    title: string
+    description: string
+    scheduledDate: Date | string
+    location: string
+    organizer: string
+    status?: string
+    meetingType: string
+    agenda?: CommunityMeetingCreateagendaInput | string[]
+    minutes?: string | null
+    attendees?: CommunityMeetingCreateattendeesInput | string[]
+    outcomes?: CommunityMeetingCreateoutcomesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommunityMeetingUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    meetingType?: StringFieldUpdateOperationsInput | string
+    agenda?: CommunityMeetingUpdateagendaInput | string[]
+    minutes?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: CommunityMeetingUpdateattendeesInput | string[]
+    outcomes?: CommunityMeetingUpdateoutcomesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommunityMeetingUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: StringFieldUpdateOperationsInput | string
+    organizer?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    meetingType?: StringFieldUpdateOperationsInput | string
+    agenda?: CommunityMeetingUpdateagendaInput | string[]
+    minutes?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: CommunityMeetingUpdateattendeesInput | string[]
+    outcomes?: CommunityMeetingUpdateoutcomesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -19516,6 +23962,7 @@ export namespace Prisma {
     consultationId?: SortOrder
     userId?: SortOrder
     comment?: SortOrder
+    vote?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -19524,6 +23971,7 @@ export namespace Prisma {
     consultationId?: SortOrder
     userId?: SortOrder
     comment?: SortOrder
+    vote?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -19532,6 +23980,7 @@ export namespace Prisma {
     consultationId?: SortOrder
     userId?: SortOrder
     comment?: SortOrder
+    vote?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -19865,6 +24314,24 @@ export namespace Prisma {
     none?: SatelliteAnalysisWhereInput
   }
 
+  export type ReportEscalationListRelationFilter = {
+    every?: ReportEscalationWhereInput
+    some?: ReportEscalationWhereInput
+    none?: ReportEscalationWhereInput
+  }
+
+  export type ReportActivityListRelationFilter = {
+    every?: ReportActivityWhereInput
+    some?: ReportActivityWhereInput
+    none?: ReportActivityWhereInput
+  }
+
+  export type CommunityMeetingListRelationFilter = {
+    every?: CommunityMeetingWhereInput
+    some?: CommunityMeetingWhereInput
+    none?: CommunityMeetingWhereInput
+  }
+
   export type ReportUpdateOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -19874,6 +24341,18 @@ export namespace Prisma {
   }
 
   export type SatelliteAnalysisOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ReportEscalationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ReportActivityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CommunityMeetingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -20392,6 +24871,133 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
+  export type UserNullableRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type ReportEscalationCountOrderByAggregateInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    escalatedBy?: SortOrder
+    escalationType?: SortOrder
+    escalationLevel?: SortOrder
+    votingData?: SortOrder
+    escalationReason?: SortOrder
+    escalatedAt?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    resolvedAt?: SortOrder
+    resolvedBy?: SortOrder
+    resolution?: SortOrder
+  }
+
+  export type ReportEscalationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    escalatedBy?: SortOrder
+    escalationType?: SortOrder
+    escalationLevel?: SortOrder
+    escalationReason?: SortOrder
+    escalatedAt?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    resolvedAt?: SortOrder
+    resolvedBy?: SortOrder
+    resolution?: SortOrder
+  }
+
+  export type ReportEscalationMinOrderByAggregateInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    escalatedBy?: SortOrder
+    escalationType?: SortOrder
+    escalationLevel?: SortOrder
+    escalationReason?: SortOrder
+    escalatedAt?: SortOrder
+    status?: SortOrder
+    priority?: SortOrder
+    resolvedAt?: SortOrder
+    resolvedBy?: SortOrder
+    resolution?: SortOrder
+  }
+
+  export type ReportActivityCountOrderByAggregateInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    description?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ReportActivityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ReportActivityMinOrderByAggregateInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    userId?: SortOrder
+    action?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CommunityMeetingCountOrderByAggregateInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    scheduledDate?: SortOrder
+    location?: SortOrder
+    organizer?: SortOrder
+    status?: SortOrder
+    meetingType?: SortOrder
+    agenda?: SortOrder
+    minutes?: SortOrder
+    attendees?: SortOrder
+    outcomes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommunityMeetingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    scheduledDate?: SortOrder
+    location?: SortOrder
+    organizer?: SortOrder
+    status?: SortOrder
+    meetingType?: SortOrder
+    minutes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommunityMeetingMinOrderByAggregateInput = {
+    id?: SortOrder
+    reportId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    scheduledDate?: SortOrder
+    location?: SortOrder
+    organizer?: SortOrder
+    status?: SortOrder
+    meetingType?: SortOrder
+    minutes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type UserCreateNestedOneWithoutAccountInput = {
     create?: XOR<UserCreateWithoutAccountInput, UserUncheckedCreateWithoutAccountInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountInput
@@ -20601,6 +25207,27 @@ export namespace Prisma {
     connect?: SatelliteAnalysisWhereUniqueInput | SatelliteAnalysisWhereUniqueInput[]
   }
 
+  export type ReportEscalationCreateNestedManyWithoutReportInput = {
+    create?: XOR<ReportEscalationCreateWithoutReportInput, ReportEscalationUncheckedCreateWithoutReportInput> | ReportEscalationCreateWithoutReportInput[] | ReportEscalationUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutReportInput | ReportEscalationCreateOrConnectWithoutReportInput[]
+    createMany?: ReportEscalationCreateManyReportInputEnvelope
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+  }
+
+  export type ReportActivityCreateNestedManyWithoutReportInput = {
+    create?: XOR<ReportActivityCreateWithoutReportInput, ReportActivityUncheckedCreateWithoutReportInput> | ReportActivityCreateWithoutReportInput[] | ReportActivityUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: ReportActivityCreateOrConnectWithoutReportInput | ReportActivityCreateOrConnectWithoutReportInput[]
+    createMany?: ReportActivityCreateManyReportInputEnvelope
+    connect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+  }
+
+  export type CommunityMeetingCreateNestedManyWithoutReportInput = {
+    create?: XOR<CommunityMeetingCreateWithoutReportInput, CommunityMeetingUncheckedCreateWithoutReportInput> | CommunityMeetingCreateWithoutReportInput[] | CommunityMeetingUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: CommunityMeetingCreateOrConnectWithoutReportInput | CommunityMeetingCreateOrConnectWithoutReportInput[]
+    createMany?: CommunityMeetingCreateManyReportInputEnvelope
+    connect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+  }
+
   export type ReportUpdateUncheckedCreateNestedManyWithoutReportInput = {
     create?: XOR<ReportUpdateCreateWithoutReportInput, ReportUpdateUncheckedCreateWithoutReportInput> | ReportUpdateCreateWithoutReportInput[] | ReportUpdateUncheckedCreateWithoutReportInput[]
     connectOrCreate?: ReportUpdateCreateOrConnectWithoutReportInput | ReportUpdateCreateOrConnectWithoutReportInput[]
@@ -20620,6 +25247,27 @@ export namespace Prisma {
     connectOrCreate?: SatelliteAnalysisCreateOrConnectWithoutReportInput | SatelliteAnalysisCreateOrConnectWithoutReportInput[]
     createMany?: SatelliteAnalysisCreateManyReportInputEnvelope
     connect?: SatelliteAnalysisWhereUniqueInput | SatelliteAnalysisWhereUniqueInput[]
+  }
+
+  export type ReportEscalationUncheckedCreateNestedManyWithoutReportInput = {
+    create?: XOR<ReportEscalationCreateWithoutReportInput, ReportEscalationUncheckedCreateWithoutReportInput> | ReportEscalationCreateWithoutReportInput[] | ReportEscalationUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutReportInput | ReportEscalationCreateOrConnectWithoutReportInput[]
+    createMany?: ReportEscalationCreateManyReportInputEnvelope
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+  }
+
+  export type ReportActivityUncheckedCreateNestedManyWithoutReportInput = {
+    create?: XOR<ReportActivityCreateWithoutReportInput, ReportActivityUncheckedCreateWithoutReportInput> | ReportActivityCreateWithoutReportInput[] | ReportActivityUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: ReportActivityCreateOrConnectWithoutReportInput | ReportActivityCreateOrConnectWithoutReportInput[]
+    createMany?: ReportActivityCreateManyReportInputEnvelope
+    connect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+  }
+
+  export type CommunityMeetingUncheckedCreateNestedManyWithoutReportInput = {
+    create?: XOR<CommunityMeetingCreateWithoutReportInput, CommunityMeetingUncheckedCreateWithoutReportInput> | CommunityMeetingCreateWithoutReportInput[] | CommunityMeetingUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: CommunityMeetingCreateOrConnectWithoutReportInput | CommunityMeetingCreateOrConnectWithoutReportInput[]
+    createMany?: CommunityMeetingCreateManyReportInputEnvelope
+    connect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
   }
 
   export type EnumReportTypeFieldUpdateOperationsInput = {
@@ -20718,6 +25366,48 @@ export namespace Prisma {
     deleteMany?: SatelliteAnalysisScalarWhereInput | SatelliteAnalysisScalarWhereInput[]
   }
 
+  export type ReportEscalationUpdateManyWithoutReportNestedInput = {
+    create?: XOR<ReportEscalationCreateWithoutReportInput, ReportEscalationUncheckedCreateWithoutReportInput> | ReportEscalationCreateWithoutReportInput[] | ReportEscalationUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutReportInput | ReportEscalationCreateOrConnectWithoutReportInput[]
+    upsert?: ReportEscalationUpsertWithWhereUniqueWithoutReportInput | ReportEscalationUpsertWithWhereUniqueWithoutReportInput[]
+    createMany?: ReportEscalationCreateManyReportInputEnvelope
+    set?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    disconnect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    delete?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    update?: ReportEscalationUpdateWithWhereUniqueWithoutReportInput | ReportEscalationUpdateWithWhereUniqueWithoutReportInput[]
+    updateMany?: ReportEscalationUpdateManyWithWhereWithoutReportInput | ReportEscalationUpdateManyWithWhereWithoutReportInput[]
+    deleteMany?: ReportEscalationScalarWhereInput | ReportEscalationScalarWhereInput[]
+  }
+
+  export type ReportActivityUpdateManyWithoutReportNestedInput = {
+    create?: XOR<ReportActivityCreateWithoutReportInput, ReportActivityUncheckedCreateWithoutReportInput> | ReportActivityCreateWithoutReportInput[] | ReportActivityUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: ReportActivityCreateOrConnectWithoutReportInput | ReportActivityCreateOrConnectWithoutReportInput[]
+    upsert?: ReportActivityUpsertWithWhereUniqueWithoutReportInput | ReportActivityUpsertWithWhereUniqueWithoutReportInput[]
+    createMany?: ReportActivityCreateManyReportInputEnvelope
+    set?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    disconnect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    delete?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    connect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    update?: ReportActivityUpdateWithWhereUniqueWithoutReportInput | ReportActivityUpdateWithWhereUniqueWithoutReportInput[]
+    updateMany?: ReportActivityUpdateManyWithWhereWithoutReportInput | ReportActivityUpdateManyWithWhereWithoutReportInput[]
+    deleteMany?: ReportActivityScalarWhereInput | ReportActivityScalarWhereInput[]
+  }
+
+  export type CommunityMeetingUpdateManyWithoutReportNestedInput = {
+    create?: XOR<CommunityMeetingCreateWithoutReportInput, CommunityMeetingUncheckedCreateWithoutReportInput> | CommunityMeetingCreateWithoutReportInput[] | CommunityMeetingUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: CommunityMeetingCreateOrConnectWithoutReportInput | CommunityMeetingCreateOrConnectWithoutReportInput[]
+    upsert?: CommunityMeetingUpsertWithWhereUniqueWithoutReportInput | CommunityMeetingUpsertWithWhereUniqueWithoutReportInput[]
+    createMany?: CommunityMeetingCreateManyReportInputEnvelope
+    set?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    disconnect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    delete?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    connect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    update?: CommunityMeetingUpdateWithWhereUniqueWithoutReportInput | CommunityMeetingUpdateWithWhereUniqueWithoutReportInput[]
+    updateMany?: CommunityMeetingUpdateManyWithWhereWithoutReportInput | CommunityMeetingUpdateManyWithWhereWithoutReportInput[]
+    deleteMany?: CommunityMeetingScalarWhereInput | CommunityMeetingScalarWhereInput[]
+  }
+
   export type ReportUpdateUncheckedUpdateManyWithoutReportNestedInput = {
     create?: XOR<ReportUpdateCreateWithoutReportInput, ReportUpdateUncheckedCreateWithoutReportInput> | ReportUpdateCreateWithoutReportInput[] | ReportUpdateUncheckedCreateWithoutReportInput[]
     connectOrCreate?: ReportUpdateCreateOrConnectWithoutReportInput | ReportUpdateCreateOrConnectWithoutReportInput[]
@@ -20758,6 +25448,48 @@ export namespace Prisma {
     update?: SatelliteAnalysisUpdateWithWhereUniqueWithoutReportInput | SatelliteAnalysisUpdateWithWhereUniqueWithoutReportInput[]
     updateMany?: SatelliteAnalysisUpdateManyWithWhereWithoutReportInput | SatelliteAnalysisUpdateManyWithWhereWithoutReportInput[]
     deleteMany?: SatelliteAnalysisScalarWhereInput | SatelliteAnalysisScalarWhereInput[]
+  }
+
+  export type ReportEscalationUncheckedUpdateManyWithoutReportNestedInput = {
+    create?: XOR<ReportEscalationCreateWithoutReportInput, ReportEscalationUncheckedCreateWithoutReportInput> | ReportEscalationCreateWithoutReportInput[] | ReportEscalationUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutReportInput | ReportEscalationCreateOrConnectWithoutReportInput[]
+    upsert?: ReportEscalationUpsertWithWhereUniqueWithoutReportInput | ReportEscalationUpsertWithWhereUniqueWithoutReportInput[]
+    createMany?: ReportEscalationCreateManyReportInputEnvelope
+    set?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    disconnect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    delete?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    update?: ReportEscalationUpdateWithWhereUniqueWithoutReportInput | ReportEscalationUpdateWithWhereUniqueWithoutReportInput[]
+    updateMany?: ReportEscalationUpdateManyWithWhereWithoutReportInput | ReportEscalationUpdateManyWithWhereWithoutReportInput[]
+    deleteMany?: ReportEscalationScalarWhereInput | ReportEscalationScalarWhereInput[]
+  }
+
+  export type ReportActivityUncheckedUpdateManyWithoutReportNestedInput = {
+    create?: XOR<ReportActivityCreateWithoutReportInput, ReportActivityUncheckedCreateWithoutReportInput> | ReportActivityCreateWithoutReportInput[] | ReportActivityUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: ReportActivityCreateOrConnectWithoutReportInput | ReportActivityCreateOrConnectWithoutReportInput[]
+    upsert?: ReportActivityUpsertWithWhereUniqueWithoutReportInput | ReportActivityUpsertWithWhereUniqueWithoutReportInput[]
+    createMany?: ReportActivityCreateManyReportInputEnvelope
+    set?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    disconnect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    delete?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    connect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    update?: ReportActivityUpdateWithWhereUniqueWithoutReportInput | ReportActivityUpdateWithWhereUniqueWithoutReportInput[]
+    updateMany?: ReportActivityUpdateManyWithWhereWithoutReportInput | ReportActivityUpdateManyWithWhereWithoutReportInput[]
+    deleteMany?: ReportActivityScalarWhereInput | ReportActivityScalarWhereInput[]
+  }
+
+  export type CommunityMeetingUncheckedUpdateManyWithoutReportNestedInput = {
+    create?: XOR<CommunityMeetingCreateWithoutReportInput, CommunityMeetingUncheckedCreateWithoutReportInput> | CommunityMeetingCreateWithoutReportInput[] | CommunityMeetingUncheckedCreateWithoutReportInput[]
+    connectOrCreate?: CommunityMeetingCreateOrConnectWithoutReportInput | CommunityMeetingCreateOrConnectWithoutReportInput[]
+    upsert?: CommunityMeetingUpsertWithWhereUniqueWithoutReportInput | CommunityMeetingUpsertWithWhereUniqueWithoutReportInput[]
+    createMany?: CommunityMeetingCreateManyReportInputEnvelope
+    set?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    disconnect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    delete?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    connect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    update?: CommunityMeetingUpdateWithWhereUniqueWithoutReportInput | CommunityMeetingUpdateWithWhereUniqueWithoutReportInput[]
+    updateMany?: CommunityMeetingUpdateManyWithWhereWithoutReportInput | CommunityMeetingUpdateManyWithWhereWithoutReportInput[]
+    deleteMany?: CommunityMeetingScalarWhereInput | CommunityMeetingScalarWhereInput[]
   }
 
   export type ReportCreateNestedOneWithoutReportUpdateInput = {
@@ -20878,6 +25610,34 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
+  export type ReportEscalationCreateNestedManyWithoutEscalatedByInput = {
+    create?: XOR<ReportEscalationCreateWithoutEscalatedByInput, ReportEscalationUncheckedCreateWithoutEscalatedByInput> | ReportEscalationCreateWithoutEscalatedByInput[] | ReportEscalationUncheckedCreateWithoutEscalatedByInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutEscalatedByInput | ReportEscalationCreateOrConnectWithoutEscalatedByInput[]
+    createMany?: ReportEscalationCreateManyEscalatedByInputEnvelope
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+  }
+
+  export type ReportEscalationCreateNestedManyWithoutResolvedByInput = {
+    create?: XOR<ReportEscalationCreateWithoutResolvedByInput, ReportEscalationUncheckedCreateWithoutResolvedByInput> | ReportEscalationCreateWithoutResolvedByInput[] | ReportEscalationUncheckedCreateWithoutResolvedByInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutResolvedByInput | ReportEscalationCreateOrConnectWithoutResolvedByInput[]
+    createMany?: ReportEscalationCreateManyResolvedByInputEnvelope
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+  }
+
+  export type ReportActivityCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReportActivityCreateWithoutUserInput, ReportActivityUncheckedCreateWithoutUserInput> | ReportActivityCreateWithoutUserInput[] | ReportActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReportActivityCreateOrConnectWithoutUserInput | ReportActivityCreateOrConnectWithoutUserInput[]
+    createMany?: ReportActivityCreateManyUserInputEnvelope
+    connect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+  }
+
+  export type CommunityMeetingCreateNestedManyWithoutOrganizerInput = {
+    create?: XOR<CommunityMeetingCreateWithoutOrganizerInput, CommunityMeetingUncheckedCreateWithoutOrganizerInput> | CommunityMeetingCreateWithoutOrganizerInput[] | CommunityMeetingUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: CommunityMeetingCreateOrConnectWithoutOrganizerInput | CommunityMeetingCreateOrConnectWithoutOrganizerInput[]
+    createMany?: CommunityMeetingCreateManyOrganizerInputEnvelope
+    connect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -20918,6 +25678,34 @@ export namespace Prisma {
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
     createMany?: SessionCreateManyUserInputEnvelope
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
+  export type ReportEscalationUncheckedCreateNestedManyWithoutEscalatedByInput = {
+    create?: XOR<ReportEscalationCreateWithoutEscalatedByInput, ReportEscalationUncheckedCreateWithoutEscalatedByInput> | ReportEscalationCreateWithoutEscalatedByInput[] | ReportEscalationUncheckedCreateWithoutEscalatedByInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutEscalatedByInput | ReportEscalationCreateOrConnectWithoutEscalatedByInput[]
+    createMany?: ReportEscalationCreateManyEscalatedByInputEnvelope
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+  }
+
+  export type ReportEscalationUncheckedCreateNestedManyWithoutResolvedByInput = {
+    create?: XOR<ReportEscalationCreateWithoutResolvedByInput, ReportEscalationUncheckedCreateWithoutResolvedByInput> | ReportEscalationCreateWithoutResolvedByInput[] | ReportEscalationUncheckedCreateWithoutResolvedByInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutResolvedByInput | ReportEscalationCreateOrConnectWithoutResolvedByInput[]
+    createMany?: ReportEscalationCreateManyResolvedByInputEnvelope
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+  }
+
+  export type ReportActivityUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ReportActivityCreateWithoutUserInput, ReportActivityUncheckedCreateWithoutUserInput> | ReportActivityCreateWithoutUserInput[] | ReportActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReportActivityCreateOrConnectWithoutUserInput | ReportActivityCreateOrConnectWithoutUserInput[]
+    createMany?: ReportActivityCreateManyUserInputEnvelope
+    connect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+  }
+
+  export type CommunityMeetingUncheckedCreateNestedManyWithoutOrganizerInput = {
+    create?: XOR<CommunityMeetingCreateWithoutOrganizerInput, CommunityMeetingUncheckedCreateWithoutOrganizerInput> | CommunityMeetingCreateWithoutOrganizerInput[] | CommunityMeetingUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: CommunityMeetingCreateOrConnectWithoutOrganizerInput | CommunityMeetingCreateOrConnectWithoutOrganizerInput[]
+    createMany?: CommunityMeetingCreateManyOrganizerInputEnvelope
+    connect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
   }
 
   export type EnumUserRoleFieldUpdateOperationsInput = {
@@ -21008,6 +25796,62 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
+  export type ReportEscalationUpdateManyWithoutEscalatedByNestedInput = {
+    create?: XOR<ReportEscalationCreateWithoutEscalatedByInput, ReportEscalationUncheckedCreateWithoutEscalatedByInput> | ReportEscalationCreateWithoutEscalatedByInput[] | ReportEscalationUncheckedCreateWithoutEscalatedByInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutEscalatedByInput | ReportEscalationCreateOrConnectWithoutEscalatedByInput[]
+    upsert?: ReportEscalationUpsertWithWhereUniqueWithoutEscalatedByInput | ReportEscalationUpsertWithWhereUniqueWithoutEscalatedByInput[]
+    createMany?: ReportEscalationCreateManyEscalatedByInputEnvelope
+    set?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    disconnect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    delete?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    update?: ReportEscalationUpdateWithWhereUniqueWithoutEscalatedByInput | ReportEscalationUpdateWithWhereUniqueWithoutEscalatedByInput[]
+    updateMany?: ReportEscalationUpdateManyWithWhereWithoutEscalatedByInput | ReportEscalationUpdateManyWithWhereWithoutEscalatedByInput[]
+    deleteMany?: ReportEscalationScalarWhereInput | ReportEscalationScalarWhereInput[]
+  }
+
+  export type ReportEscalationUpdateManyWithoutResolvedByNestedInput = {
+    create?: XOR<ReportEscalationCreateWithoutResolvedByInput, ReportEscalationUncheckedCreateWithoutResolvedByInput> | ReportEscalationCreateWithoutResolvedByInput[] | ReportEscalationUncheckedCreateWithoutResolvedByInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutResolvedByInput | ReportEscalationCreateOrConnectWithoutResolvedByInput[]
+    upsert?: ReportEscalationUpsertWithWhereUniqueWithoutResolvedByInput | ReportEscalationUpsertWithWhereUniqueWithoutResolvedByInput[]
+    createMany?: ReportEscalationCreateManyResolvedByInputEnvelope
+    set?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    disconnect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    delete?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    update?: ReportEscalationUpdateWithWhereUniqueWithoutResolvedByInput | ReportEscalationUpdateWithWhereUniqueWithoutResolvedByInput[]
+    updateMany?: ReportEscalationUpdateManyWithWhereWithoutResolvedByInput | ReportEscalationUpdateManyWithWhereWithoutResolvedByInput[]
+    deleteMany?: ReportEscalationScalarWhereInput | ReportEscalationScalarWhereInput[]
+  }
+
+  export type ReportActivityUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReportActivityCreateWithoutUserInput, ReportActivityUncheckedCreateWithoutUserInput> | ReportActivityCreateWithoutUserInput[] | ReportActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReportActivityCreateOrConnectWithoutUserInput | ReportActivityCreateOrConnectWithoutUserInput[]
+    upsert?: ReportActivityUpsertWithWhereUniqueWithoutUserInput | ReportActivityUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReportActivityCreateManyUserInputEnvelope
+    set?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    disconnect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    delete?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    connect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    update?: ReportActivityUpdateWithWhereUniqueWithoutUserInput | ReportActivityUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReportActivityUpdateManyWithWhereWithoutUserInput | ReportActivityUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReportActivityScalarWhereInput | ReportActivityScalarWhereInput[]
+  }
+
+  export type CommunityMeetingUpdateManyWithoutOrganizerNestedInput = {
+    create?: XOR<CommunityMeetingCreateWithoutOrganizerInput, CommunityMeetingUncheckedCreateWithoutOrganizerInput> | CommunityMeetingCreateWithoutOrganizerInput[] | CommunityMeetingUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: CommunityMeetingCreateOrConnectWithoutOrganizerInput | CommunityMeetingCreateOrConnectWithoutOrganizerInput[]
+    upsert?: CommunityMeetingUpsertWithWhereUniqueWithoutOrganizerInput | CommunityMeetingUpsertWithWhereUniqueWithoutOrganizerInput[]
+    createMany?: CommunityMeetingCreateManyOrganizerInputEnvelope
+    set?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    disconnect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    delete?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    connect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    update?: CommunityMeetingUpdateWithWhereUniqueWithoutOrganizerInput | CommunityMeetingUpdateWithWhereUniqueWithoutOrganizerInput[]
+    updateMany?: CommunityMeetingUpdateManyWithWhereWithoutOrganizerInput | CommunityMeetingUpdateManyWithWhereWithoutOrganizerInput[]
+    deleteMany?: CommunityMeetingScalarWhereInput | CommunityMeetingScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -21092,12 +25936,197 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
+  export type ReportEscalationUncheckedUpdateManyWithoutEscalatedByNestedInput = {
+    create?: XOR<ReportEscalationCreateWithoutEscalatedByInput, ReportEscalationUncheckedCreateWithoutEscalatedByInput> | ReportEscalationCreateWithoutEscalatedByInput[] | ReportEscalationUncheckedCreateWithoutEscalatedByInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutEscalatedByInput | ReportEscalationCreateOrConnectWithoutEscalatedByInput[]
+    upsert?: ReportEscalationUpsertWithWhereUniqueWithoutEscalatedByInput | ReportEscalationUpsertWithWhereUniqueWithoutEscalatedByInput[]
+    createMany?: ReportEscalationCreateManyEscalatedByInputEnvelope
+    set?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    disconnect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    delete?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    update?: ReportEscalationUpdateWithWhereUniqueWithoutEscalatedByInput | ReportEscalationUpdateWithWhereUniqueWithoutEscalatedByInput[]
+    updateMany?: ReportEscalationUpdateManyWithWhereWithoutEscalatedByInput | ReportEscalationUpdateManyWithWhereWithoutEscalatedByInput[]
+    deleteMany?: ReportEscalationScalarWhereInput | ReportEscalationScalarWhereInput[]
+  }
+
+  export type ReportEscalationUncheckedUpdateManyWithoutResolvedByNestedInput = {
+    create?: XOR<ReportEscalationCreateWithoutResolvedByInput, ReportEscalationUncheckedCreateWithoutResolvedByInput> | ReportEscalationCreateWithoutResolvedByInput[] | ReportEscalationUncheckedCreateWithoutResolvedByInput[]
+    connectOrCreate?: ReportEscalationCreateOrConnectWithoutResolvedByInput | ReportEscalationCreateOrConnectWithoutResolvedByInput[]
+    upsert?: ReportEscalationUpsertWithWhereUniqueWithoutResolvedByInput | ReportEscalationUpsertWithWhereUniqueWithoutResolvedByInput[]
+    createMany?: ReportEscalationCreateManyResolvedByInputEnvelope
+    set?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    disconnect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    delete?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    connect?: ReportEscalationWhereUniqueInput | ReportEscalationWhereUniqueInput[]
+    update?: ReportEscalationUpdateWithWhereUniqueWithoutResolvedByInput | ReportEscalationUpdateWithWhereUniqueWithoutResolvedByInput[]
+    updateMany?: ReportEscalationUpdateManyWithWhereWithoutResolvedByInput | ReportEscalationUpdateManyWithWhereWithoutResolvedByInput[]
+    deleteMany?: ReportEscalationScalarWhereInput | ReportEscalationScalarWhereInput[]
+  }
+
+  export type ReportActivityUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ReportActivityCreateWithoutUserInput, ReportActivityUncheckedCreateWithoutUserInput> | ReportActivityCreateWithoutUserInput[] | ReportActivityUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ReportActivityCreateOrConnectWithoutUserInput | ReportActivityCreateOrConnectWithoutUserInput[]
+    upsert?: ReportActivityUpsertWithWhereUniqueWithoutUserInput | ReportActivityUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ReportActivityCreateManyUserInputEnvelope
+    set?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    disconnect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    delete?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    connect?: ReportActivityWhereUniqueInput | ReportActivityWhereUniqueInput[]
+    update?: ReportActivityUpdateWithWhereUniqueWithoutUserInput | ReportActivityUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ReportActivityUpdateManyWithWhereWithoutUserInput | ReportActivityUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ReportActivityScalarWhereInput | ReportActivityScalarWhereInput[]
+  }
+
+  export type CommunityMeetingUncheckedUpdateManyWithoutOrganizerNestedInput = {
+    create?: XOR<CommunityMeetingCreateWithoutOrganizerInput, CommunityMeetingUncheckedCreateWithoutOrganizerInput> | CommunityMeetingCreateWithoutOrganizerInput[] | CommunityMeetingUncheckedCreateWithoutOrganizerInput[]
+    connectOrCreate?: CommunityMeetingCreateOrConnectWithoutOrganizerInput | CommunityMeetingCreateOrConnectWithoutOrganizerInput[]
+    upsert?: CommunityMeetingUpsertWithWhereUniqueWithoutOrganizerInput | CommunityMeetingUpsertWithWhereUniqueWithoutOrganizerInput[]
+    createMany?: CommunityMeetingCreateManyOrganizerInputEnvelope
+    set?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    disconnect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    delete?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    connect?: CommunityMeetingWhereUniqueInput | CommunityMeetingWhereUniqueInput[]
+    update?: CommunityMeetingUpdateWithWhereUniqueWithoutOrganizerInput | CommunityMeetingUpdateWithWhereUniqueWithoutOrganizerInput[]
+    updateMany?: CommunityMeetingUpdateManyWithWhereWithoutOrganizerInput | CommunityMeetingUpdateManyWithWhereWithoutOrganizerInput[]
+    deleteMany?: CommunityMeetingScalarWhereInput | CommunityMeetingScalarWhereInput[]
+  }
+
   export type NullableFloatFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type ReportCreateNestedOneWithoutReportEscalationInput = {
+    create?: XOR<ReportCreateWithoutReportEscalationInput, ReportUncheckedCreateWithoutReportEscalationInput>
+    connectOrCreate?: ReportCreateOrConnectWithoutReportEscalationInput
+    connect?: ReportWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutEscalationsCreatedInput = {
+    create?: XOR<UserCreateWithoutEscalationsCreatedInput, UserUncheckedCreateWithoutEscalationsCreatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutEscalationsCreatedInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutEscalationsResolvedInput = {
+    create?: XOR<UserCreateWithoutEscalationsResolvedInput, UserUncheckedCreateWithoutEscalationsResolvedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutEscalationsResolvedInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ReportUpdateOneRequiredWithoutReportEscalationNestedInput = {
+    create?: XOR<ReportCreateWithoutReportEscalationInput, ReportUncheckedCreateWithoutReportEscalationInput>
+    connectOrCreate?: ReportCreateOrConnectWithoutReportEscalationInput
+    upsert?: ReportUpsertWithoutReportEscalationInput
+    connect?: ReportWhereUniqueInput
+    update?: XOR<XOR<ReportUpdateToOneWithWhereWithoutReportEscalationInput, ReportUpdateWithoutReportEscalationInput>, ReportUncheckedUpdateWithoutReportEscalationInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutEscalationsCreatedNestedInput = {
+    create?: XOR<UserCreateWithoutEscalationsCreatedInput, UserUncheckedCreateWithoutEscalationsCreatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutEscalationsCreatedInput
+    upsert?: UserUpsertWithoutEscalationsCreatedInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEscalationsCreatedInput, UserUpdateWithoutEscalationsCreatedInput>, UserUncheckedUpdateWithoutEscalationsCreatedInput>
+  }
+
+  export type UserUpdateOneWithoutEscalationsResolvedNestedInput = {
+    create?: XOR<UserCreateWithoutEscalationsResolvedInput, UserUncheckedCreateWithoutEscalationsResolvedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutEscalationsResolvedInput
+    upsert?: UserUpsertWithoutEscalationsResolvedInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutEscalationsResolvedInput, UserUpdateWithoutEscalationsResolvedInput>, UserUncheckedUpdateWithoutEscalationsResolvedInput>
+  }
+
+  export type ReportCreateNestedOneWithoutReportActivityInput = {
+    create?: XOR<ReportCreateWithoutReportActivityInput, ReportUncheckedCreateWithoutReportActivityInput>
+    connectOrCreate?: ReportCreateOrConnectWithoutReportActivityInput
+    connect?: ReportWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutReportActivityInput = {
+    create?: XOR<UserCreateWithoutReportActivityInput, UserUncheckedCreateWithoutReportActivityInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReportActivityInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ReportUpdateOneRequiredWithoutReportActivityNestedInput = {
+    create?: XOR<ReportCreateWithoutReportActivityInput, ReportUncheckedCreateWithoutReportActivityInput>
+    connectOrCreate?: ReportCreateOrConnectWithoutReportActivityInput
+    upsert?: ReportUpsertWithoutReportActivityInput
+    connect?: ReportWhereUniqueInput
+    update?: XOR<XOR<ReportUpdateToOneWithWhereWithoutReportActivityInput, ReportUpdateWithoutReportActivityInput>, ReportUncheckedUpdateWithoutReportActivityInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutReportActivityNestedInput = {
+    create?: XOR<UserCreateWithoutReportActivityInput, UserUncheckedCreateWithoutReportActivityInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReportActivityInput
+    upsert?: UserUpsertWithoutReportActivityInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReportActivityInput, UserUpdateWithoutReportActivityInput>, UserUncheckedUpdateWithoutReportActivityInput>
+  }
+
+  export type CommunityMeetingCreateagendaInput = {
+    set: string[]
+  }
+
+  export type CommunityMeetingCreateattendeesInput = {
+    set: string[]
+  }
+
+  export type CommunityMeetingCreateoutcomesInput = {
+    set: string[]
+  }
+
+  export type ReportCreateNestedOneWithoutCommunityMeetingInput = {
+    create?: XOR<ReportCreateWithoutCommunityMeetingInput, ReportUncheckedCreateWithoutCommunityMeetingInput>
+    connectOrCreate?: ReportCreateOrConnectWithoutCommunityMeetingInput
+    connect?: ReportWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutCommunityMeetingInput = {
+    create?: XOR<UserCreateWithoutCommunityMeetingInput, UserUncheckedCreateWithoutCommunityMeetingInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCommunityMeetingInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type CommunityMeetingUpdateagendaInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type CommunityMeetingUpdateattendeesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type CommunityMeetingUpdateoutcomesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ReportUpdateOneWithoutCommunityMeetingNestedInput = {
+    create?: XOR<ReportCreateWithoutCommunityMeetingInput, ReportUncheckedCreateWithoutCommunityMeetingInput>
+    connectOrCreate?: ReportCreateOrConnectWithoutCommunityMeetingInput
+    upsert?: ReportUpsertWithoutCommunityMeetingInput
+    disconnect?: ReportWhereInput | boolean
+    delete?: ReportWhereInput | boolean
+    connect?: ReportWhereUniqueInput
+    update?: XOR<XOR<ReportUpdateToOneWithWhereWithoutCommunityMeetingInput, ReportUpdateWithoutCommunityMeetingInput>, ReportUncheckedUpdateWithoutCommunityMeetingInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutCommunityMeetingNestedInput = {
+    create?: XOR<UserCreateWithoutCommunityMeetingInput, UserUncheckedCreateWithoutCommunityMeetingInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCommunityMeetingInput
+    upsert?: UserUpsertWithoutCommunityMeetingInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommunityMeetingInput, UserUpdateWithoutCommunityMeetingInput>, UserUncheckedUpdateWithoutCommunityMeetingInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -21478,6 +26507,10 @@ export namespace Prisma {
     Report?: ReportCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteCreateNestedManyWithoutUserInput
     Session?: SessionCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserUncheckedCreateWithoutAccountInput = {
@@ -21496,6 +26529,10 @@ export namespace Prisma {
     Report?: ReportUncheckedCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutUserInput
     Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationUncheckedCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationUncheckedCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserCreateOrConnectWithoutAccountInput = {
@@ -21530,6 +26567,10 @@ export namespace Prisma {
     Report?: ReportUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUpdateManyWithoutUserNestedInput
     Session?: SessionUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutOrganizerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountInput = {
@@ -21548,6 +26589,10 @@ export namespace Prisma {
     Report?: ReportUncheckedUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUncheckedUpdateManyWithoutUserNestedInput
     Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUncheckedUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUncheckedUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type PublicConsultationCreateWithoutConsultationCommentInput = {
@@ -21597,6 +26642,10 @@ export namespace Prisma {
     Report?: ReportCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteCreateNestedManyWithoutUserInput
     Session?: SessionCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserUncheckedCreateWithoutConsultationCommentInput = {
@@ -21615,6 +26664,10 @@ export namespace Prisma {
     Report?: ReportUncheckedCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutUserInput
     Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationUncheckedCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationUncheckedCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserCreateOrConnectWithoutConsultationCommentInput = {
@@ -21686,6 +26739,10 @@ export namespace Prisma {
     Report?: ReportUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUpdateManyWithoutUserNestedInput
     Session?: SessionUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutOrganizerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutConsultationCommentInput = {
@@ -21704,6 +26761,10 @@ export namespace Prisma {
     Report?: ReportUncheckedUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUncheckedUpdateManyWithoutUserNestedInput
     Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUncheckedUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUncheckedUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type PublicConsultationCreateWithoutConsultationVoteInput = {
@@ -21753,6 +26814,10 @@ export namespace Prisma {
     Report?: ReportCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteCreateNestedManyWithoutUserInput
     Session?: SessionCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserUncheckedCreateWithoutConsultationVoteInput = {
@@ -21771,6 +26836,10 @@ export namespace Prisma {
     Report?: ReportUncheckedCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutUserInput
     Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationUncheckedCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationUncheckedCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserCreateOrConnectWithoutConsultationVoteInput = {
@@ -21842,6 +26911,10 @@ export namespace Prisma {
     Report?: ReportUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUpdateManyWithoutUserNestedInput
     Session?: SessionUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutOrganizerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutConsultationVoteInput = {
@@ -21860,11 +26933,16 @@ export namespace Prisma {
     Report?: ReportUncheckedUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUncheckedUpdateManyWithoutUserNestedInput
     Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUncheckedUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUncheckedUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type ConsultationCommentCreateWithoutPublicConsultationInput = {
     id: string
     comment: string
+    vote?: string | null
     createdAt?: Date | string
     User: UserCreateNestedOneWithoutConsultationCommentInput
   }
@@ -21873,6 +26951,7 @@ export namespace Prisma {
     id: string
     userId: string
     comment: string
+    vote?: string | null
     createdAt?: Date | string
   }
 
@@ -21934,6 +27013,7 @@ export namespace Prisma {
     consultationId?: StringFilter<"ConsultationComment"> | string
     userId?: StringFilter<"ConsultationComment"> | string
     comment?: StringFilter<"ConsultationComment"> | string
+    vote?: StringNullableFilter<"ConsultationComment"> | string | null
     createdAt?: DateTimeFilter<"ConsultationComment"> | Date | string
   }
 
@@ -21980,6 +27060,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteCreateNestedManyWithoutUserInput
     Session?: SessionCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserUncheckedCreateWithoutReportInput = {
@@ -21998,6 +27082,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteUncheckedCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutUserInput
     Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationUncheckedCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationUncheckedCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserCreateOrConnectWithoutReportInput = {
@@ -22091,6 +27179,118 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ReportEscalationCreateWithoutReportInput = {
+    id?: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolution?: string | null
+    EscalatedBy: UserCreateNestedOneWithoutEscalationsCreatedInput
+    ResolvedBy?: UserCreateNestedOneWithoutEscalationsResolvedInput
+  }
+
+  export type ReportEscalationUncheckedCreateWithoutReportInput = {
+    id?: string
+    escalatedBy: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolvedBy?: string | null
+    resolution?: string | null
+  }
+
+  export type ReportEscalationCreateOrConnectWithoutReportInput = {
+    where: ReportEscalationWhereUniqueInput
+    create: XOR<ReportEscalationCreateWithoutReportInput, ReportEscalationUncheckedCreateWithoutReportInput>
+  }
+
+  export type ReportEscalationCreateManyReportInputEnvelope = {
+    data: ReportEscalationCreateManyReportInput | ReportEscalationCreateManyReportInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReportActivityCreateWithoutReportInput = {
+    id?: string
+    action: string
+    description: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    User: UserCreateNestedOneWithoutReportActivityInput
+  }
+
+  export type ReportActivityUncheckedCreateWithoutReportInput = {
+    id?: string
+    userId: string
+    action: string
+    description: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ReportActivityCreateOrConnectWithoutReportInput = {
+    where: ReportActivityWhereUniqueInput
+    create: XOR<ReportActivityCreateWithoutReportInput, ReportActivityUncheckedCreateWithoutReportInput>
+  }
+
+  export type ReportActivityCreateManyReportInputEnvelope = {
+    data: ReportActivityCreateManyReportInput | ReportActivityCreateManyReportInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CommunityMeetingCreateWithoutReportInput = {
+    id?: string
+    title: string
+    description: string
+    scheduledDate: Date | string
+    location: string
+    status?: string
+    meetingType: string
+    agenda?: CommunityMeetingCreateagendaInput | string[]
+    minutes?: string | null
+    attendees?: CommunityMeetingCreateattendeesInput | string[]
+    outcomes?: CommunityMeetingCreateoutcomesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Organizer: UserCreateNestedOneWithoutCommunityMeetingInput
+  }
+
+  export type CommunityMeetingUncheckedCreateWithoutReportInput = {
+    id?: string
+    title: string
+    description: string
+    scheduledDate: Date | string
+    location: string
+    organizer: string
+    status?: string
+    meetingType: string
+    agenda?: CommunityMeetingCreateagendaInput | string[]
+    minutes?: string | null
+    attendees?: CommunityMeetingCreateattendeesInput | string[]
+    outcomes?: CommunityMeetingCreateoutcomesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommunityMeetingCreateOrConnectWithoutReportInput = {
+    where: CommunityMeetingWhereUniqueInput
+    create: XOR<CommunityMeetingCreateWithoutReportInput, CommunityMeetingUncheckedCreateWithoutReportInput>
+  }
+
+  export type CommunityMeetingCreateManyReportInputEnvelope = {
+    data: CommunityMeetingCreateManyReportInput | CommunityMeetingCreateManyReportInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutReportInput = {
     update: XOR<UserUpdateWithoutReportInput, UserUncheckedUpdateWithoutReportInput>
     create: XOR<UserCreateWithoutReportInput, UserUncheckedCreateWithoutReportInput>
@@ -22118,6 +27318,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUpdateManyWithoutUserNestedInput
     Session?: SessionUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutOrganizerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReportInput = {
@@ -22136,6 +27340,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteUncheckedUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUncheckedUpdateManyWithoutUserNestedInput
     Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUncheckedUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUncheckedUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type ReportUpdateUpsertWithWhereUniqueWithoutReportInput = {
@@ -22226,6 +27434,107 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"SatelliteAnalysis"> | Date | string
   }
 
+  export type ReportEscalationUpsertWithWhereUniqueWithoutReportInput = {
+    where: ReportEscalationWhereUniqueInput
+    update: XOR<ReportEscalationUpdateWithoutReportInput, ReportEscalationUncheckedUpdateWithoutReportInput>
+    create: XOR<ReportEscalationCreateWithoutReportInput, ReportEscalationUncheckedCreateWithoutReportInput>
+  }
+
+  export type ReportEscalationUpdateWithWhereUniqueWithoutReportInput = {
+    where: ReportEscalationWhereUniqueInput
+    data: XOR<ReportEscalationUpdateWithoutReportInput, ReportEscalationUncheckedUpdateWithoutReportInput>
+  }
+
+  export type ReportEscalationUpdateManyWithWhereWithoutReportInput = {
+    where: ReportEscalationScalarWhereInput
+    data: XOR<ReportEscalationUpdateManyMutationInput, ReportEscalationUncheckedUpdateManyWithoutReportInput>
+  }
+
+  export type ReportEscalationScalarWhereInput = {
+    AND?: ReportEscalationScalarWhereInput | ReportEscalationScalarWhereInput[]
+    OR?: ReportEscalationScalarWhereInput[]
+    NOT?: ReportEscalationScalarWhereInput | ReportEscalationScalarWhereInput[]
+    id?: StringFilter<"ReportEscalation"> | string
+    reportId?: StringFilter<"ReportEscalation"> | string
+    escalatedBy?: StringFilter<"ReportEscalation"> | string
+    escalationType?: StringFilter<"ReportEscalation"> | string
+    escalationLevel?: StringFilter<"ReportEscalation"> | string
+    votingData?: JsonNullableFilter<"ReportEscalation">
+    escalationReason?: StringFilter<"ReportEscalation"> | string
+    escalatedAt?: DateTimeFilter<"ReportEscalation"> | Date | string
+    status?: StringFilter<"ReportEscalation"> | string
+    priority?: StringFilter<"ReportEscalation"> | string
+    resolvedAt?: DateTimeNullableFilter<"ReportEscalation"> | Date | string | null
+    resolvedBy?: StringNullableFilter<"ReportEscalation"> | string | null
+    resolution?: StringNullableFilter<"ReportEscalation"> | string | null
+  }
+
+  export type ReportActivityUpsertWithWhereUniqueWithoutReportInput = {
+    where: ReportActivityWhereUniqueInput
+    update: XOR<ReportActivityUpdateWithoutReportInput, ReportActivityUncheckedUpdateWithoutReportInput>
+    create: XOR<ReportActivityCreateWithoutReportInput, ReportActivityUncheckedCreateWithoutReportInput>
+  }
+
+  export type ReportActivityUpdateWithWhereUniqueWithoutReportInput = {
+    where: ReportActivityWhereUniqueInput
+    data: XOR<ReportActivityUpdateWithoutReportInput, ReportActivityUncheckedUpdateWithoutReportInput>
+  }
+
+  export type ReportActivityUpdateManyWithWhereWithoutReportInput = {
+    where: ReportActivityScalarWhereInput
+    data: XOR<ReportActivityUpdateManyMutationInput, ReportActivityUncheckedUpdateManyWithoutReportInput>
+  }
+
+  export type ReportActivityScalarWhereInput = {
+    AND?: ReportActivityScalarWhereInput | ReportActivityScalarWhereInput[]
+    OR?: ReportActivityScalarWhereInput[]
+    NOT?: ReportActivityScalarWhereInput | ReportActivityScalarWhereInput[]
+    id?: StringFilter<"ReportActivity"> | string
+    reportId?: StringFilter<"ReportActivity"> | string
+    userId?: StringFilter<"ReportActivity"> | string
+    action?: StringFilter<"ReportActivity"> | string
+    description?: StringFilter<"ReportActivity"> | string
+    metadata?: JsonNullableFilter<"ReportActivity">
+    createdAt?: DateTimeFilter<"ReportActivity"> | Date | string
+  }
+
+  export type CommunityMeetingUpsertWithWhereUniqueWithoutReportInput = {
+    where: CommunityMeetingWhereUniqueInput
+    update: XOR<CommunityMeetingUpdateWithoutReportInput, CommunityMeetingUncheckedUpdateWithoutReportInput>
+    create: XOR<CommunityMeetingCreateWithoutReportInput, CommunityMeetingUncheckedCreateWithoutReportInput>
+  }
+
+  export type CommunityMeetingUpdateWithWhereUniqueWithoutReportInput = {
+    where: CommunityMeetingWhereUniqueInput
+    data: XOR<CommunityMeetingUpdateWithoutReportInput, CommunityMeetingUncheckedUpdateWithoutReportInput>
+  }
+
+  export type CommunityMeetingUpdateManyWithWhereWithoutReportInput = {
+    where: CommunityMeetingScalarWhereInput
+    data: XOR<CommunityMeetingUpdateManyMutationInput, CommunityMeetingUncheckedUpdateManyWithoutReportInput>
+  }
+
+  export type CommunityMeetingScalarWhereInput = {
+    AND?: CommunityMeetingScalarWhereInput | CommunityMeetingScalarWhereInput[]
+    OR?: CommunityMeetingScalarWhereInput[]
+    NOT?: CommunityMeetingScalarWhereInput | CommunityMeetingScalarWhereInput[]
+    id?: StringFilter<"CommunityMeeting"> | string
+    reportId?: StringNullableFilter<"CommunityMeeting"> | string | null
+    title?: StringFilter<"CommunityMeeting"> | string
+    description?: StringFilter<"CommunityMeeting"> | string
+    scheduledDate?: DateTimeFilter<"CommunityMeeting"> | Date | string
+    location?: StringFilter<"CommunityMeeting"> | string
+    organizer?: StringFilter<"CommunityMeeting"> | string
+    status?: StringFilter<"CommunityMeeting"> | string
+    meetingType?: StringFilter<"CommunityMeeting"> | string
+    agenda?: StringNullableListFilter<"CommunityMeeting">
+    minutes?: StringNullableFilter<"CommunityMeeting"> | string | null
+    attendees?: StringNullableListFilter<"CommunityMeeting">
+    outcomes?: StringNullableListFilter<"CommunityMeeting">
+    createdAt?: DateTimeFilter<"CommunityMeeting"> | Date | string
+    updatedAt?: DateTimeFilter<"CommunityMeeting"> | Date | string
+  }
+
   export type ReportCreateWithoutReportUpdateInput = {
     id: string
     title: string
@@ -22254,6 +27563,9 @@ export namespace Prisma {
     User: UserCreateNestedOneWithoutReportInput
     ReportVote?: ReportVoteCreateNestedManyWithoutReportInput
     SatelliteAnalysis?: SatelliteAnalysisCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutReportInput
   }
 
   export type ReportUncheckedCreateWithoutReportUpdateInput = {
@@ -22284,6 +27596,9 @@ export namespace Prisma {
     verdictDate?: Date | string | null
     ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutReportInput
     SatelliteAnalysis?: SatelliteAnalysisUncheckedCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationUncheckedCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutReportInput
   }
 
   export type ReportCreateOrConnectWithoutReportUpdateInput = {
@@ -22330,6 +27645,9 @@ export namespace Prisma {
     User?: UserUpdateOneRequiredWithoutReportNestedInput
     ReportVote?: ReportVoteUpdateManyWithoutReportNestedInput
     SatelliteAnalysis?: SatelliteAnalysisUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutReportNestedInput
   }
 
   export type ReportUncheckedUpdateWithoutReportUpdateInput = {
@@ -22360,6 +27678,9 @@ export namespace Prisma {
     verdictDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     ReportVote?: ReportVoteUncheckedUpdateManyWithoutReportNestedInput
     SatelliteAnalysis?: SatelliteAnalysisUncheckedUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUncheckedUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutReportNestedInput
   }
 
   export type ReportCreateWithoutReportVoteInput = {
@@ -22390,6 +27711,9 @@ export namespace Prisma {
     User: UserCreateNestedOneWithoutReportInput
     ReportUpdate?: ReportUpdateCreateNestedManyWithoutReportInput
     SatelliteAnalysis?: SatelliteAnalysisCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutReportInput
   }
 
   export type ReportUncheckedCreateWithoutReportVoteInput = {
@@ -22420,6 +27744,9 @@ export namespace Prisma {
     verdictDate?: Date | string | null
     ReportUpdate?: ReportUpdateUncheckedCreateNestedManyWithoutReportInput
     SatelliteAnalysis?: SatelliteAnalysisUncheckedCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationUncheckedCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutReportInput
   }
 
   export type ReportCreateOrConnectWithoutReportVoteInput = {
@@ -22443,6 +27770,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteCreateNestedManyWithoutUserInput
     Report?: ReportCreateNestedManyWithoutUserInput
     Session?: SessionCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserUncheckedCreateWithoutReportVoteInput = {
@@ -22461,6 +27792,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteUncheckedCreateNestedManyWithoutUserInput
     Report?: ReportUncheckedCreateNestedManyWithoutUserInput
     Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationUncheckedCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationUncheckedCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserCreateOrConnectWithoutReportVoteInput = {
@@ -22507,6 +27842,9 @@ export namespace Prisma {
     User?: UserUpdateOneRequiredWithoutReportNestedInput
     ReportUpdate?: ReportUpdateUpdateManyWithoutReportNestedInput
     SatelliteAnalysis?: SatelliteAnalysisUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutReportNestedInput
   }
 
   export type ReportUncheckedUpdateWithoutReportVoteInput = {
@@ -22537,6 +27875,9 @@ export namespace Prisma {
     verdictDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     ReportUpdate?: ReportUpdateUncheckedUpdateManyWithoutReportNestedInput
     SatelliteAnalysis?: SatelliteAnalysisUncheckedUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUncheckedUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutReportNestedInput
   }
 
   export type UserUpsertWithoutReportVoteInput = {
@@ -22566,6 +27907,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteUpdateManyWithoutUserNestedInput
     Report?: ReportUpdateManyWithoutUserNestedInput
     Session?: SessionUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutOrganizerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReportVoteInput = {
@@ -22584,6 +27929,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteUncheckedUpdateManyWithoutUserNestedInput
     Report?: ReportUncheckedUpdateManyWithoutUserNestedInput
     Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUncheckedUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUncheckedUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type ReportCreateWithoutSatelliteAnalysisInput = {
@@ -22614,6 +27963,9 @@ export namespace Prisma {
     User: UserCreateNestedOneWithoutReportInput
     ReportUpdate?: ReportUpdateCreateNestedManyWithoutReportInput
     ReportVote?: ReportVoteCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutReportInput
   }
 
   export type ReportUncheckedCreateWithoutSatelliteAnalysisInput = {
@@ -22644,6 +27996,9 @@ export namespace Prisma {
     verdictDate?: Date | string | null
     ReportUpdate?: ReportUpdateUncheckedCreateNestedManyWithoutReportInput
     ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationUncheckedCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutReportInput
   }
 
   export type ReportCreateOrConnectWithoutSatelliteAnalysisInput = {
@@ -22690,6 +28045,9 @@ export namespace Prisma {
     User?: UserUpdateOneRequiredWithoutReportNestedInput
     ReportUpdate?: ReportUpdateUpdateManyWithoutReportNestedInput
     ReportVote?: ReportVoteUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutReportNestedInput
   }
 
   export type ReportUncheckedUpdateWithoutSatelliteAnalysisInput = {
@@ -22720,6 +28078,9 @@ export namespace Prisma {
     verdictDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     ReportUpdate?: ReportUpdateUncheckedUpdateManyWithoutReportNestedInput
     ReportVote?: ReportVoteUncheckedUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUncheckedUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutReportNestedInput
   }
 
   export type UserCreateWithoutSessionInput = {
@@ -22738,6 +28099,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteCreateNestedManyWithoutUserInput
     Report?: ReportCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserUncheckedCreateWithoutSessionInput = {
@@ -22756,6 +28121,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteUncheckedCreateNestedManyWithoutUserInput
     Report?: ReportUncheckedCreateNestedManyWithoutUserInput
     ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationUncheckedCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationUncheckedCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutOrganizerInput
   }
 
   export type UserCreateOrConnectWithoutSessionInput = {
@@ -22790,6 +28159,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteUpdateManyWithoutUserNestedInput
     Report?: ReportUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutOrganizerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionInput = {
@@ -22808,6 +28181,10 @@ export namespace Prisma {
     ConsultationVote?: ConsultationVoteUncheckedUpdateManyWithoutUserNestedInput
     Report?: ReportUncheckedUpdateManyWithoutUserNestedInput
     ReportVote?: ReportVoteUncheckedUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUncheckedUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUncheckedUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutOrganizerNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -22851,6 +28228,7 @@ export namespace Prisma {
   export type ConsultationCommentCreateWithoutUserInput = {
     id: string
     comment: string
+    vote?: string | null
     createdAt?: Date | string
     PublicConsultation: PublicConsultationCreateNestedOneWithoutConsultationCommentInput
   }
@@ -22859,6 +28237,7 @@ export namespace Prisma {
     id: string
     consultationId: string
     comment: string
+    vote?: string | null
     createdAt?: Date | string
   }
 
@@ -22924,6 +28303,9 @@ export namespace Prisma {
     ReportUpdate?: ReportUpdateCreateNestedManyWithoutReportInput
     ReportVote?: ReportVoteCreateNestedManyWithoutReportInput
     SatelliteAnalysis?: SatelliteAnalysisCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutReportInput
   }
 
   export type ReportUncheckedCreateWithoutUserInput = {
@@ -22954,6 +28336,9 @@ export namespace Prisma {
     ReportUpdate?: ReportUpdateUncheckedCreateNestedManyWithoutReportInput
     ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutReportInput
     SatelliteAnalysis?: SatelliteAnalysisUncheckedCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationUncheckedCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutReportInput
   }
 
   export type ReportCreateOrConnectWithoutUserInput = {
@@ -23011,6 +28396,158 @@ export namespace Prisma {
 
   export type SessionCreateManyUserInputEnvelope = {
     data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReportEscalationCreateWithoutEscalatedByInput = {
+    id?: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolution?: string | null
+    Report: ReportCreateNestedOneWithoutReportEscalationInput
+    ResolvedBy?: UserCreateNestedOneWithoutEscalationsResolvedInput
+  }
+
+  export type ReportEscalationUncheckedCreateWithoutEscalatedByInput = {
+    id?: string
+    reportId: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolvedBy?: string | null
+    resolution?: string | null
+  }
+
+  export type ReportEscalationCreateOrConnectWithoutEscalatedByInput = {
+    where: ReportEscalationWhereUniqueInput
+    create: XOR<ReportEscalationCreateWithoutEscalatedByInput, ReportEscalationUncheckedCreateWithoutEscalatedByInput>
+  }
+
+  export type ReportEscalationCreateManyEscalatedByInputEnvelope = {
+    data: ReportEscalationCreateManyEscalatedByInput | ReportEscalationCreateManyEscalatedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReportEscalationCreateWithoutResolvedByInput = {
+    id?: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolution?: string | null
+    Report: ReportCreateNestedOneWithoutReportEscalationInput
+    EscalatedBy: UserCreateNestedOneWithoutEscalationsCreatedInput
+  }
+
+  export type ReportEscalationUncheckedCreateWithoutResolvedByInput = {
+    id?: string
+    reportId: string
+    escalatedBy: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolution?: string | null
+  }
+
+  export type ReportEscalationCreateOrConnectWithoutResolvedByInput = {
+    where: ReportEscalationWhereUniqueInput
+    create: XOR<ReportEscalationCreateWithoutResolvedByInput, ReportEscalationUncheckedCreateWithoutResolvedByInput>
+  }
+
+  export type ReportEscalationCreateManyResolvedByInputEnvelope = {
+    data: ReportEscalationCreateManyResolvedByInput | ReportEscalationCreateManyResolvedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ReportActivityCreateWithoutUserInput = {
+    id?: string
+    action: string
+    description: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    Report: ReportCreateNestedOneWithoutReportActivityInput
+  }
+
+  export type ReportActivityUncheckedCreateWithoutUserInput = {
+    id?: string
+    reportId: string
+    action: string
+    description: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type ReportActivityCreateOrConnectWithoutUserInput = {
+    where: ReportActivityWhereUniqueInput
+    create: XOR<ReportActivityCreateWithoutUserInput, ReportActivityUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReportActivityCreateManyUserInputEnvelope = {
+    data: ReportActivityCreateManyUserInput | ReportActivityCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CommunityMeetingCreateWithoutOrganizerInput = {
+    id?: string
+    title: string
+    description: string
+    scheduledDate: Date | string
+    location: string
+    status?: string
+    meetingType: string
+    agenda?: CommunityMeetingCreateagendaInput | string[]
+    minutes?: string | null
+    attendees?: CommunityMeetingCreateattendeesInput | string[]
+    outcomes?: CommunityMeetingCreateoutcomesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Report?: ReportCreateNestedOneWithoutCommunityMeetingInput
+  }
+
+  export type CommunityMeetingUncheckedCreateWithoutOrganizerInput = {
+    id?: string
+    reportId?: string | null
+    title: string
+    description: string
+    scheduledDate: Date | string
+    location: string
+    status?: string
+    meetingType: string
+    agenda?: CommunityMeetingCreateagendaInput | string[]
+    minutes?: string | null
+    attendees?: CommunityMeetingCreateattendeesInput | string[]
+    outcomes?: CommunityMeetingCreateoutcomesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommunityMeetingCreateOrConnectWithoutOrganizerInput = {
+    where: CommunityMeetingWhereUniqueInput
+    create: XOR<CommunityMeetingCreateWithoutOrganizerInput, CommunityMeetingUncheckedCreateWithoutOrganizerInput>
+  }
+
+  export type CommunityMeetingCreateManyOrganizerInputEnvelope = {
+    data: CommunityMeetingCreateManyOrganizerInput | CommunityMeetingCreateManyOrganizerInput[]
     skipDuplicates?: boolean
   }
 
@@ -23169,10 +28706,935 @@ export namespace Prisma {
     expires?: DateTimeFilter<"Session"> | Date | string
   }
 
+  export type ReportEscalationUpsertWithWhereUniqueWithoutEscalatedByInput = {
+    where: ReportEscalationWhereUniqueInput
+    update: XOR<ReportEscalationUpdateWithoutEscalatedByInput, ReportEscalationUncheckedUpdateWithoutEscalatedByInput>
+    create: XOR<ReportEscalationCreateWithoutEscalatedByInput, ReportEscalationUncheckedCreateWithoutEscalatedByInput>
+  }
+
+  export type ReportEscalationUpdateWithWhereUniqueWithoutEscalatedByInput = {
+    where: ReportEscalationWhereUniqueInput
+    data: XOR<ReportEscalationUpdateWithoutEscalatedByInput, ReportEscalationUncheckedUpdateWithoutEscalatedByInput>
+  }
+
+  export type ReportEscalationUpdateManyWithWhereWithoutEscalatedByInput = {
+    where: ReportEscalationScalarWhereInput
+    data: XOR<ReportEscalationUpdateManyMutationInput, ReportEscalationUncheckedUpdateManyWithoutEscalatedByInput>
+  }
+
+  export type ReportEscalationUpsertWithWhereUniqueWithoutResolvedByInput = {
+    where: ReportEscalationWhereUniqueInput
+    update: XOR<ReportEscalationUpdateWithoutResolvedByInput, ReportEscalationUncheckedUpdateWithoutResolvedByInput>
+    create: XOR<ReportEscalationCreateWithoutResolvedByInput, ReportEscalationUncheckedCreateWithoutResolvedByInput>
+  }
+
+  export type ReportEscalationUpdateWithWhereUniqueWithoutResolvedByInput = {
+    where: ReportEscalationWhereUniqueInput
+    data: XOR<ReportEscalationUpdateWithoutResolvedByInput, ReportEscalationUncheckedUpdateWithoutResolvedByInput>
+  }
+
+  export type ReportEscalationUpdateManyWithWhereWithoutResolvedByInput = {
+    where: ReportEscalationScalarWhereInput
+    data: XOR<ReportEscalationUpdateManyMutationInput, ReportEscalationUncheckedUpdateManyWithoutResolvedByInput>
+  }
+
+  export type ReportActivityUpsertWithWhereUniqueWithoutUserInput = {
+    where: ReportActivityWhereUniqueInput
+    update: XOR<ReportActivityUpdateWithoutUserInput, ReportActivityUncheckedUpdateWithoutUserInput>
+    create: XOR<ReportActivityCreateWithoutUserInput, ReportActivityUncheckedCreateWithoutUserInput>
+  }
+
+  export type ReportActivityUpdateWithWhereUniqueWithoutUserInput = {
+    where: ReportActivityWhereUniqueInput
+    data: XOR<ReportActivityUpdateWithoutUserInput, ReportActivityUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ReportActivityUpdateManyWithWhereWithoutUserInput = {
+    where: ReportActivityScalarWhereInput
+    data: XOR<ReportActivityUpdateManyMutationInput, ReportActivityUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CommunityMeetingUpsertWithWhereUniqueWithoutOrganizerInput = {
+    where: CommunityMeetingWhereUniqueInput
+    update: XOR<CommunityMeetingUpdateWithoutOrganizerInput, CommunityMeetingUncheckedUpdateWithoutOrganizerInput>
+    create: XOR<CommunityMeetingCreateWithoutOrganizerInput, CommunityMeetingUncheckedCreateWithoutOrganizerInput>
+  }
+
+  export type CommunityMeetingUpdateWithWhereUniqueWithoutOrganizerInput = {
+    where: CommunityMeetingWhereUniqueInput
+    data: XOR<CommunityMeetingUpdateWithoutOrganizerInput, CommunityMeetingUncheckedUpdateWithoutOrganizerInput>
+  }
+
+  export type CommunityMeetingUpdateManyWithWhereWithoutOrganizerInput = {
+    where: CommunityMeetingScalarWhereInput
+    data: XOR<CommunityMeetingUpdateManyMutationInput, CommunityMeetingUncheckedUpdateManyWithoutOrganizerInput>
+  }
+
+  export type ReportCreateWithoutReportEscalationInput = {
+    id: string
+    title: string
+    description: string
+    type: $Enums.ReportType
+    status?: $Enums.ReportStatus
+    priority?: $Enums.Priority
+    latitude: number
+    longitude: number
+    address?: string | null
+    images?: ReportCreateimagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resolvedAt?: Date | string | null
+    infringedLaws?: ReportCreateinfringedLawsInput | string[]
+    lawAnalysisDate?: Date | string | null
+    publicVotingEnabled?: boolean
+    votesFor?: number
+    votesAgainst?: number
+    votingDeadline?: Date | string | null
+    meetingScheduled?: boolean
+    meetingDate?: Date | string | null
+    meetingMinutes?: string | null
+    finalVerdict?: string | null
+    verdictDate?: Date | string | null
+    User: UserCreateNestedOneWithoutReportInput
+    ReportUpdate?: ReportUpdateCreateNestedManyWithoutReportInput
+    ReportVote?: ReportVoteCreateNestedManyWithoutReportInput
+    SatelliteAnalysis?: SatelliteAnalysisCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutReportInput
+  }
+
+  export type ReportUncheckedCreateWithoutReportEscalationInput = {
+    id: string
+    title: string
+    description: string
+    type: $Enums.ReportType
+    status?: $Enums.ReportStatus
+    priority?: $Enums.Priority
+    latitude: number
+    longitude: number
+    address?: string | null
+    images?: ReportCreateimagesInput | string[]
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resolvedAt?: Date | string | null
+    infringedLaws?: ReportCreateinfringedLawsInput | string[]
+    lawAnalysisDate?: Date | string | null
+    publicVotingEnabled?: boolean
+    votesFor?: number
+    votesAgainst?: number
+    votingDeadline?: Date | string | null
+    meetingScheduled?: boolean
+    meetingDate?: Date | string | null
+    meetingMinutes?: string | null
+    finalVerdict?: string | null
+    verdictDate?: Date | string | null
+    ReportUpdate?: ReportUpdateUncheckedCreateNestedManyWithoutReportInput
+    ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutReportInput
+    SatelliteAnalysis?: SatelliteAnalysisUncheckedCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutReportInput
+  }
+
+  export type ReportCreateOrConnectWithoutReportEscalationInput = {
+    where: ReportWhereUniqueInput
+    create: XOR<ReportCreateWithoutReportEscalationInput, ReportUncheckedCreateWithoutReportEscalationInput>
+  }
+
+  export type UserCreateWithoutEscalationsCreatedInput = {
+    id: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    role?: $Enums.UserRole
+    phoneNumber?: string | null
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Account?: AccountCreateNestedManyWithoutUserInput
+    ConsultationComment?: ConsultationCommentCreateNestedManyWithoutUserInput
+    ConsultationVote?: ConsultationVoteCreateNestedManyWithoutUserInput
+    Report?: ReportCreateNestedManyWithoutUserInput
+    ReportVote?: ReportVoteCreateNestedManyWithoutUserInput
+    Session?: SessionCreateNestedManyWithoutUserInput
+    EscalationsResolved?: ReportEscalationCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type UserUncheckedCreateWithoutEscalationsCreatedInput = {
+    id: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    role?: $Enums.UserRole
+    phoneNumber?: string | null
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Account?: AccountUncheckedCreateNestedManyWithoutUserInput
+    ConsultationComment?: ConsultationCommentUncheckedCreateNestedManyWithoutUserInput
+    ConsultationVote?: ConsultationVoteUncheckedCreateNestedManyWithoutUserInput
+    Report?: ReportUncheckedCreateNestedManyWithoutUserInput
+    ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutUserInput
+    Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    EscalationsResolved?: ReportEscalationUncheckedCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type UserCreateOrConnectWithoutEscalationsCreatedInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutEscalationsCreatedInput, UserUncheckedCreateWithoutEscalationsCreatedInput>
+  }
+
+  export type UserCreateWithoutEscalationsResolvedInput = {
+    id: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    role?: $Enums.UserRole
+    phoneNumber?: string | null
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Account?: AccountCreateNestedManyWithoutUserInput
+    ConsultationComment?: ConsultationCommentCreateNestedManyWithoutUserInput
+    ConsultationVote?: ConsultationVoteCreateNestedManyWithoutUserInput
+    Report?: ReportCreateNestedManyWithoutUserInput
+    ReportVote?: ReportVoteCreateNestedManyWithoutUserInput
+    Session?: SessionCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationCreateNestedManyWithoutEscalatedByInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type UserUncheckedCreateWithoutEscalationsResolvedInput = {
+    id: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    role?: $Enums.UserRole
+    phoneNumber?: string | null
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Account?: AccountUncheckedCreateNestedManyWithoutUserInput
+    ConsultationComment?: ConsultationCommentUncheckedCreateNestedManyWithoutUserInput
+    ConsultationVote?: ConsultationVoteUncheckedCreateNestedManyWithoutUserInput
+    Report?: ReportUncheckedCreateNestedManyWithoutUserInput
+    ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutUserInput
+    Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationUncheckedCreateNestedManyWithoutEscalatedByInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutUserInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type UserCreateOrConnectWithoutEscalationsResolvedInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutEscalationsResolvedInput, UserUncheckedCreateWithoutEscalationsResolvedInput>
+  }
+
+  export type ReportUpsertWithoutReportEscalationInput = {
+    update: XOR<ReportUpdateWithoutReportEscalationInput, ReportUncheckedUpdateWithoutReportEscalationInput>
+    create: XOR<ReportCreateWithoutReportEscalationInput, ReportUncheckedCreateWithoutReportEscalationInput>
+    where?: ReportWhereInput
+  }
+
+  export type ReportUpdateToOneWithWhereWithoutReportEscalationInput = {
+    where?: ReportWhereInput
+    data: XOR<ReportUpdateWithoutReportEscalationInput, ReportUncheckedUpdateWithoutReportEscalationInput>
+  }
+
+  export type ReportUpdateWithoutReportEscalationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
+    status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ReportUpdateimagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    infringedLaws?: ReportUpdateinfringedLawsInput | string[]
+    lawAnalysisDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    publicVotingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    votesFor?: IntFieldUpdateOperationsInput | number
+    votesAgainst?: IntFieldUpdateOperationsInput | number
+    votingDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
+    meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingMinutes?: NullableStringFieldUpdateOperationsInput | string | null
+    finalVerdict?: NullableStringFieldUpdateOperationsInput | string | null
+    verdictDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    User?: UserUpdateOneRequiredWithoutReportNestedInput
+    ReportUpdate?: ReportUpdateUpdateManyWithoutReportNestedInput
+    ReportVote?: ReportVoteUpdateManyWithoutReportNestedInput
+    SatelliteAnalysis?: SatelliteAnalysisUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutReportNestedInput
+  }
+
+  export type ReportUncheckedUpdateWithoutReportEscalationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
+    status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ReportUpdateimagesInput | string[]
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    infringedLaws?: ReportUpdateinfringedLawsInput | string[]
+    lawAnalysisDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    publicVotingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    votesFor?: IntFieldUpdateOperationsInput | number
+    votesAgainst?: IntFieldUpdateOperationsInput | number
+    votingDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
+    meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingMinutes?: NullableStringFieldUpdateOperationsInput | string | null
+    finalVerdict?: NullableStringFieldUpdateOperationsInput | string | null
+    verdictDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ReportUpdate?: ReportUpdateUncheckedUpdateManyWithoutReportNestedInput
+    ReportVote?: ReportVoteUncheckedUpdateManyWithoutReportNestedInput
+    SatelliteAnalysis?: SatelliteAnalysisUncheckedUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutReportNestedInput
+  }
+
+  export type UserUpsertWithoutEscalationsCreatedInput = {
+    update: XOR<UserUpdateWithoutEscalationsCreatedInput, UserUncheckedUpdateWithoutEscalationsCreatedInput>
+    create: XOR<UserCreateWithoutEscalationsCreatedInput, UserUncheckedCreateWithoutEscalationsCreatedInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutEscalationsCreatedInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutEscalationsCreatedInput, UserUncheckedUpdateWithoutEscalationsCreatedInput>
+  }
+
+  export type UserUpdateWithoutEscalationsCreatedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Account?: AccountUpdateManyWithoutUserNestedInput
+    ConsultationComment?: ConsultationCommentUpdateManyWithoutUserNestedInput
+    ConsultationVote?: ConsultationVoteUpdateManyWithoutUserNestedInput
+    Report?: ReportUpdateManyWithoutUserNestedInput
+    ReportVote?: ReportVoteUpdateManyWithoutUserNestedInput
+    Session?: SessionUpdateManyWithoutUserNestedInput
+    EscalationsResolved?: ReportEscalationUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutOrganizerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutEscalationsCreatedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    ConsultationComment?: ConsultationCommentUncheckedUpdateManyWithoutUserNestedInput
+    ConsultationVote?: ConsultationVoteUncheckedUpdateManyWithoutUserNestedInput
+    Report?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    ReportVote?: ReportVoteUncheckedUpdateManyWithoutUserNestedInput
+    Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    EscalationsResolved?: ReportEscalationUncheckedUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutOrganizerNestedInput
+  }
+
+  export type UserUpsertWithoutEscalationsResolvedInput = {
+    update: XOR<UserUpdateWithoutEscalationsResolvedInput, UserUncheckedUpdateWithoutEscalationsResolvedInput>
+    create: XOR<UserCreateWithoutEscalationsResolvedInput, UserUncheckedCreateWithoutEscalationsResolvedInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutEscalationsResolvedInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutEscalationsResolvedInput, UserUncheckedUpdateWithoutEscalationsResolvedInput>
+  }
+
+  export type UserUpdateWithoutEscalationsResolvedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Account?: AccountUpdateManyWithoutUserNestedInput
+    ConsultationComment?: ConsultationCommentUpdateManyWithoutUserNestedInput
+    ConsultationVote?: ConsultationVoteUpdateManyWithoutUserNestedInput
+    Report?: ReportUpdateManyWithoutUserNestedInput
+    ReportVote?: ReportVoteUpdateManyWithoutUserNestedInput
+    Session?: SessionUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUpdateManyWithoutEscalatedByNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutOrganizerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutEscalationsResolvedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    ConsultationComment?: ConsultationCommentUncheckedUpdateManyWithoutUserNestedInput
+    ConsultationVote?: ConsultationVoteUncheckedUpdateManyWithoutUserNestedInput
+    Report?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    ReportVote?: ReportVoteUncheckedUpdateManyWithoutUserNestedInput
+    Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUncheckedUpdateManyWithoutEscalatedByNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutUserNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutOrganizerNestedInput
+  }
+
+  export type ReportCreateWithoutReportActivityInput = {
+    id: string
+    title: string
+    description: string
+    type: $Enums.ReportType
+    status?: $Enums.ReportStatus
+    priority?: $Enums.Priority
+    latitude: number
+    longitude: number
+    address?: string | null
+    images?: ReportCreateimagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resolvedAt?: Date | string | null
+    infringedLaws?: ReportCreateinfringedLawsInput | string[]
+    lawAnalysisDate?: Date | string | null
+    publicVotingEnabled?: boolean
+    votesFor?: number
+    votesAgainst?: number
+    votingDeadline?: Date | string | null
+    meetingScheduled?: boolean
+    meetingDate?: Date | string | null
+    meetingMinutes?: string | null
+    finalVerdict?: string | null
+    verdictDate?: Date | string | null
+    User: UserCreateNestedOneWithoutReportInput
+    ReportUpdate?: ReportUpdateCreateNestedManyWithoutReportInput
+    ReportVote?: ReportVoteCreateNestedManyWithoutReportInput
+    SatelliteAnalysis?: SatelliteAnalysisCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutReportInput
+  }
+
+  export type ReportUncheckedCreateWithoutReportActivityInput = {
+    id: string
+    title: string
+    description: string
+    type: $Enums.ReportType
+    status?: $Enums.ReportStatus
+    priority?: $Enums.Priority
+    latitude: number
+    longitude: number
+    address?: string | null
+    images?: ReportCreateimagesInput | string[]
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resolvedAt?: Date | string | null
+    infringedLaws?: ReportCreateinfringedLawsInput | string[]
+    lawAnalysisDate?: Date | string | null
+    publicVotingEnabled?: boolean
+    votesFor?: number
+    votesAgainst?: number
+    votingDeadline?: Date | string | null
+    meetingScheduled?: boolean
+    meetingDate?: Date | string | null
+    meetingMinutes?: string | null
+    finalVerdict?: string | null
+    verdictDate?: Date | string | null
+    ReportUpdate?: ReportUpdateUncheckedCreateNestedManyWithoutReportInput
+    ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutReportInput
+    SatelliteAnalysis?: SatelliteAnalysisUncheckedCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationUncheckedCreateNestedManyWithoutReportInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutReportInput
+  }
+
+  export type ReportCreateOrConnectWithoutReportActivityInput = {
+    where: ReportWhereUniqueInput
+    create: XOR<ReportCreateWithoutReportActivityInput, ReportUncheckedCreateWithoutReportActivityInput>
+  }
+
+  export type UserCreateWithoutReportActivityInput = {
+    id: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    role?: $Enums.UserRole
+    phoneNumber?: string | null
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Account?: AccountCreateNestedManyWithoutUserInput
+    ConsultationComment?: ConsultationCommentCreateNestedManyWithoutUserInput
+    ConsultationVote?: ConsultationVoteCreateNestedManyWithoutUserInput
+    Report?: ReportCreateNestedManyWithoutUserInput
+    ReportVote?: ReportVoteCreateNestedManyWithoutUserInput
+    Session?: SessionCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationCreateNestedManyWithoutResolvedByInput
+    CommunityMeeting?: CommunityMeetingCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type UserUncheckedCreateWithoutReportActivityInput = {
+    id: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    role?: $Enums.UserRole
+    phoneNumber?: string | null
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Account?: AccountUncheckedCreateNestedManyWithoutUserInput
+    ConsultationComment?: ConsultationCommentUncheckedCreateNestedManyWithoutUserInput
+    ConsultationVote?: ConsultationVoteUncheckedCreateNestedManyWithoutUserInput
+    Report?: ReportUncheckedCreateNestedManyWithoutUserInput
+    ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutUserInput
+    Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationUncheckedCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationUncheckedCreateNestedManyWithoutResolvedByInput
+    CommunityMeeting?: CommunityMeetingUncheckedCreateNestedManyWithoutOrganizerInput
+  }
+
+  export type UserCreateOrConnectWithoutReportActivityInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReportActivityInput, UserUncheckedCreateWithoutReportActivityInput>
+  }
+
+  export type ReportUpsertWithoutReportActivityInput = {
+    update: XOR<ReportUpdateWithoutReportActivityInput, ReportUncheckedUpdateWithoutReportActivityInput>
+    create: XOR<ReportCreateWithoutReportActivityInput, ReportUncheckedCreateWithoutReportActivityInput>
+    where?: ReportWhereInput
+  }
+
+  export type ReportUpdateToOneWithWhereWithoutReportActivityInput = {
+    where?: ReportWhereInput
+    data: XOR<ReportUpdateWithoutReportActivityInput, ReportUncheckedUpdateWithoutReportActivityInput>
+  }
+
+  export type ReportUpdateWithoutReportActivityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
+    status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ReportUpdateimagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    infringedLaws?: ReportUpdateinfringedLawsInput | string[]
+    lawAnalysisDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    publicVotingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    votesFor?: IntFieldUpdateOperationsInput | number
+    votesAgainst?: IntFieldUpdateOperationsInput | number
+    votingDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
+    meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingMinutes?: NullableStringFieldUpdateOperationsInput | string | null
+    finalVerdict?: NullableStringFieldUpdateOperationsInput | string | null
+    verdictDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    User?: UserUpdateOneRequiredWithoutReportNestedInput
+    ReportUpdate?: ReportUpdateUpdateManyWithoutReportNestedInput
+    ReportVote?: ReportVoteUpdateManyWithoutReportNestedInput
+    SatelliteAnalysis?: SatelliteAnalysisUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutReportNestedInput
+  }
+
+  export type ReportUncheckedUpdateWithoutReportActivityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
+    status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ReportUpdateimagesInput | string[]
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    infringedLaws?: ReportUpdateinfringedLawsInput | string[]
+    lawAnalysisDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    publicVotingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    votesFor?: IntFieldUpdateOperationsInput | number
+    votesAgainst?: IntFieldUpdateOperationsInput | number
+    votingDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
+    meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingMinutes?: NullableStringFieldUpdateOperationsInput | string | null
+    finalVerdict?: NullableStringFieldUpdateOperationsInput | string | null
+    verdictDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ReportUpdate?: ReportUpdateUncheckedUpdateManyWithoutReportNestedInput
+    ReportVote?: ReportVoteUncheckedUpdateManyWithoutReportNestedInput
+    SatelliteAnalysis?: SatelliteAnalysisUncheckedUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUncheckedUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutReportNestedInput
+  }
+
+  export type UserUpsertWithoutReportActivityInput = {
+    update: XOR<UserUpdateWithoutReportActivityInput, UserUncheckedUpdateWithoutReportActivityInput>
+    create: XOR<UserCreateWithoutReportActivityInput, UserUncheckedCreateWithoutReportActivityInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReportActivityInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReportActivityInput, UserUncheckedUpdateWithoutReportActivityInput>
+  }
+
+  export type UserUpdateWithoutReportActivityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Account?: AccountUpdateManyWithoutUserNestedInput
+    ConsultationComment?: ConsultationCommentUpdateManyWithoutUserNestedInput
+    ConsultationVote?: ConsultationVoteUpdateManyWithoutUserNestedInput
+    Report?: ReportUpdateManyWithoutUserNestedInput
+    ReportVote?: ReportVoteUpdateManyWithoutUserNestedInput
+    Session?: SessionUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUpdateManyWithoutResolvedByNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutOrganizerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReportActivityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    ConsultationComment?: ConsultationCommentUncheckedUpdateManyWithoutUserNestedInput
+    ConsultationVote?: ConsultationVoteUncheckedUpdateManyWithoutUserNestedInput
+    Report?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    ReportVote?: ReportVoteUncheckedUpdateManyWithoutUserNestedInput
+    Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUncheckedUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUncheckedUpdateManyWithoutResolvedByNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutOrganizerNestedInput
+  }
+
+  export type ReportCreateWithoutCommunityMeetingInput = {
+    id: string
+    title: string
+    description: string
+    type: $Enums.ReportType
+    status?: $Enums.ReportStatus
+    priority?: $Enums.Priority
+    latitude: number
+    longitude: number
+    address?: string | null
+    images?: ReportCreateimagesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resolvedAt?: Date | string | null
+    infringedLaws?: ReportCreateinfringedLawsInput | string[]
+    lawAnalysisDate?: Date | string | null
+    publicVotingEnabled?: boolean
+    votesFor?: number
+    votesAgainst?: number
+    votingDeadline?: Date | string | null
+    meetingScheduled?: boolean
+    meetingDate?: Date | string | null
+    meetingMinutes?: string | null
+    finalVerdict?: string | null
+    verdictDate?: Date | string | null
+    User: UserCreateNestedOneWithoutReportInput
+    ReportUpdate?: ReportUpdateCreateNestedManyWithoutReportInput
+    ReportVote?: ReportVoteCreateNestedManyWithoutReportInput
+    SatelliteAnalysis?: SatelliteAnalysisCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutReportInput
+  }
+
+  export type ReportUncheckedCreateWithoutCommunityMeetingInput = {
+    id: string
+    title: string
+    description: string
+    type: $Enums.ReportType
+    status?: $Enums.ReportStatus
+    priority?: $Enums.Priority
+    latitude: number
+    longitude: number
+    address?: string | null
+    images?: ReportCreateimagesInput | string[]
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    resolvedAt?: Date | string | null
+    infringedLaws?: ReportCreateinfringedLawsInput | string[]
+    lawAnalysisDate?: Date | string | null
+    publicVotingEnabled?: boolean
+    votesFor?: number
+    votesAgainst?: number
+    votingDeadline?: Date | string | null
+    meetingScheduled?: boolean
+    meetingDate?: Date | string | null
+    meetingMinutes?: string | null
+    finalVerdict?: string | null
+    verdictDate?: Date | string | null
+    ReportUpdate?: ReportUpdateUncheckedCreateNestedManyWithoutReportInput
+    ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutReportInput
+    SatelliteAnalysis?: SatelliteAnalysisUncheckedCreateNestedManyWithoutReportInput
+    ReportEscalation?: ReportEscalationUncheckedCreateNestedManyWithoutReportInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutReportInput
+  }
+
+  export type ReportCreateOrConnectWithoutCommunityMeetingInput = {
+    where: ReportWhereUniqueInput
+    create: XOR<ReportCreateWithoutCommunityMeetingInput, ReportUncheckedCreateWithoutCommunityMeetingInput>
+  }
+
+  export type UserCreateWithoutCommunityMeetingInput = {
+    id: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    role?: $Enums.UserRole
+    phoneNumber?: string | null
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Account?: AccountCreateNestedManyWithoutUserInput
+    ConsultationComment?: ConsultationCommentCreateNestedManyWithoutUserInput
+    ConsultationVote?: ConsultationVoteCreateNestedManyWithoutUserInput
+    Report?: ReportCreateNestedManyWithoutUserInput
+    ReportVote?: ReportVoteCreateNestedManyWithoutUserInput
+    Session?: SessionCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCommunityMeetingInput = {
+    id: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    role?: $Enums.UserRole
+    phoneNumber?: string | null
+    location?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Account?: AccountUncheckedCreateNestedManyWithoutUserInput
+    ConsultationComment?: ConsultationCommentUncheckedCreateNestedManyWithoutUserInput
+    ConsultationVote?: ConsultationVoteUncheckedCreateNestedManyWithoutUserInput
+    Report?: ReportUncheckedCreateNestedManyWithoutUserInput
+    ReportVote?: ReportVoteUncheckedCreateNestedManyWithoutUserInput
+    Session?: SessionUncheckedCreateNestedManyWithoutUserInput
+    EscalationsCreated?: ReportEscalationUncheckedCreateNestedManyWithoutEscalatedByInput
+    EscalationsResolved?: ReportEscalationUncheckedCreateNestedManyWithoutResolvedByInput
+    ReportActivity?: ReportActivityUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCommunityMeetingInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCommunityMeetingInput, UserUncheckedCreateWithoutCommunityMeetingInput>
+  }
+
+  export type ReportUpsertWithoutCommunityMeetingInput = {
+    update: XOR<ReportUpdateWithoutCommunityMeetingInput, ReportUncheckedUpdateWithoutCommunityMeetingInput>
+    create: XOR<ReportCreateWithoutCommunityMeetingInput, ReportUncheckedCreateWithoutCommunityMeetingInput>
+    where?: ReportWhereInput
+  }
+
+  export type ReportUpdateToOneWithWhereWithoutCommunityMeetingInput = {
+    where?: ReportWhereInput
+    data: XOR<ReportUpdateWithoutCommunityMeetingInput, ReportUncheckedUpdateWithoutCommunityMeetingInput>
+  }
+
+  export type ReportUpdateWithoutCommunityMeetingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
+    status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ReportUpdateimagesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    infringedLaws?: ReportUpdateinfringedLawsInput | string[]
+    lawAnalysisDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    publicVotingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    votesFor?: IntFieldUpdateOperationsInput | number
+    votesAgainst?: IntFieldUpdateOperationsInput | number
+    votingDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
+    meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingMinutes?: NullableStringFieldUpdateOperationsInput | string | null
+    finalVerdict?: NullableStringFieldUpdateOperationsInput | string | null
+    verdictDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    User?: UserUpdateOneRequiredWithoutReportNestedInput
+    ReportUpdate?: ReportUpdateUpdateManyWithoutReportNestedInput
+    ReportVote?: ReportVoteUpdateManyWithoutReportNestedInput
+    SatelliteAnalysis?: SatelliteAnalysisUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutReportNestedInput
+  }
+
+  export type ReportUncheckedUpdateWithoutCommunityMeetingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumReportTypeFieldUpdateOperationsInput | $Enums.ReportType
+    status?: EnumReportStatusFieldUpdateOperationsInput | $Enums.ReportStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ReportUpdateimagesInput | string[]
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    infringedLaws?: ReportUpdateinfringedLawsInput | string[]
+    lawAnalysisDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    publicVotingEnabled?: BoolFieldUpdateOperationsInput | boolean
+    votesFor?: IntFieldUpdateOperationsInput | number
+    votesAgainst?: IntFieldUpdateOperationsInput | number
+    votingDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingScheduled?: BoolFieldUpdateOperationsInput | boolean
+    meetingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    meetingMinutes?: NullableStringFieldUpdateOperationsInput | string | null
+    finalVerdict?: NullableStringFieldUpdateOperationsInput | string | null
+    verdictDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    ReportUpdate?: ReportUpdateUncheckedUpdateManyWithoutReportNestedInput
+    ReportVote?: ReportVoteUncheckedUpdateManyWithoutReportNestedInput
+    SatelliteAnalysis?: SatelliteAnalysisUncheckedUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUncheckedUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutReportNestedInput
+  }
+
+  export type UserUpsertWithoutCommunityMeetingInput = {
+    update: XOR<UserUpdateWithoutCommunityMeetingInput, UserUncheckedUpdateWithoutCommunityMeetingInput>
+    create: XOR<UserCreateWithoutCommunityMeetingInput, UserUncheckedCreateWithoutCommunityMeetingInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCommunityMeetingInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCommunityMeetingInput, UserUncheckedUpdateWithoutCommunityMeetingInput>
+  }
+
+  export type UserUpdateWithoutCommunityMeetingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Account?: AccountUpdateManyWithoutUserNestedInput
+    ConsultationComment?: ConsultationCommentUpdateManyWithoutUserNestedInput
+    ConsultationVote?: ConsultationVoteUpdateManyWithoutUserNestedInput
+    Report?: ReportUpdateManyWithoutUserNestedInput
+    ReportVote?: ReportVoteUpdateManyWithoutUserNestedInput
+    Session?: SessionUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCommunityMeetingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Account?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    ConsultationComment?: ConsultationCommentUncheckedUpdateManyWithoutUserNestedInput
+    ConsultationVote?: ConsultationVoteUncheckedUpdateManyWithoutUserNestedInput
+    Report?: ReportUncheckedUpdateManyWithoutUserNestedInput
+    ReportVote?: ReportVoteUncheckedUpdateManyWithoutUserNestedInput
+    Session?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    EscalationsCreated?: ReportEscalationUncheckedUpdateManyWithoutEscalatedByNestedInput
+    EscalationsResolved?: ReportEscalationUncheckedUpdateManyWithoutResolvedByNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type ConsultationCommentCreateManyPublicConsultationInput = {
     id: string
     userId: string
     comment: string
+    vote?: string | null
     createdAt?: Date | string
   }
 
@@ -23186,6 +29648,7 @@ export namespace Prisma {
   export type ConsultationCommentUpdateWithoutPublicConsultationInput = {
     id?: StringFieldUpdateOperationsInput | string
     comment?: StringFieldUpdateOperationsInput | string
+    vote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     User?: UserUpdateOneRequiredWithoutConsultationCommentNestedInput
   }
@@ -23194,6 +29657,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     comment?: StringFieldUpdateOperationsInput | string
+    vote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -23201,6 +29665,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     comment?: StringFieldUpdateOperationsInput | string
+    vote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -23251,6 +29716,47 @@ export namespace Prisma {
     imageUrl?: string | null
     analysisDate?: Date | string
     createdAt?: Date | string
+  }
+
+  export type ReportEscalationCreateManyReportInput = {
+    id?: string
+    escalatedBy: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolvedBy?: string | null
+    resolution?: string | null
+  }
+
+  export type ReportActivityCreateManyReportInput = {
+    id?: string
+    userId: string
+    action: string
+    description: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CommunityMeetingCreateManyReportInput = {
+    id?: string
+    title: string
+    description: string
+    scheduledDate: Date | string
+    location: string
+    organizer: string
+    status?: string
+    meetingType: string
+    agenda?: CommunityMeetingCreateagendaInput | string[]
+    minutes?: string | null
+    attendees?: CommunityMeetingCreateattendeesInput | string[]
+    outcomes?: CommunityMeetingCreateoutcomesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ReportUpdateUpdateWithoutReportInput = {
@@ -23337,6 +29843,129 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ReportEscalationUpdateWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+    EscalatedBy?: UserUpdateOneRequiredWithoutEscalationsCreatedNestedInput
+    ResolvedBy?: UserUpdateOneWithoutEscalationsResolvedNestedInput
+  }
+
+  export type ReportEscalationUncheckedUpdateWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    escalatedBy?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportEscalationUncheckedUpdateManyWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    escalatedBy?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportActivityUpdateWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    User?: UserUpdateOneRequiredWithoutReportActivityNestedInput
+  }
+
+  export type ReportActivityUncheckedUpdateWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReportActivityUncheckedUpdateManyWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommunityMeetingUpdateWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    meetingType?: StringFieldUpdateOperationsInput | string
+    agenda?: CommunityMeetingUpdateagendaInput | string[]
+    minutes?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: CommunityMeetingUpdateattendeesInput | string[]
+    outcomes?: CommunityMeetingUpdateoutcomesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Organizer?: UserUpdateOneRequiredWithoutCommunityMeetingNestedInput
+  }
+
+  export type CommunityMeetingUncheckedUpdateWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: StringFieldUpdateOperationsInput | string
+    organizer?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    meetingType?: StringFieldUpdateOperationsInput | string
+    agenda?: CommunityMeetingUpdateagendaInput | string[]
+    minutes?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: CommunityMeetingUpdateattendeesInput | string[]
+    outcomes?: CommunityMeetingUpdateoutcomesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommunityMeetingUncheckedUpdateManyWithoutReportInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: StringFieldUpdateOperationsInput | string
+    organizer?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    meetingType?: StringFieldUpdateOperationsInput | string
+    agenda?: CommunityMeetingUpdateagendaInput | string[]
+    minutes?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: CommunityMeetingUpdateattendeesInput | string[]
+    outcomes?: CommunityMeetingUpdateoutcomesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AccountCreateManyUserInput = {
     id: string
     type: string
@@ -23355,6 +29984,7 @@ export namespace Prisma {
     id: string
     consultationId: string
     comment: string
+    vote?: string | null
     createdAt?: Date | string
   }
 
@@ -23406,6 +30036,62 @@ export namespace Prisma {
     expires: Date | string
   }
 
+  export type ReportEscalationCreateManyEscalatedByInput = {
+    id?: string
+    reportId: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolvedBy?: string | null
+    resolution?: string | null
+  }
+
+  export type ReportEscalationCreateManyResolvedByInput = {
+    id?: string
+    reportId: string
+    escalatedBy: string
+    escalationType: string
+    escalationLevel: string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason: string
+    escalatedAt?: Date | string
+    status?: string
+    priority?: string
+    resolvedAt?: Date | string | null
+    resolution?: string | null
+  }
+
+  export type ReportActivityCreateManyUserInput = {
+    id?: string
+    reportId: string
+    action: string
+    description: string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type CommunityMeetingCreateManyOrganizerInput = {
+    id?: string
+    reportId?: string | null
+    title: string
+    description: string
+    scheduledDate: Date | string
+    location: string
+    status?: string
+    meetingType: string
+    agenda?: CommunityMeetingCreateagendaInput | string[]
+    minutes?: string | null
+    attendees?: CommunityMeetingCreateattendeesInput | string[]
+    outcomes?: CommunityMeetingCreateoutcomesInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AccountUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -23451,6 +30137,7 @@ export namespace Prisma {
   export type ConsultationCommentUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     comment?: StringFieldUpdateOperationsInput | string
+    vote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     PublicConsultation?: PublicConsultationUpdateOneRequiredWithoutConsultationCommentNestedInput
   }
@@ -23459,6 +30146,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     consultationId?: StringFieldUpdateOperationsInput | string
     comment?: StringFieldUpdateOperationsInput | string
+    vote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -23466,6 +30154,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     consultationId?: StringFieldUpdateOperationsInput | string
     comment?: StringFieldUpdateOperationsInput | string
+    vote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -23518,6 +30207,9 @@ export namespace Prisma {
     ReportUpdate?: ReportUpdateUpdateManyWithoutReportNestedInput
     ReportVote?: ReportVoteUpdateManyWithoutReportNestedInput
     SatelliteAnalysis?: SatelliteAnalysisUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUpdateManyWithoutReportNestedInput
   }
 
   export type ReportUncheckedUpdateWithoutUserInput = {
@@ -23548,6 +30240,9 @@ export namespace Prisma {
     ReportUpdate?: ReportUpdateUncheckedUpdateManyWithoutReportNestedInput
     ReportVote?: ReportVoteUncheckedUpdateManyWithoutReportNestedInput
     SatelliteAnalysis?: SatelliteAnalysisUncheckedUpdateManyWithoutReportNestedInput
+    ReportEscalation?: ReportEscalationUncheckedUpdateManyWithoutReportNestedInput
+    ReportActivity?: ReportActivityUncheckedUpdateManyWithoutReportNestedInput
+    CommunityMeeting?: CommunityMeetingUncheckedUpdateManyWithoutReportNestedInput
   }
 
   export type ReportUncheckedUpdateManyWithoutUserInput = {
@@ -23617,6 +30312,174 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     sessionToken?: StringFieldUpdateOperationsInput | string
     expires?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReportEscalationUpdateWithoutEscalatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+    Report?: ReportUpdateOneRequiredWithoutReportEscalationNestedInput
+    ResolvedBy?: UserUpdateOneWithoutEscalationsResolvedNestedInput
+  }
+
+  export type ReportEscalationUncheckedUpdateWithoutEscalatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportEscalationUncheckedUpdateManyWithoutEscalatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportEscalationUpdateWithoutResolvedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+    Report?: ReportUpdateOneRequiredWithoutReportEscalationNestedInput
+    EscalatedBy?: UserUpdateOneRequiredWithoutEscalationsCreatedNestedInput
+  }
+
+  export type ReportEscalationUncheckedUpdateWithoutResolvedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    escalatedBy?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportEscalationUncheckedUpdateManyWithoutResolvedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    escalatedBy?: StringFieldUpdateOperationsInput | string
+    escalationType?: StringFieldUpdateOperationsInput | string
+    escalationLevel?: StringFieldUpdateOperationsInput | string
+    votingData?: NullableJsonNullValueInput | InputJsonValue
+    escalationReason?: StringFieldUpdateOperationsInput | string
+    escalatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    priority?: StringFieldUpdateOperationsInput | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolution?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportActivityUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Report?: ReportUpdateOneRequiredWithoutReportActivityNestedInput
+  }
+
+  export type ReportActivityUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReportActivityUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommunityMeetingUpdateWithoutOrganizerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    meetingType?: StringFieldUpdateOperationsInput | string
+    agenda?: CommunityMeetingUpdateagendaInput | string[]
+    minutes?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: CommunityMeetingUpdateattendeesInput | string[]
+    outcomes?: CommunityMeetingUpdateoutcomesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Report?: ReportUpdateOneWithoutCommunityMeetingNestedInput
+  }
+
+  export type CommunityMeetingUncheckedUpdateWithoutOrganizerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    meetingType?: StringFieldUpdateOperationsInput | string
+    agenda?: CommunityMeetingUpdateagendaInput | string[]
+    minutes?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: CommunityMeetingUpdateattendeesInput | string[]
+    outcomes?: CommunityMeetingUpdateoutcomesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommunityMeetingUncheckedUpdateManyWithoutOrganizerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    scheduledDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    meetingType?: StringFieldUpdateOperationsInput | string
+    agenda?: CommunityMeetingUpdateagendaInput | string[]
+    minutes?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: CommunityMeetingUpdateattendeesInput | string[]
+    outcomes?: CommunityMeetingUpdateoutcomesInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

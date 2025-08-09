@@ -195,6 +195,65 @@ Be precise with law section references and explain how they specifically apply t
         }
       })
 
+      // Create public consultation if needed
+      let consultationCreated = false
+      if (shouldTriggerPublicParticipation) {
+        try {
+          const consultation = await prisma.publicConsultation.create({
+              data: {
+                id: crypto.randomUUID(),
+                title: `Urgent Community Issue: ${report.title}`,
+                description: `
+**HIGH PRIORITY ISSUE REQUIRING COMMUNITY INPUT**
+
+**Original Report:** ${report.description}
+
+**Location:** ${report.address || `Coordinates: ${report.latitude}, ${report.longitude}`}
+
+**Legal Analysis Results:**
+**Severity Level:** ${analysis.severity}
+**Urgency:** ${analysis.urgencyLevel}
+
+**Legal Analysis:**
+${analysis.reasoning}
+
+**Laws Potentially Violated:**
+${(analysis.infringedLaws || []).map((law: string) => `• ${law}`).join('\n')}
+
+**Recommended Government Actions:**
+${(analysis.recommendedActions || []).map((action: string) => `• ${action}`).join('\n')}
+
+**Legal Basis for Action:**
+${analysis.legalBasis}
+
+**Why Your Input Matters:**
+This issue has been flagged as requiring community consultation based on its severity and potential impact. Your vote and comments will directly influence the government's response priority and approach.
+
+**How to Participate:**
+- **Vote:** Support urgent action, Oppose the proposed response, or choose Neutral
+- **Comment:** Share your experience, suggest solutions, or provide additional context
+- **Deadline:** 14 days from today
+
+**Supporting Laws:**
+${(analysis.supportingLaws || []).map((law: string) => `• ${law}`).join('\n')}
+              `,
+                startDate: new Date(),
+                endDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days
+                status: 'ACTIVE',
+                coordinates: (typeof report.latitude === 'number' && typeof report.longitude === 'number')
+                  ? { latitude: report.latitude, longitude: report.longitude }
+                  : undefined
+              }
+          })
+          
+          consultationCreated = true
+          console.log('Public consultation created for analyzed high priority report:', consultation.id)
+          
+        } catch (consultationError) {
+          console.error('Failed to create public consultation for analyzed report:', consultationError)
+        }
+      }
+
       return NextResponse.json({
         success: true,
         analysis: {
@@ -213,7 +272,8 @@ Be precise with law section references and explain how they specifically apply t
           publicVotingEnabled: updatedReport.publicVotingEnabled,
           votingDeadline: updatedReport.votingDeadline
         },
-        publicParticipationTriggered: shouldTriggerPublicParticipation
+        publicParticipationTriggered: shouldTriggerPublicParticipation,
+        consultationCreated
       })
 
     } catch (aiError) {

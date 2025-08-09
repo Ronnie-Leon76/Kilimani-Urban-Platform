@@ -140,6 +140,7 @@ exports.Prisma.ConsultationCommentScalarFieldEnum = {
   consultationId: 'consultationId',
   userId: 'userId',
   comment: 'comment',
+  vote: 'vote',
   createdAt: 'createdAt'
 };
 
@@ -279,6 +280,50 @@ exports.Prisma.WaterDemandAnalysisScalarFieldEnum = {
   analysisDate: 'analysisDate'
 };
 
+exports.Prisma.ReportEscalationScalarFieldEnum = {
+  id: 'id',
+  reportId: 'reportId',
+  escalatedBy: 'escalatedBy',
+  escalationType: 'escalationType',
+  escalationLevel: 'escalationLevel',
+  votingData: 'votingData',
+  escalationReason: 'escalationReason',
+  escalatedAt: 'escalatedAt',
+  status: 'status',
+  priority: 'priority',
+  resolvedAt: 'resolvedAt',
+  resolvedBy: 'resolvedBy',
+  resolution: 'resolution'
+};
+
+exports.Prisma.ReportActivityScalarFieldEnum = {
+  id: 'id',
+  reportId: 'reportId',
+  userId: 'userId',
+  action: 'action',
+  description: 'description',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CommunityMeetingScalarFieldEnum = {
+  id: 'id',
+  reportId: 'reportId',
+  title: 'title',
+  description: 'description',
+  scheduledDate: 'scheduledDate',
+  location: 'location',
+  organizer: 'organizer',
+  status: 'status',
+  meetingType: 'meetingType',
+  agenda: 'agenda',
+  minutes: 'minutes',
+  attendees: 'attendees',
+  outcomes: 'outcomes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -321,7 +366,9 @@ exports.ReportStatus = exports.$Enums.ReportStatus = {
   PENDING: 'PENDING',
   IN_PROGRESS: 'IN_PROGRESS',
   RESOLVED: 'RESOLVED',
-  REJECTED: 'REJECTED'
+  REJECTED: 'REJECTED',
+  ESCALATED: 'ESCALATED',
+  UNDER_REVIEW: 'UNDER_REVIEW'
 };
 
 exports.Priority = exports.$Enums.Priority = {
@@ -351,7 +398,10 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   User: 'User',
   VerificationToken: 'VerificationToken',
-  WaterDemandAnalysis: 'WaterDemandAnalysis'
+  WaterDemandAnalysis: 'WaterDemandAnalysis',
+  ReportEscalation: 'ReportEscalation',
+  ReportActivity: 'ReportActivity',
+  CommunityMeeting: 'CommunityMeeting'
 };
 
 /**
