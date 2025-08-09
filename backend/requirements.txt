@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-asyncpg
-pydantic
-python-dotenv
-openai
-boto3
-twilio

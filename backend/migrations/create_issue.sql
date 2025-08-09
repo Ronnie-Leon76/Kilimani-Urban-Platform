@@ -1,7 +1,0 @@
-CREATE TABLE IF NOT EXISTS issues (
-    id SERIAL PRIMARY KEY,
-    description TEXT NOT NULL,
-    priority VARCHAR(10) NOT NULL,
-    solution TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
