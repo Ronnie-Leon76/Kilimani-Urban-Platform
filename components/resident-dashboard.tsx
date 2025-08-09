@@ -28,6 +28,7 @@ import {
 import { signOut } from "next-auth/react"
 import { KilimaniMap } from "./kilimani-map"
 import { ReportIssueDialog } from "./report-issue-dialog"
+import { LegalChatbot } from "./legal-chatbot"
 import { useRouter } from "next/navigation"
 
 interface User {
@@ -738,6 +739,9 @@ export function ResidentDashboard({ user }: ResidentDashboardProps) {
         onOpenChange={setShowReportDialog} 
         onSuccess={handleReportSuccess}
       />
+
+      {/* Legal Chatbot */}
+      <LegalChatbot />
     </div>
   )
 }

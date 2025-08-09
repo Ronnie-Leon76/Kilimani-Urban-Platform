@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const userReports = await prisma.report.findMany({
       where: { userId: userId },
       include: {
-        user: {
+        User: {
           select: { name: true, email: true }
         }
       },
@@ -72,18 +72,18 @@ export async function GET(request: NextRequest) {
         endDate: { gte: new Date() }
       },
       include: {
-        votes: {
+        ConsultationVote: {
           where: { userId },
           select: { vote: true }
         },
-        comments: {
+        ConsultationComment: {
           where: { userId },
           select: { id: true }
         },
         _count: {
           select: {
-            votes: true,
-            comments: true
+            ConsultationVote: true,
+            ConsultationComment: true
           }
         }
       },
@@ -113,23 +113,23 @@ export async function GET(request: NextRequest) {
       priority: report.priority,
       location: report.address || 'Location not specified',
       createdAt: report.createdAt.toLocaleDateString(),
-      reporter: report.user?.name || 'Anonymous'
+      reporter: report.User?.name || 'Anonymous'
     }))
 
     // Format consultation data
     const formattedConsultations = activeConsultations.map(consultation => {
-      const userVoted = consultation.votes.length > 0
-      const userCommented = consultation.comments.length > 0
+      const userVoted = consultation.ConsultationVote.length > 0
+      const userCommented = consultation.ConsultationComment.length > 0
       
       return {
         id: consultation.id,
         title: consultation.title,
         description: consultation.description,
         endDate: consultation.endDate.toLocaleDateString(),
-        participants: consultation._count.votes,
-        comments: consultation._count.comments,
+        participants: consultation._count.ConsultationVote,
+        comments: consultation._count.ConsultationComment,
         userParticipated: userVoted || userCommented,
-        userVote: consultation.votes[0]?.vote || null
+        userVote: consultation.ConsultationVote[0]?.vote || null
       }
     })
 

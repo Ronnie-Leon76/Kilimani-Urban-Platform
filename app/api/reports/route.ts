@@ -34,10 +34,10 @@ export async function POST(request: NextRequest) {
         priority: priority || "MEDIUM",
         status: "PENDING",
         userId: session.user.id,
-        images: images || []
+        images: { set: images || [] }
       },
       include: {
-        user: {
+        User: {
           select: { name: true, email: true }
         }
       }
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
         priority: report.priority,
         location: report.address || 'Location not specified',
         createdAt: report.createdAt.toLocaleDateString(),
-        reporter: report.user?.name || 'Anonymous'
+        reporter: report.User?.name || 'Anonymous'
       }
     })
 
@@ -98,14 +98,14 @@ export async function GET(request: NextRequest) {
     const reports = await prisma.report.findMany({
       where,
       include: {
-        user: {
+        User: {
           select: { name: true, email: true }
         }
       },
       orderBy: { createdAt: "desc" }
     })
 
-    const formattedReports = reports.map(report => ({
+    const formattedReports = reports.map((report: typeof reports[0] & { User?: { name?: string } }) => ({
       id: report.id,
       title: report.title,
       description: report.description,
@@ -115,7 +115,7 @@ export async function GET(request: NextRequest) {
       location: report.address || 'Location not specified',
       images: report.images,
       createdAt: report.createdAt.toLocaleDateString(),
-      reporter: report.user?.name || 'Anonymous'
+      reporter: report.User?.name || 'Anonymous'
     }))
 
     return NextResponse.json({ reports: formattedReports })

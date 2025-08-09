@@ -135,6 +135,113 @@ exports.Prisma.AccountScalarFieldEnum = {
   session_state: 'session_state'
 };
 
+exports.Prisma.ConsultationCommentScalarFieldEnum = {
+  id: 'id',
+  consultationId: 'consultationId',
+  userId: 'userId',
+  comment: 'comment',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ConsultationVoteScalarFieldEnum = {
+  id: 'id',
+  consultationId: 'consultationId',
+  userId: 'userId',
+  vote: 'vote',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.DevelopmentPlanScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  coordinates: 'coordinates',
+  status: 'status',
+  approvedBy: 'approvedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FloodRiskAreaScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  coordinates: 'coordinates',
+  riskLevel: 'riskLevel',
+  lastUpdated: 'lastUpdated',
+  predictions: 'predictions'
+};
+
+exports.Prisma.PublicConsultationScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  status: 'status',
+  coordinates: 'coordinates',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ReportScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  type: 'type',
+  status: 'status',
+  priority: 'priority',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  address: 'address',
+  images: 'images',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  resolvedAt: 'resolvedAt',
+  infringedLaws: 'infringedLaws',
+  lawAnalysisDate: 'lawAnalysisDate',
+  publicVotingEnabled: 'publicVotingEnabled',
+  votesFor: 'votesFor',
+  votesAgainst: 'votesAgainst',
+  votingDeadline: 'votingDeadline',
+  meetingScheduled: 'meetingScheduled',
+  meetingDate: 'meetingDate',
+  meetingMinutes: 'meetingMinutes',
+  finalVerdict: 'finalVerdict',
+  verdictDate: 'verdictDate'
+};
+
+exports.Prisma.ReportUpdateScalarFieldEnum = {
+  id: 'id',
+  reportId: 'reportId',
+  message: 'message',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedBy: 'updatedBy'
+};
+
+exports.Prisma.ReportVoteScalarFieldEnum = {
+  id: 'id',
+  reportId: 'reportId',
+  userId: 'userId',
+  vote: 'vote',
+  comment: 'comment',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.SatelliteAnalysisScalarFieldEnum = {
+  id: 'id',
+  reportId: 'reportId',
+  analysisType: 'analysisType',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  confidence: 'confidence',
+  detectedChanges: 'detectedChanges',
+  imageUrl: 'imageUrl',
+  analysisDate: 'analysisDate',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
   sessionToken: 'sessionToken',
@@ -161,93 +268,6 @@ exports.Prisma.VerificationTokenScalarFieldEnum = {
   expires: 'expires'
 };
 
-exports.Prisma.ReportScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  description: 'description',
-  type: 'type',
-  status: 'status',
-  priority: 'priority',
-  latitude: 'latitude',
-  longitude: 'longitude',
-  address: 'address',
-  images: 'images',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  resolvedAt: 'resolvedAt'
-};
-
-exports.Prisma.ReportUpdateScalarFieldEnum = {
-  id: 'id',
-  reportId: 'reportId',
-  message: 'message',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedBy: 'updatedBy'
-};
-
-exports.Prisma.SatelliteAnalysisScalarFieldEnum = {
-  id: 'id',
-  reportId: 'reportId',
-  analysisType: 'analysisType',
-  latitude: 'latitude',
-  longitude: 'longitude',
-  confidence: 'confidence',
-  detectedChanges: 'detectedChanges',
-  imageUrl: 'imageUrl',
-  analysisDate: 'analysisDate',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.FloodRiskAreaScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  coordinates: 'coordinates',
-  riskLevel: 'riskLevel',
-  lastUpdated: 'lastUpdated',
-  predictions: 'predictions'
-};
-
-exports.Prisma.DevelopmentPlanScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  description: 'description',
-  coordinates: 'coordinates',
-  status: 'status',
-  approvedBy: 'approvedBy',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.PublicConsultationScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  description: 'description',
-  startDate: 'startDate',
-  endDate: 'endDate',
-  status: 'status',
-  coordinates: 'coordinates',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.ConsultationVoteScalarFieldEnum = {
-  id: 'id',
-  consultationId: 'consultationId',
-  userId: 'userId',
-  vote: 'vote',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.ConsultationCommentScalarFieldEnum = {
-  id: 'id',
-  consultationId: 'consultationId',
-  userId: 'userId',
-  comment: 'comment',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.WaterDemandAnalysisScalarFieldEnum = {
   id: 'id',
   area: 'area',
@@ -264,12 +284,12 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
-exports.Prisma.NullableJsonNullValueInput = {
-  DbNull: Prisma.DbNull,
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
-exports.Prisma.JsonNullValueInput = {
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull
 };
 
@@ -288,12 +308,6 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
-exports.UserRole = exports.$Enums.UserRole = {
-  RESIDENT: 'RESIDENT',
-  GOVERNMENT_OFFICIAL: 'GOVERNMENT_OFFICIAL',
-  ADMIN: 'ADMIN'
-};
-
 exports.ReportType = exports.$Enums.ReportType = {
   INFRASTRUCTURE: 'INFRASTRUCTURE',
   WATER_SHORTAGE: 'WATER_SHORTAGE',
@@ -317,19 +331,26 @@ exports.Priority = exports.$Enums.Priority = {
   CRITICAL: 'CRITICAL'
 };
 
+exports.UserRole = exports.$Enums.UserRole = {
+  RESIDENT: 'RESIDENT',
+  GOVERNMENT_OFFICIAL: 'GOVERNMENT_OFFICIAL',
+  ADMIN: 'ADMIN'
+};
+
 exports.Prisma.ModelName = {
   Account: 'Account',
+  ConsultationComment: 'ConsultationComment',
+  ConsultationVote: 'ConsultationVote',
+  DevelopmentPlan: 'DevelopmentPlan',
+  FloodRiskArea: 'FloodRiskArea',
+  PublicConsultation: 'PublicConsultation',
+  Report: 'Report',
+  ReportUpdate: 'ReportUpdate',
+  ReportVote: 'ReportVote',
+  SatelliteAnalysis: 'SatelliteAnalysis',
   Session: 'Session',
   User: 'User',
   VerificationToken: 'VerificationToken',
-  Report: 'Report',
-  ReportUpdate: 'ReportUpdate',
-  SatelliteAnalysis: 'SatelliteAnalysis',
-  FloodRiskArea: 'FloodRiskArea',
-  DevelopmentPlan: 'DevelopmentPlan',
-  PublicConsultation: 'PublicConsultation',
-  ConsultationVote: 'ConsultationVote',
-  ConsultationComment: 'ConsultationComment',
   WaterDemandAnalysis: 'WaterDemandAnalysis'
 };
 

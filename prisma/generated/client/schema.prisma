@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
   output   = "./generated/client"
@@ -12,49 +9,173 @@ datasource db {
 }
 
 model Account {
-  id                String  @id @default(cuid())
+  id                String  @id
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
+model ConsultationComment {
+  id                 String             @id
+  consultationId     String
+  userId             String
+  comment            String
+  createdAt          DateTime           @default(now())
+  PublicConsultation PublicConsultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  User               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ConsultationVote {
+  id                 String             @id
+  consultationId     String
+  userId             String
+  vote               String
+  createdAt          DateTime           @default(now())
+  PublicConsultation PublicConsultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  User               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([consultationId, userId])
+}
+
+model DevelopmentPlan {
+  id          String   @id
+  title       String
+  description String
+  coordinates Json
+  status      String
+  approvedBy  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model FloodRiskArea {
+  id          String   @id
+  name        String
+  coordinates Json
+  riskLevel   String
+  lastUpdated DateTime @default(now())
+  predictions Json?
+}
+
+model PublicConsultation {
+  id                  String                @id
+  title               String
+  description         String
+  startDate           DateTime
+  endDate             DateTime
+  status              String
+  coordinates         Json?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  ConsultationComment ConsultationComment[]
+  ConsultationVote    ConsultationVote[]
+}
+
+model Report {
+  id                  String              @id
+  title               String
+  description         String
+  type                ReportType
+  status              ReportStatus        @default(PENDING)
+  priority            Priority            @default(MEDIUM)
+  latitude            Float
+  longitude           Float
+  address             String?
+  images              String[]
+  userId              String
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  resolvedAt          DateTime?
+  infringedLaws       String[]
+  lawAnalysisDate     DateTime?
+  publicVotingEnabled Boolean             @default(false)
+  votesFor            Int                 @default(0)
+  votesAgainst        Int                 @default(0)
+  votingDeadline      DateTime?
+  meetingScheduled    Boolean             @default(false)
+  meetingDate         DateTime?
+  meetingMinutes      String?
+  finalVerdict        String?
+  verdictDate         DateTime?
+  User                User                @relation(fields: [userId], references: [id])
+  ReportUpdate        ReportUpdate[]
+  ReportVote          ReportVote[]
+  SatelliteAnalysis   SatelliteAnalysis[]
+}
+
+model ReportUpdate {
+  id        String        @id
+  reportId  String
+  message   String
+  status    ReportStatus?
+  createdAt DateTime      @default(now())
+  updatedBy String?
+  Report    Report        @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
+
+model ReportVote {
+  id        String   @id
+  reportId  String
+  userId    String
+  vote      String
+  comment   String?
+  createdAt DateTime @default(now())
+  Report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([reportId, userId])
+}
+
+model SatelliteAnalysis {
+  id              String   @id
+  reportId        String?
+  analysisType    String
+  latitude        Float
+  longitude       Float
+  confidence      Float
+  detectedChanges Json?
+  imageUrl        String?
+  analysisDate    DateTime @default(now())
+  createdAt       DateTime @default(now())
+  Report          Report?  @relation(fields: [reportId], references: [id])
+}
+
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  role          UserRole  @default(RESIDENT)
-  phoneNumber   String?
-  location      String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  accounts             Account[]
-  sessions             Session[]
-  reports              Report[]
-  consultationVotes    ConsultationVote[]
-  consultationComments ConsultationComment[]
+  id                  String                @id
+  name                String?
+  email               String                @unique
+  emailVerified       DateTime?
+  image               String?
+  role                UserRole              @default(RESIDENT)
+  phoneNumber         String?
+  location            String?
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  Account             Account[]
+  ConsultationComment ConsultationComment[]
+  ConsultationVote    ConsultationVote[]
+  Report              Report[]
+  ReportVote          ReportVote[]
+  Session             Session[]
 }
 
 model VerificationToken {
@@ -65,10 +186,29 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-enum UserRole {
-  RESIDENT
-  GOVERNMENT_OFFICIAL
-  ADMIN
+model WaterDemandAnalysis {
+  id                String   @id
+  area              String
+  coordinates       Json
+  populationDensity Float
+  predictedDemand   Float
+  currentSupply     Float?
+  shortage          Float?
+  analysisDate      DateTime @default(now())
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum ReportStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+  REJECTED
 }
 
 enum ReportType {
@@ -80,133 +220,8 @@ enum ReportType {
   OTHER
 }
 
-enum ReportStatus {
-  PENDING
-  IN_PROGRESS
-  RESOLVED
-  REJECTED
-}
-
-enum Priority {
-  LOW
-  MEDIUM
-  HIGH
-  CRITICAL
-}
-
-model Report {
-  id          String       @id @default(cuid())
-  title       String
-  description String
-  type        ReportType
-  status      ReportStatus @default(PENDING)
-  priority    Priority     @default(MEDIUM)
-  latitude    Float
-  longitude   Float
-  address     String?
-  images      String[] // Array of image URLs
-  userId      String
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  resolvedAt  DateTime?
-
-  user     User                @relation(fields: [userId], references: [id])
-  updates  ReportUpdate[]
-  analysis SatelliteAnalysis[]
-}
-
-model ReportUpdate {
-  id        String        @id @default(cuid())
-  reportId  String
-  message   String
-  status    ReportStatus?
-  createdAt DateTime      @default(now())
-  updatedBy String?
-
-  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
-}
-
-model SatelliteAnalysis {
-  id              String   @id @default(cuid())
-  reportId        String?
-  analysisType    String // 'flood_risk', 'illegal_development', 'green_cover', 'waste_dumping'
-  latitude        Float
-  longitude       Float
-  confidence      Float // AI confidence score 0-1
-  detectedChanges Json? // Store analysis results
-  imageUrl        String? // Satellite image URL
-  analysisDate    DateTime @default(now())
-  createdAt       DateTime @default(now())
-
-  report Report? @relation(fields: [reportId], references: [id])
-}
-
-model FloodRiskArea {
-  id          String   @id @default(cuid())
-  name        String
-  coordinates Json // GeoJSON polygon
-  riskLevel   String // 'low', 'medium', 'high', 'critical'
-  lastUpdated DateTime @default(now())
-  predictions Json? // AI predictions data
-}
-
-model DevelopmentPlan {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  coordinates Json // GeoJSON data
-  status      String // 'proposed', 'approved', 'under_construction', 'completed'
-  approvedBy  String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
-model PublicConsultation {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  startDate   DateTime
-  endDate     DateTime
-  status      String // 'active', 'closed', 'draft'
-  coordinates Json? // Area of interest
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  votes    ConsultationVote[]
-  comments ConsultationComment[]
-}
-
-model ConsultationVote {
-  id             String   @id @default(cuid())
-  consultationId String
-  userId         String
-  vote           String // 'support', 'oppose', 'neutral'
-  createdAt      DateTime @default(now())
-
-  consultation PublicConsultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
-  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([consultationId, userId])
-}
-
-model ConsultationComment {
-  id             String   @id @default(cuid())
-  consultationId String
-  userId         String
-  comment        String
-  createdAt      DateTime @default(now())
-
-  consultation PublicConsultation @relation(fields: [consultationId], references: [id], onDelete: Cascade)
-  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model WaterDemandAnalysis {
-  id                String   @id @default(cuid())
-  area              String
-  coordinates       Json // GeoJSON polygon
-  populationDensity Float
-  predictedDemand   Float // Liters per day
-  currentSupply     Float? // Liters per day
-  shortage          Float? // Calculated shortage
-  analysisDate      DateTime @default(now())
+enum UserRole {
+  RESIDENT
+  GOVERNMENT_OFFICIAL
+  ADMIN
 }

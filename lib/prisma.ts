@@ -20,6 +20,13 @@ const createPrismaClient = () => {
   try {
     return new PrismaClient({
       log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+      datasources: {
+        db: {
+          url: process.env.DATABASE_URL,
+        },
+      },
+      // Connection pooling and timeout settings are not supported via '__internal' here.
+      // Refer to Prisma documentation for configuring these options.
     })
   } catch (error) {
     console.error('Failed to initialize Prisma client:', error)

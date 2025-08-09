@@ -28,16 +28,16 @@ export async function GET(request: NextRequest) {
         endDate: { gte: new Date() }
       },
       include: {
-        votes: {
+        ConsultationVote: {
           select: { vote: true }
         },
-        comments: {
+        ConsultationComment: {
           select: { id: true }
         },
         _count: {
           select: {
-            votes: true,
-            comments: true
+            ConsultationVote: true,
+            ConsultationComment: true
           }
         }
       },
@@ -61,12 +61,12 @@ export async function GET(request: NextRequest) {
       where: {
         OR: [
           {
-            consultationVotes: {
+            ConsultationVote: {
               some: {}
             }
           },
           {
-            consultationComments: {
+            ConsultationComment: {
               some: {}
             }
           }
@@ -80,12 +80,12 @@ export async function GET(request: NextRequest) {
 
     // Process consultation data
     const consultationsWithStats = activeConsultations.map(consultation => {
-      const voteCounts = consultation.votes.reduce((acc, vote) => {
+      const voteCounts = consultation.ConsultationVote.reduce((acc, vote) => {
         acc[vote.vote] = (acc[vote.vote] || 0) + 1
         return acc
       }, {} as Record<string, number>)
 
-      const totalVotes = consultation.votes.length
+      const totalVotes = consultation.ConsultationVote.length
       const supportPercentage = totalVotes > 0 ? Math.round((voteCounts.support || 0) / totalVotes * 100) : 0
       const opposePercentage = totalVotes > 0 ? Math.round((voteCounts.oppose || 0) / totalVotes * 100) : 0
       const neutralPercentage = totalVotes > 0 ? Math.round((voteCounts.neutral || 0) / totalVotes * 100) : 0
@@ -95,8 +95,8 @@ export async function GET(request: NextRequest) {
         title: consultation.title,
         description: consultation.description,
         endDate: consultation.endDate.toISOString().split('T')[0],
-        participants: consultation._count.votes,
-        comments: consultation._count.comments,
+        participants: consultation._count.ConsultationVote,
+        comments: consultation._count.ConsultationComment,
         support: supportPercentage,
         oppose: opposePercentage,
         neutral: neutralPercentage

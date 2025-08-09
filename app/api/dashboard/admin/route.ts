@@ -72,16 +72,8 @@ export async function GET(request: NextRequest) {
         }
       }),
       
-      // Average response time calculation
-      prisma.report.aggregate({
-        where: {
-          status: "RESOLVED",
-          resolvedAt: { not: null }
-        },
-        _avg: {
-          // No valid numeric field for average; placeholder removed
-        }
-      }).then(() => 2.3), // Hardcoded for now
+      // Average response time calculation (hardcoded for now)
+      Promise.resolve(2.3),
       
       // Recent reports requiring attention
       prisma.report.findMany({
@@ -93,7 +85,7 @@ export async function GET(request: NextRequest) {
           ]
         },
         include: {
-          user: {
+          User: {
             select: { name: true, email: true }
           }
         },
@@ -134,9 +126,9 @@ export async function GET(request: NextRequest) {
           role: true,
           createdAt: true,
           updatedAt: true,
-          _count: {
+          Report: {
             select: {
-              reports: true
+              id: true
             }
           }
         },
@@ -154,7 +146,7 @@ export async function GET(request: NextRequest) {
       type: report.type,
       status: report.status,
       priority: report.priority,
-      reporter: report.user?.name || 'Anonymous',
+      reporter: report.User?.name || 'Anonymous',
       createdAt: report.createdAt.toLocaleDateString()
     }))
 
@@ -166,7 +158,7 @@ export async function GET(request: NextRequest) {
       role: user.role,
       status: user.updatedAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) ? 'active' : 'inactive',
       joinDate: user.createdAt.toLocaleDateString(),
-      reportsCount: user._count.reports,
+      reportsCount: user.Report ? user.Report.length : 0,
       lastActive: getLastActiveTime(user.updatedAt)
     }))
 

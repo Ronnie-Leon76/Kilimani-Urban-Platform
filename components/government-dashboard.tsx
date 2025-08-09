@@ -31,6 +31,7 @@ import {
 } from "lucide-react"
 import { signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { LegalChatbot } from "./legal-chatbot"
 
 interface User {
   id: string
@@ -246,6 +247,59 @@ export function GovernmentDashboard({ user }: GovernmentDashboardProps) {
         return <AlertTriangle className="h-4 w-4 text-white" />
       default:
         return <AlertTriangle className="h-4 w-4 text-white" />
+    }
+  }
+
+  // Handler functions for report actions
+  const handleViewReport = (reportId: string) => {
+    // Open a detailed view of the report
+    console.log(`Viewing report: ${reportId}`)
+    // You can add modal logic or navigation here
+    alert(`Viewing detailed information for report ID: ${reportId}`)
+  }
+
+  const handleTakeAction = async (reportId: string, currentStatus: string) => {
+    try {
+      console.log(`Taking action on report: ${reportId}, current status: ${currentStatus}`)
+      
+      // Determine next status based on current status
+      let nextStatus = currentStatus
+      switch (currentStatus) {
+        case "PENDING":
+          nextStatus = "IN_PROGRESS"
+          break
+        case "IN_PROGRESS":
+          nextStatus = "RESOLVED"
+          break
+        case "RESOLVED":
+          alert("This report is already resolved!")
+          return
+        default:
+          nextStatus = "IN_PROGRESS"
+      }
+
+      // Update report status via API
+      const response = await fetch(`/api/reports/${reportId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          status: nextStatus,
+          resolvedAt: nextStatus === "RESOLVED" ? new Date() : null
+        })
+      })
+
+      if (response.ok) {
+        alert(`Report status updated to: ${nextStatus.replace("_", " ")}`)
+        // Refresh dashboard data
+        window.location.reload()
+      } else {
+        throw new Error('Failed to update report status')
+      }
+    } catch (error) {
+      console.error('Error updating report:', error)
+      alert('Failed to update report status. Please try again.')
     }
   }
 
@@ -476,14 +530,23 @@ export function GovernmentDashboard({ user }: GovernmentDashboardProps) {
                             <span className="text-xs text-gray-500">{report.createdAt}</span>
                           </div>
                         </div>
-                        <div className="flex gap-2 flex-col sm:flex-row">
-                          <Button size="sm" variant="outline" className="mobile-button bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200 hover:from-gray-100 hover:to-gray-200">
-                            <Eye className="w-4 h-4 mr-1" />
-                            <span className="hidden sm:inline">View</span>
+                        <div className="flex gap-2 flex-col sm:flex-row ml-auto">
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 text-blue-700 hover:from-blue-100 hover:to-indigo-100 hover:scale-105 transition-all duration-300 shadow-md"
+                            onClick={() => handleViewReport(report.id)}
+                          >
+                            <Eye className="w-4 h-4 mr-2" />
+                            View
                           </Button>
-                          <Button size="sm" className="mobile-button bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-lg">
-                            <Target className="w-4 h-4 mr-1" />
-                            <span className="hidden sm:inline">Action</span>
+                          <Button 
+                            size="sm" 
+                            className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-lg hover:scale-105 transition-all duration-300"
+                            onClick={() => handleTakeAction(report.id, report.status)}
+                          >
+                            <Target className="w-4 h-4 mr-2" />
+                            Action
                           </Button>
                         </div>
                       </div>
@@ -522,10 +585,15 @@ export function GovernmentDashboard({ user }: GovernmentDashboardProps) {
                           </div>
                           <span className="text-sm font-semibold text-blue-900">Weekly Reports</span>
                         </div>
-                        <span className="text-xl font-bold text-blue-600">+23%</span>
+                        <span className="text-xl font-bold text-blue-600">
+                          {dashboardData?.stats.totalReports.change || "+0%"}
+                        </span>
                       </div>
                       <div className="w-full bg-blue-200 rounded-full h-3">
-                        <div className="bg-gradient-to-r from-blue-500 to-cyan-500 h-3 rounded-full transition-all duration-1000 ease-out" style={{width: '75%'}}></div>
+                        <div 
+                          className="bg-gradient-to-r from-blue-500 to-cyan-500 h-3 rounded-full transition-all duration-1000 ease-out" 
+                          style={{width: `${Math.min(100, Math.max(10, (dashboardData?.stats.totalReports.value || 0) * 10))}%`}}
+                        ></div>
                       </div>
                       <p className="text-xs text-blue-700 mt-2">Compared to last week</p>
                     </div>
@@ -537,10 +605,18 @@ export function GovernmentDashboard({ user }: GovernmentDashboardProps) {
                           </div>
                           <span className="text-sm font-semibold text-green-900">Resolution Rate</span>
                         </div>
-                        <span className="text-xl font-bold text-green-600">87%</span>
+                        <span className="text-xl font-bold text-green-600">
+                          {dashboardData ? 
+                            Math.round((dashboardData.stats.resolvedThisMonth.value / Math.max(1, dashboardData.stats.totalReports.value)) * 100) + '%'
+                            : '0%'
+                          }
+                        </span>
                       </div>
                       <div className="w-full bg-green-200 rounded-full h-3">
-                        <div className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full transition-all duration-1000 ease-out" style={{width: '87%'}}></div>
+                        <div 
+                          className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full transition-all duration-1000 ease-out" 
+                          style={{width: `${dashboardData ? Math.round((dashboardData.stats.resolvedThisMonth.value / Math.max(1, dashboardData.stats.totalReports.value)) * 100) : 0}%`}}
+                        ></div>
                       </div>
                       <p className="text-xs text-green-700 mt-2">Target: 85%</p>
                     </div>
@@ -552,10 +628,18 @@ export function GovernmentDashboard({ user }: GovernmentDashboardProps) {
                           </div>
                           <span className="text-sm font-semibold text-orange-900">Avg Response Time</span>
                         </div>
-                        <span className="text-xl font-bold text-orange-600">2.3 days</span>
+                        <span className="text-xl font-bold text-orange-600">
+                          {dashboardData?.analytics.avgResponseTime ? 
+                            `${dashboardData.analytics.avgResponseTime} days` 
+                            : '0 days'
+                          }
+                        </span>
                       </div>
                       <div className="w-full bg-orange-200 rounded-full h-3">
-                        <div className="bg-gradient-to-r from-orange-500 to-red-500 h-3 rounded-full transition-all duration-1000 ease-out" style={{width: '65%'}}></div>
+                        <div 
+                          className="bg-gradient-to-r from-orange-500 to-red-500 h-3 rounded-full transition-all duration-1000 ease-out" 
+                          style={{width: `${Math.min(100, Math.max(10, 100 - (dashboardData?.analytics.avgResponseTime || 0) * 10))}%`}}
+                        ></div>
                       </div>
                       <p className="text-xs text-orange-700 mt-2">Target: &lt;3 days</p>
                     </div>
@@ -579,28 +663,48 @@ export function GovernmentDashboard({ user }: GovernmentDashboardProps) {
                       <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:animate-pulse">
                         <Droplets className="h-8 w-8 text-white" />
                       </div>
-                      <p className="text-2xl font-bold text-blue-600 mb-1">34%</p>
+                      <p className="text-2xl font-bold text-blue-600 mb-1">
+                        {dashboardData ? 
+                          Math.round((dashboardData.analytics.typeDistribution.WATER_SHORTAGE || 0) / Math.max(1, dashboardData.stats.totalReports.value) * 100) + '%'
+                          : '0%'
+                        }
+                      </p>
                       <p className="text-sm text-blue-700 font-medium">Water Issues</p>
                     </div>
                     <div className="text-center bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl p-6 border border-amber-200 group hover:shadow-lg transition-all duration-300 hover:scale-105">
                       <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:animate-pulse">
                         <Construction className="h-8 w-8 text-white" />
                       </div>
-                      <p className="text-2xl font-bold text-amber-600 mb-1">28%</p>
+                      <p className="text-2xl font-bold text-amber-600 mb-1">
+                        {dashboardData ? 
+                          Math.round((dashboardData.analytics.typeDistribution.INFRASTRUCTURE || 0) / Math.max(1, dashboardData.stats.totalReports.value) * 100) + '%'
+                          : '0%'
+                        }
+                      </p>
                       <p className="text-sm text-amber-700 font-medium">Infrastructure</p>
                     </div>
                     <div className="text-center bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-6 border border-red-200 group hover:shadow-lg transition-all duration-300 hover:scale-105">
                       <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:animate-pulse">
                         <AlertTriangle className="h-8 w-8 text-white" />
                       </div>
-                      <p className="text-2xl font-bold text-red-600 mb-1">22%</p>
+                      <p className="text-2xl font-bold text-red-600 mb-1">
+                        {dashboardData ? 
+                          Math.round((dashboardData.analytics.typeDistribution.FLOODING || 0) / Math.max(1, dashboardData.stats.totalReports.value) * 100) + '%'
+                          : '0%'
+                        }
+                      </p>
                       <p className="text-sm text-red-700 font-medium">Flooding</p>
                     </div>
                     <div className="text-center bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 border border-purple-200 group hover:shadow-lg transition-all duration-300 hover:scale-105">
                       <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-lg group-hover:animate-pulse">
                         <Trash2 className="h-8 w-8 text-white" />
                       </div>
-                      <p className="text-2xl font-bold text-purple-600 mb-1">16%</p>
+                      <p className="text-2xl font-bold text-purple-600 mb-1">
+                        {dashboardData ? 
+                          Math.round((dashboardData.analytics.typeDistribution.WASTE_MANAGEMENT || 0) / Math.max(1, dashboardData.stats.totalReports.value) * 100) + '%'
+                          : '0%'
+                        }
+                      </p>
                       <p className="text-sm text-purple-700 font-medium">Waste Management</p>
                     </div>
                   </div>
@@ -830,6 +934,9 @@ export function GovernmentDashboard({ user }: GovernmentDashboardProps) {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Legal Chatbot */}
+      <LegalChatbot />
     </div>
   )
 }

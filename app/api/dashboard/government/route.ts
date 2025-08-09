@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
       // Active users (users who created reports in last 30 days)
       prisma.user.count({
         where: {
-          reports: {
+          Report: {
             some: {
               createdAt: {
                 gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
         take: 10,
         orderBy: { createdAt: "desc" },
         include: {
-          user: {
+          User: {
             select: { name: true, email: true }
           }
         }
@@ -179,7 +179,7 @@ export async function GET(request: NextRequest) {
         type: report.type,
         status: report.status,
         priority: report.priority,
-        reporter: report.user.name || "Anonymous",
+        reporter: report.User.name || "Anonymous",
         createdAt: report.createdAt.toISOString().split('T')[0],
         location: report.address || `${report.latitude}, ${report.longitude}`
       })),
