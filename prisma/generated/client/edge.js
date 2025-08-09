@@ -336,7 +336,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/project/prisma/generated/client",
+      "value": "/home/adeptschneiderthedev/Desktop/kilimani-urban-platform/prisma/generated/client",
       "fromEnvVar": null
     },
     "config": {
@@ -345,16 +345,17 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-1.1.x",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/project/prisma/schema.prisma",
+    "sourceFilePath": "/home/adeptschneiderthedev/Desktop/kilimani-urban-platform/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
   "clientVersion": "6.13.0",

@@ -10,12 +10,31 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
-// Initialize law documents on module load
+// Track initialization state
 let lawDocumentsInitialized = false
+let lawDocumentsInitializing = false
+
 const initializeLaws = async () => {
-  if (!lawDocumentsInitialized) {
+  if (lawDocumentsInitialized) {
+    return
+  }
+  
+  if (lawDocumentsInitializing) {
+    // Wait for ongoing initialization
+    while (lawDocumentsInitializing) {
+      await new Promise(resolve => setTimeout(resolve, 100))
+    }
+    return
+  }
+  
+  try {
+    lawDocumentsInitializing = true
     await initializeLawDocuments()
     lawDocumentsInitialized = true
+  } catch (error) {
+    console.error('Failed to initialize law documents:', error)
+  } finally {
+    lawDocumentsInitializing = false
   }
 }
 

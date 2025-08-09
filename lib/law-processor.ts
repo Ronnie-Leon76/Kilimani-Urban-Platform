@@ -1,6 +1,20 @@
 import fs from 'fs'
 import path from 'path'
-import pdfParse from 'pdf-parse'
+
+// Dynamically import pdf-parse to avoid build-time issues
+let pdfParse: any = null
+
+const getPdfParse = async () => {
+  if (!pdfParse) {
+    try {
+      pdfParse = (await import('pdf-parse')).default
+    } catch (error) {
+      console.error('Failed to import pdf-parse:', error)
+      throw new Error('PDF parsing not available')
+    }
+  }
+  return pdfParse
+}
 
 export interface LawDocument {
   title: string
@@ -22,8 +36,31 @@ export class LawDocumentProcessor {
 
   static async extractPDFText(filePath: string): Promise<string> {
     try {
+      // Check if file exists
+      if (!fs.existsSync(filePath)) {
+        console.error(`PDF file not found: ${filePath}`)
+        return ''
+      }
+
+      // Check file size (avoid processing very large files)
+      const stats = fs.statSync(filePath)
+      if (stats.size > 50 * 1024 * 1024) { // 50MB limit
+        console.warn(`PDF file too large (${Math.round(stats.size / 1024 / 1024)}MB): ${filePath}`)
+        return ''
+      }
+
+      console.log(`Extracting text from: ${filePath}`)
+      
+      // Get pdf-parse dynamically
+      const pdfParseModule = await getPdfParse()
+      
       const dataBuffer = fs.readFileSync(filePath)
-      const data = await pdfParse(dataBuffer)
+      const data = await pdfParseModule(dataBuffer, {
+        // PDF parse options
+        max: 0, // No page limit
+      })
+      
+      console.log(`Extracted ${data.text.length} characters from ${filePath}`)
       return data.text
     } catch (error) {
       console.error(`Error extracting PDF text from ${filePath}:`, error)
@@ -119,8 +156,25 @@ export class LawDocumentProcessor {
         return this.lawsCache.get(filename)!
       }
 
-      const text = await this.extractPDFText(filePath)
-      if (!text) {
+      let text = ''
+      const fileExtension = path.extname(filename).toLowerCase()
+      
+      if (fileExtension === '.pdf') {
+        text = await this.extractPDFText(filePath)
+      } else if (fileExtension === '.txt') {
+        try {
+          text = fs.readFileSync(filePath, 'utf-8')
+        } catch (error) {
+          console.error(`Error reading text file ${filePath}:`, error)
+          return null
+        }
+      } else {
+        console.warn(`Unsupported file type: ${filename}`)
+        return null
+      }
+
+      if (!text || text.trim().length === 0) {
+        console.warn(`No content extracted from: ${filename}`)
         return null
       }
 
@@ -144,6 +198,7 @@ export class LawDocumentProcessor {
 
       // Cache the processed document
       this.lawsCache.set(filename, lawDocument)
+      console.log(`Successfully processed law document: ${lawDocument.title} (${sections.length} sections)`)
       return lawDocument
 
     } catch (error) {
@@ -260,8 +315,25 @@ export class LawDocumentProcessor {
 
 // Initialize the law documents on module load
 export const initializeLawDocuments = async () => {
-  console.log('Initializing law documents...')
-  const documents = await LawDocumentProcessor.getAllLawDocuments()
-  console.log(`Loaded ${documents.length} law documents`)
-  return documents
+  try {
+    // Skip initialization during build time
+    if (process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE === 'phase-production-build') {
+      console.log('Skipping law documents initialization during build')
+      return []
+    }
+
+    console.log('Initializing law documents...')
+    const documents = await LawDocumentProcessor.getAllLawDocuments()
+    console.log(`Successfully loaded ${documents.length} law documents`)
+    
+    if (documents.length === 0) {
+      console.warn('No law documents were loaded. Legal analysis will use fallback logic.')
+    }
+    
+    return documents
+  } catch (error) {
+    console.error('Failed to initialize law documents:', error)
+    console.warn('Legal analysis will use fallback logic.')
+    return []
+  }
 }
